@@ -27,6 +27,6 @@ jobs:
       - run: node house/check.mjs .
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: _site/${{ github.event.repository.name }}
       - id: deployment
         uses: actions/deploy-pages@v4
