@@ -1,0 +1,39 @@
+<section data-layout="figure">
+  <h2>One pipeline serves every tracer</h2>
+  <figure>
+    <svg viewBox="0 0 1600 520" role="img" aria-label="Pipeline: catalogues to maps to bandpowers to likelihood">
+      <defs>
+        <marker id="schematic-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" class="fill-muted"/>
+        </marker>
+      </defs>
+      <g>
+        <rect x="20" y="170" width="300" height="180" rx="14" class="fill-panel stroke-rule" stroke-width="3"/>
+        <text x="170" y="250" text-anchor="middle" font-size="40" font-weight="600">Catalogues</text>
+        <text x="170" y="300" text-anchor="middle" font-size="30" class="fill-muted">shear, positions</text>
+      </g>
+      <g class="fragment">
+        <path d="M330 260 H430" class="stroke-muted" stroke-width="4" marker-end="url(#schematic-arrow)"/>
+        <rect x="440" y="170" width="300" height="180" rx="14" class="fill-panel stroke-rule" stroke-width="3"/>
+        <text x="590" y="250" text-anchor="middle" font-size="40" font-weight="600">Maps</text>
+        <text x="590" y="300" text-anchor="middle" font-size="30" class="fill-muted">HEALPix, masks</text>
+      </g>
+      <g class="fragment">
+        <path d="M750 260 H850" class="stroke-muted" stroke-width="4" marker-end="url(#schematic-arrow)"/>
+        <rect x="860" y="170" width="300" height="180" rx="14" class="fill-ground stroke-accent" stroke-width="5"/>
+        <text x="1010" y="250" text-anchor="middle" font-size="40" font-weight="600" class="fill-accent">Bandpowers</text>
+        <text x="1010" y="300" text-anchor="middle" font-size="30" class="fill-muted">NaMaster</text>
+      </g>
+      <g class="fragment">
+        <path d="M1170 260 H1270" class="stroke-muted" stroke-width="4" marker-end="url(#schematic-arrow)"/>
+        <rect x="1280" y="170" width="300" height="180" rx="14" class="fill-panel stroke-rule" stroke-width="3"/>
+        <text x="1430" y="250" text-anchor="middle" font-size="40" font-weight="600">Likelihood</text>
+        <text x="1430" y="300" text-anchor="middle" font-size="30" class="fill-muted">amplitudes</text>
+      </g>
+      <text x="1010" y="440" text-anchor="middle" font-size="30" class="fill-teal fragment">one covariance for all tracers</text>
+    </svg>
+  </figure>
+  <aside class="notes">
+    <p>A schematic drawn as inline SVG. Its colours are theme tokens (classes such as fill-panel and stroke-accent), so it recolours with the theme, and its groups can arrive as fragments. Text sizes are checked on screen like any other text.</p>
+  </aside>
+</section>

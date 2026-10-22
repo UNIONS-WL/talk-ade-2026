@@ -1,0 +1,17 @@
+/* house-dark — the house palette inverted onto a dark ground; figures sit on white cards. */
+:root {
+  --ground:       #1C1915;
+  --ground-deep:  #14120F;
+  --ink:          #EDE2CE;
+  --muted:        #ADA08A;
+  --accent:       #E07565;
+  --teal:         #6FB3A8;
+  --cobalt:       #8EA6DD;
+  --ochre:        #D9AE57;
+  --rule:         #5A5144;
+  --panel:        #2A231D;
+  --veil:         rgba(28, 25, 21, 0.82);
+  --figure-card:  #FFFFFF;
+  --figure-blend: normal;
+  --figure-radius: 6px;
+}

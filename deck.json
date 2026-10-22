@@ -1,0 +1,17 @@
+{
+  "title": "UNIONS: Cosmology and Astrophysics from Northern-Sky Weak Lensing",
+  "author": "Cail Daley and Calum Murray",
+  "venue": "Colloque national Dark Energy · Paris",
+  "date": "2026-11-03",
+  "description": "Joint UNIONS survey, astrophysics and cosmology talk.",
+  "footer": "UNIONS · Colloque national Dark Energy · Paris · 3 November 2026",
+  "theme": "unions",
+  "draft": true,
+  "sections": [
+    {"title":"Opening","outline":"UNIONS: Cosmology and Astrophysics from Northern-Sky Weak Lensing.","slides":["title"]},
+    {"title":"Calum · Survey and astrophysics (~15 min)","outline":"The UNIONS survey and astrophysical applications of weak lensing.","slides":["survey","intrinsic-alignments","satellite-stripping","lensing-low","spherex-nz"]},
+    {"title":"Handover","outline":"From astrophysics to cosmological weak-lensing constraints.","slides":["handover"]},
+    {"title":"Cail · Cosmology and outlook (~10 min)","outline":"Two-dimensional cosmic shear results and the upcoming tomographic programme.","slides":["cosmic-shear","tomography","footprint-progress"]},
+    {"title":"Backup","outline":"References and previous UNIONS talks.","slides":["references"]}
+  ]
+}

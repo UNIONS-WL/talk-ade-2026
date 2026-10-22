@@ -1,0 +1,36 @@
+{
+  "title": "Broken fixture",
+  "author": "house test",
+  "date": "2026-10-02",
+  "footer": "fixture",
+  "draft": true,
+  "css": "deck.css",
+  "sections": [
+    {
+      "title": "Everything wrong",
+      "outline": "Each slide breaks one rule the checker must catch.",
+      "slides": [
+        "overflow",
+        "tiny",
+        "unknown",
+        "contrast",
+        "layoutless",
+        "toomany",
+        "overlap",
+        "offcanvas",
+        "stepfade",
+        "svgtext",
+        "faint",
+        "headline",
+        "nested",
+        "shrunk",
+        "emptyfig",
+        "widemath",
+        "cssurl",
+        "longname",
+        "noface",
+        "stackless"
+      ]
+    }
+  ]
+}

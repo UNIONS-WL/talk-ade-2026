@@ -1,0 +1,16 @@
+/* house — warm paper, ink, one cinnabar accent. EB Garamond throughout. */
+:root {
+  --ground:       #F7F0E1;
+  --ground-deep:  #EDE2CE;
+  --ink:          #1B1611;
+  --muted:        #685D4B;
+  --accent:       #B03E32;
+  --teal:         #33746B;
+  --cobalt:       #3D5BA0;
+  --ochre:        #C49333;
+  --rule:         #C5B89E;
+  --panel:        #F1E3D3;
+  --veil:         rgba(247, 240, 225, 0.82);
+  --figure-card:  transparent;
+  --figure-blend: multiply;
+}

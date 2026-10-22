@@ -1,0 +1,4 @@
+{
+  "title": "Build-failure fixture", "author": "house test", "date": "2026-10-02", "footer": "fixture", "draft": true,
+  "sections": [ { "title": "Failures", "outline": "Slides the build must refuse, each for its own reason.", "slides": ["missing", "badbox", "stray", "badtex"] } ]
+}

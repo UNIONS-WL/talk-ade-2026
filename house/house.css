@@ -1,0 +1,772 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   House deck system — tokens, slide frame, layouts, components.
+
+   Every slide is a fixed 1920×1080 frame (.slide) inside a reveal <section>.
+   The build wraps each authored <section>'s content in that frame, adds the
+   footer, and sets data-layout on it; nothing here depends on reveal's state
+   classes, so the same rules lay out the deck, the report and the checker.
+
+   Class names defined in this file are the vocabulary the linter accepts.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Tokens come from the theme (themes/<name>.css); the scale and canvas
+      below are shared by every theme. ───────────────────────────────────── */
+:root {
+  /* type: five sizes, nothing below --t-fine */
+  --t-display: 104px;
+  --t-head:     60px;
+  --t-body:     44px;
+  --t-small:    32px;
+  --t-fine:     24px;
+  --lh-tight: 1.12;
+  --lh-body:  1.35;
+
+  --face: 'EB Garamond', Georgia, serif;
+  --face-head: var(--face);
+  --mono:  'IBM Plex Mono', ui-monospace, monospace;
+
+  /* space */
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 40px;  --s5: 64px;
+
+  /* canvas: content box is x 104–1816, y 72–968 */
+  --pad-x: 104px;
+  --pad-top: 72px;
+  --pad-bottom: 112px;
+  --gap: 40px;
+}
+
+/* ── Fonts are inlined by the build as @font-face rules ─────────────────── */
+
+/* ── Reveal shell ───────────────────────────────────────────────────────── */
+html, body { background: var(--ground); }
+.reveal { font-family: var(--face); color: var(--ink); }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { padding: 0; width: 1920px; height: 1080px; }
+.reveal .slides > section { top: 0 !important; }
+.reveal .progress { color: var(--accent); height: 4px; }
+
+/* ── The slide frame ────────────────────────────────────────────────────── */
+.slide {
+  position: relative;
+  box-sizing: border-box;
+  width: 1920px;
+  height: 1080px;
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--face);
+  font-size: var(--t-body);
+  font-weight: 500;
+  line-height: var(--lh-body);
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+  text-align: left;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  row-gap: var(--gap);
+  isolation: isolate;
+  overflow: hidden;
+}
+.slide * { box-sizing: border-box; }
+.slide > .body { min-height: 0; min-width: 0; }
+
+.slide p, .slide ul, .slide ol, .slide figure, .slide blockquote, .slide table, .slide pre {
+  margin: 0;
+}
+.slide p, .slide li { text-wrap: pretty; }
+
+/* headline: a claim, at the top margin, with the cinnabar kicker rule */
+.slide h1, .slide h2, .slide h3 {
+  margin: 0;
+  font-family: var(--face-head);
+  font-weight: 600;
+  font-synthesis: none;
+  letter-spacing: -0.005em;
+  line-height: var(--lh-tight);
+  color: var(--ink);
+  text-transform: none;
+  text-wrap: balance;
+}
+.slide > h2 { font-size: var(--t-head); }
+.slide > h2::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 4px;
+  margin-top: 14px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.slide h3 { font-size: var(--t-body); }
+
+.slide strong { font-weight: 700; color: inherit; }
+.slide em { font-style: italic; }
+.slide a { color: var(--accent); text-decoration: none; }
+.slide code {
+  font-family: var(--mono);
+  font-size: 0.82em;
+  background: rgba(196, 147, 51, 0.14);
+  padding: 0.04em 0.28em;
+  border-radius: 4px;
+}
+.slide pre {
+  font-family: var(--mono);
+  font-size: var(--t-fine);
+  line-height: 1.45;
+  background: var(--panel);
+  border-left: 4px solid var(--accent);
+  padding: var(--s3) var(--s4);
+  border-radius: 6px;
+  white-space: pre;
+  overflow: hidden;
+}
+.slide pre code { background: none; padding: 0; font-size: inherit; }
+
+/* lists: generous, with small accent markers */
+.slide ul, .slide ol { padding-left: 1.1em; }
+.slide li { margin: 0 0 0.45em; }
+.slide li:last-child { margin-bottom: 0; }
+.slide li::marker { color: var(--accent); }
+.slide ul ul, .slide ol ul { margin-top: 0.3em; font-size: var(--t-small); }
+
+/* emphasis by weight or colour, never a new size */
+.slide .accent { color: var(--accent); }
+.slide .muted  { color: var(--muted); }
+.slide .teal   { color: var(--teal); }
+.slide .cobalt { color: var(--cobalt); }
+.slide .small  { font-size: var(--t-small); }
+.slide .fine   { font-size: var(--t-fine); }
+
+/* small-caps label above a block */
+.slide .kicker {
+  display: block;
+  font-size: var(--t-fine);
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  line-height: 1.2;
+  margin-bottom: var(--s1);
+}
+
+/* attribution under a figure or quote */
+.slide .source {
+  display: block;
+  font-size: var(--t-fine);
+  color: var(--muted);
+  line-height: 1.3;
+  margin-top: var(--s2);
+}
+
+/* ── Footer (written by the build) ──────────────────────────────────────── */
+.slide > .foot {
+  position: absolute;
+  left: var(--pad-x);
+  right: var(--pad-x);
+  bottom: 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--t-fine);
+  line-height: 1;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.slide > .foot .num { font-variant-caps: normal; letter-spacing: 0.02em; }
+
+/* ── Figures ────────────────────────────────────────────────────────────────
+   <figure> holds an optional <figcaption>, one image or inline <svg>, optional
+   <mark> highlights and an optional .source. The build wraps the image in
+   .frame (with --ar from its pixel size or viewBox) and puts caption, frame and
+   source together in .cell, a size container: the frame takes the largest box
+   of its aspect ratio that fits beside the one-line caption and source, so
+   all three stay together, centred in the space the layout gives the figure.
+   White plot backgrounds multiply into the ground; .plain opts out.         */
+.slide figure {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  height: 100%;
+}
+.slide figure > .cell {
+  flex: 1 1 0;
+  container-type: size;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  --chrome: 0px;
+}
+.slide figure > .cell:has(> figcaption) { --chrome: 54px; }
+.slide figure > .cell:has(> .source) { --chrome: 48px; }
+.slide figure > .cell:has(> figcaption):has(> .source) { --chrome: 102px; }
+.slide figure figcaption {
+  font-size: var(--t-small);
+  line-height: 38px;
+  height: 38px;
+  margin-bottom: var(--s2);
+  white-space: nowrap;
+  color: var(--ink);
+  text-align: center;
+  max-width: 100%;
+}
+.slide figure > figcaption { flex: none; }
+.slide figure > .placeholder { flex: 1 1 0; }
+.slide figure .cell > .source { text-align: center; margin-top: 16px; height: 32px; line-height: 32px; white-space: nowrap; max-width: 100%; }
+.slide .frame {
+  position: relative;
+  display: block;
+  flex: none;
+  aspect-ratio: var(--ar);
+  width: min(100cqw, (100cqh - var(--chrome)) * var(--ar));
+  background: var(--figure-card);
+  border-radius: var(--figure-radius, 0);
+}
+/* data-crop shows a region of the image (build sets the crop variables) */
+.slide .frame.crop { overflow: hidden; }
+.slide .frame.crop > img {
+  position: absolute;
+  left: calc(var(--cx) * -100% / var(--cw));
+  top: calc(var(--cy) * -100% / var(--ch));
+  width: calc(100% / var(--cw));
+  height: calc(100% / var(--ch));
+  max-width: none;
+}
+.slide figure.left > .cell { align-items: flex-start; }
+.slide figure.left figcaption, .slide figure.left .source { text-align: left; }
+.slide .frame > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* raster figures are multiplied into the ground at build time; SVG images blend here */
+.slide .frame > img[data-blend] { mix-blend-mode: var(--figure-blend); }
+.slide .frame > svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* highlight a region of any image: <mark class="box fragment" data-box="x y w h">
+   in percent of the image; .spot dims everything outside the region instead */
+.slide .frame > mark {
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  width: calc(var(--w) * 1%);
+  height: calc(var(--h) * 1%);
+  background: transparent;
+  color: var(--ink);
+  pointer-events: none;
+}
+.slide .frame > mark.box {
+  border: 5px solid var(--accent);
+  border-radius: 10px;
+  box-shadow: 0 0 0 3px var(--ground);
+}
+.slide .frame > mark.spot {
+  border-radius: 10px;
+  box-shadow: 0 0 0 4000px var(--veil);
+}
+.slide .frame:has(> mark.spot) { overflow: hidden; }
+.slide .frame > mark[data-label]::before {
+  content: attr(data-label);
+  position: absolute;
+  left: -5px;
+  bottom: calc(100% + 10px);
+  white-space: nowrap;
+  font-size: var(--t-fine);
+  font-weight: 600;
+  line-height: 1;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #FFFFFF;
+}
+.slide .frame > mark.below[data-label]::before { bottom: auto; top: calc(100% + 10px); }
+
+/* inline SVG schematics: text in the deck's face, colours from the theme */
+.slide svg text { font-family: var(--face); font-weight: 500; fill: var(--ink); }
+.slide svg .fill-ink    { fill: var(--ink); }     .slide svg .stroke-ink    { stroke: var(--ink); }
+.slide svg .fill-muted  { fill: var(--muted); }   .slide svg .stroke-muted  { stroke: var(--muted); }
+.slide svg .fill-accent { fill: var(--accent); }  .slide svg .stroke-accent { stroke: var(--accent); }
+.slide svg .fill-teal   { fill: var(--teal); }    .slide svg .stroke-teal   { stroke: var(--teal); }
+.slide svg .fill-cobalt { fill: var(--cobalt); }  .slide svg .stroke-cobalt { stroke: var(--cobalt); }
+.slide svg .fill-ochre  { fill: var(--ochre); }   .slide svg .stroke-ochre  { stroke: var(--ochre); }
+.slide svg .fill-rule   { fill: var(--rule); }    .slide svg .stroke-rule   { stroke: var(--rule); }
+.slide svg .fill-panel  { fill: var(--panel); }   .slide svg .fill-ground   { fill: var(--ground); }
+.slide svg .fill-none   { fill: none; }
+
+/* a figure that does not exist yet */
+.slide .placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  min-height: 160px;
+  padding: var(--s4);
+  border: 3px dashed rgba(176, 62, 50, 0.5);
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: var(--t-small);
+  font-style: italic;
+}
+
+/* ── Components ─────────────────────────────────────────────────────────── */
+
+/* labelled equation */
+.slide .eq {
+  display: inline-block;
+  background: var(--panel);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  padding: var(--s2) var(--s4) var(--s3);
+}
+.slide .eq mjx-container[display="true"] { margin: var(--s1) 0 0 !important; }
+
+/* inline key number */
+.slide .num {
+  font-weight: 600;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* pill */
+.slide .tag {
+  display: inline-block;
+  font-size: var(--t-fine);
+  font-weight: 600;
+  line-height: 1;
+  padding: 8px 14px 9px;
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--ink);
+  vertical-align: middle;
+}
+
+/* two columns inside a text body */
+.slide .cols {
+  align-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  column-gap: var(--s5);
+}
+
+/* tables */
+.slide table {
+  border-collapse: collapse;
+  font-size: var(--t-small);
+  line-height: 1.25;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.slide th {
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--t-fine);
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 2px solid var(--ink);
+  padding: 0 var(--s4) var(--s2) 0;
+}
+.slide td {
+  padding: var(--s2) var(--s4) var(--s2) 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: baseline;
+}
+.slide td.r, .slide th.r { text-align: right; }
+/* table.large: a short table at body size; its first column, the row labels, does not wrap */
+.slide table.large { font-size: var(--t-body); }
+.slide table.large td:first-child { white-space: nowrap; }
+.slide tr.hl td { color: var(--accent); font-weight: 600; }
+
+/* ── Depth on demand ────────────────────────────────────────────────────────
+   <aside class="detail" data-label="…" data-layout="…"> is a slide outside the
+   linear order. The build makes it a second .slide frame stacked over the
+   main one, and a chip above the footer opens it; Esc or the close control
+   returns to the same slide and fragment.                                   */
+.slide > .chips {
+  position: absolute;
+  right: var(--pad-x);
+  bottom: 84px;
+  display: flex;
+  gap: var(--s2);
+  z-index: 5;
+}
+.slide .chip {
+  font: inherit;
+  font-size: var(--t-fine);
+  font-weight: 600;
+  line-height: 1;
+  padding: 10px 18px 11px;
+  border-radius: 999px;
+  border: 2px solid var(--teal);
+  background: var(--ground);
+  color: var(--teal);
+  cursor: pointer;
+}
+.slide .chip::before { content: "+ "; }
+.reveal .slides > section > .slide.detail {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: none;
+}
+.reveal .slides > section > .slide.detail.open { display: grid; }
+.slide.detail > h2::after { background: var(--teal); }
+.slide.detail > .foot .close {
+  font: inherit;
+  color: var(--teal);
+  font-weight: 600;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ═══ Layouts ═══════════════════════════════════════════════════════════════
+   data-layout on .slide; the body is .body, the authored content after <h2>. */
+
+/* title — h1, then any of .subtitle .byline .affil .venue .date .logos */
+.slide[data-layout="title"] {
+  grid-template-rows: auto auto auto auto 1fr auto auto;
+  row-gap: 0;
+  padding-top: 200px;
+  padding-bottom: 72px;
+}
+.slide[data-layout="title"] > .body { display: contents; }
+.slide[data-layout="title"] h1 { font-size: var(--t-display); line-height: 1.04; max-width: 1500px; }
+.slide[data-layout="title"] .subtitle { font-size: var(--t-head); line-height: var(--lh-tight); color: var(--muted); margin-top: var(--s3); max-width: 1500px; }
+.slide[data-layout="title"] .byline { font-size: var(--t-body); font-weight: 600; margin-top: var(--s5); }
+.slide[data-layout="title"] .affil {
+  font-size: var(--t-small);
+  color: var(--muted);
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.04em;
+}
+.slide[data-layout="title"] .venue {
+  grid-row: 6;
+  font-size: var(--t-small);
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.05em;
+}
+.slide[data-layout="title"] .date { grid-row: 7; font-size: var(--t-small); color: var(--muted); }
+.slide[data-layout="title"] .logos {
+  position: absolute;
+  right: var(--pad-x);
+  bottom: 72px;
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+}
+.slide .logos img { height: 80px; width: auto; display: block; }
+
+/* section — a divider: h2 large, optional one-line outline */
+.slide[data-layout="section"] {
+  grid-template-rows: auto;
+  align-content: center;
+  padding-bottom: 200px;
+}
+.slide[data-layout="section"] > h2 { font-size: var(--t-display); line-height: 1.04; }
+.slide[data-layout="section"] > .body { font-size: var(--t-head); color: var(--muted); line-height: var(--lh-tight); }
+
+/* statement — one claim, vertically centred; optional supporting line */
+.slide[data-layout="statement"] {
+  grid-template-rows: auto;
+  align-content: center;
+  padding-bottom: 160px;
+}
+.slide[data-layout="statement"] > h2 { font-size: var(--t-head); max-width: 1500px; }
+.slide[data-layout="statement"] > .body { color: var(--muted); max-width: 1400px; }
+
+/* points — headline and a text body: list, paragraphs, .eq, .cols */
+.slide[data-layout="points"] > .body { display: flex; flex-direction: column; gap: var(--s4); align-items: flex-start; max-width: 1560px; }
+
+/* figure — headline and one figure filling the body */
+.slide[data-layout="figure"] > .body { display: grid; min-height: 0; }
+
+/* figure-text — figure and a text column; data-split = figure share (50/60/70), data-flip puts text left */
+.slide[data-layout="figure-text"] > .body {
+  display: grid;
+  grid-template-columns: 6fr 4fr;
+  column-gap: var(--s5);
+  min-height: 0;
+}
+.slide[data-layout="figure-text"][data-split="50"] > .body { grid-template-columns: 1fr 1fr; }
+.slide[data-layout="figure-text"][data-split="70"] > .body { grid-template-columns: 7fr 3fr; }
+.slide[data-layout="figure-text"][data-flip] > .body > figure { order: 2; }
+.slide[data-layout="figure-text"] > .body > .text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s4);
+  min-width: 0;
+}
+
+/* compare and grid align their figures to a shared top, so captions line up */
+.slide[data-layout="compare"] figure > .cell,
+.slide[data-layout="grid"] figure > .cell { justify-content: flex-start; }
+
+/* compare — two figures side by side, each with a caption label */
+.slide[data-layout="compare"] > .body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: var(--s5);
+  min-height: 0;
+}
+
+/* grid — three to six figures */
+.slide[data-layout="grid"] > .body {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  gap: var(--s4) var(--s4);
+  min-height: 0;
+}
+.slide[data-layout="grid"][data-count="4"] > .body,
+.slide[data-layout="grid"][data-cols="2"] > .body { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.slide[data-layout="grid"][data-cols="3"] > .body { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* number — one to three key numbers with labels */
+.slide[data-layout="number"] > .body {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  column-gap: var(--s5);
+  align-content: center;
+  padding-bottom: var(--s5);
+}
+.slide .stat { display: flex; flex-direction: column; gap: var(--s2); }
+.slide .stat > .value {
+  font-size: var(--t-display);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+.slide .stat > .label { font-size: var(--t-small); line-height: 1.25; max-width: 30ch; }
+
+/* bleed — one image filling the canvas; optional headline on a band */
+.slide[data-layout="bleed"] { padding: 0; grid-template-rows: minmax(0, 1fr); }
+.slide[data-layout="bleed"] > .body { grid-row: 1; grid-column: 1; display: grid; }
+.slide[data-layout="bleed"] > .body > figure { height: 1080px; }
+.slide[data-layout="bleed"] .frame { width: 100cqw; height: 100cqh; aspect-ratio: auto; }
+.slide[data-layout="bleed"] .frame > img { object-fit: cover; }
+.slide[data-layout="bleed"] > h2 {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: start;
+  justify-self: start;
+  z-index: 2;
+  margin: 56px 0 0 0;
+  padding: 24px var(--pad-x) 28px;
+  background: var(--veil);
+  max-width: 1500px;
+}
+.slide[data-layout="bleed"] > .foot { z-index: 2; left: auto; }
+.slide[data-layout="bleed"] > .foot > span:first-child { display: none; }
+.slide[data-layout="bleed"] > .foot .num { background: var(--veil); padding: 8px 12px; border-radius: 6px; color: var(--ink); }
+
+/* table — headline and one table */
+.slide[data-layout="table"] > .body { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s3); }
+
+/* quote — a blockquote with a .source */
+.slide[data-layout="quote"] { grid-template-rows: auto; align-content: center; padding-bottom: 160px; }
+.slide[data-layout="quote"] blockquote {
+  font-size: var(--t-head);
+  line-height: 1.22;
+  font-weight: 500;
+  border-left: 5px solid var(--ochre);
+  padding-left: var(--s4);
+  max-width: 1500px;
+}
+.slide[data-layout="quote"] .source { font-size: var(--t-small); margin-top: var(--s4); padding-left: calc(var(--s4) + 5px); }
+
+/* closing — numbered takeaways and a contact line */
+.slide[data-layout="closing"] > .body { display: flex; flex-direction: column; justify-content: space-between; min-height: 0; }
+.slide[data-layout="closing"] ol { list-style: none; padding: 0; counter-reset: take; max-width: 1560px; }
+.slide[data-layout="closing"] ol > li { counter-increment: take; position: relative; padding-left: 1.6em; margin-bottom: 0.7em; }
+.slide[data-layout="closing"] ol > li::before {
+  content: counter(take);
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+.slide[data-layout="closing"] .contact { font-size: var(--t-small); color: var(--muted); }
+
+/* people — a grid of portraits with names, optionally beside a .text column
+   (text 40 %, left; data-flip puts it right; data-stack puts it on top at full width) and with a .source line under
+   both. The build gathers the .people blocks into .roster and sets --cols/--rows
+   (and --mcols/--mrows for the .memoriam block, set apart on the right behind
+   a rule); --d is the portrait size, computed from the roster and capped at
+   240 px. A [data-label] block carries a small heading above its portraits.
+   Portraits keep their own backgrounds (no multiply); a person without a
+   photo is a disc of initials. */
+.slide[data-layout="people"] > .body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  column-gap: var(--s5);
+  min-height: 0;
+}
+.slide[data-layout="people"] > .body:has(> .source) { grid-template-rows: minmax(0, 1fr) auto; }
+.slide[data-layout="people"] > .body:has(> .text) { grid-template-columns: minmax(0, 4fr) minmax(0, 6fr); }
+.slide[data-layout="people"][data-stack] > .body:has(> .text) { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); row-gap: var(--s4); }
+.slide[data-layout="people"][data-stack] > .body:has(> .text):has(> .source) { grid-template-rows: auto minmax(0, 1fr) auto; }
+.slide[data-layout="people"][data-stack] > .body > .text { order: -1; justify-content: flex-start; }
+.slide[data-layout="people"][data-stack] .roster { align-items: flex-end; }
+.slide[data-layout="people"][data-stack] .people { align-content: flex-end; }
+.slide[data-layout="people"][data-flip] > .body:has(> .text) { grid-template-columns: minmax(0, 6fr) minmax(0, 4fr); }
+.slide[data-layout="people"][data-flip] > .body > .text { order: 2; }
+.slide[data-layout="people"] > .body > .source { grid-column: 1 / -1; order: 3; }
+.slide[data-layout="people"] > .body > .text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s4);
+  min-width: 0;
+}
+.slide[data-layout="people"] .roster {
+  container-type: size;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --g: 32px;
+  --rg: 16px;
+  --cap: 72px;
+  --sep: 0px;
+  --lab: 40px;
+  --lab1: 0px;
+}
+.slide[data-layout="people"] .roster:has(> .memoriam) { --sep: 64px; }
+.slide[data-layout="people"] .roster:has(> .people[data-label]:not(.memoriam)) { --lab1: 40px; }
+.slide[data-layout="people"] .people {
+  --d: min(
+    240px,
+    (100cqw - var(--sep)) / (var(--cols) + var(--mcols)) - var(--g),
+    (100cqh - var(--lab1) - (var(--rows) - 1) * var(--rg)) / var(--rows) - var(--cap),
+    (100cqh - var(--lab) - (max(var(--mrows), 1) - 1) * var(--rg)) / max(var(--mrows), 1) - var(--cap) + (1 - min(var(--mcols), 1)) * 1000px
+  );
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  row-gap: var(--rg);
+  width: calc(var(--cols) * (var(--d) + var(--g)));
+}
+.slide[data-layout="people"] .people.memoriam {
+  width: calc(var(--mcols) * (var(--d) + var(--g)) + var(--sep) / 2);
+  margin-left: calc(var(--sep) / 2);
+  padding-left: calc(var(--sep) / 2 - 2px);
+  border-left: 2px solid var(--rule);
+  align-self: stretch;
+}
+.slide[data-layout="people"] .people[data-label]::before {
+  content: attr(data-label);
+  flex: 0 0 100%;
+  margin-bottom: calc(-1 * var(--rg));
+  text-align: center;
+  font-size: var(--t-fine);
+  line-height: 32px;
+  height: var(--lab);
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1, "lnum" 1;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.slide[data-layout="people"] .people:not(.memoriam)[data-label]::before { color: var(--accent); }
+.slide[data-layout="people"] .people > figure {
+  flex: none;
+  width: calc(var(--d) + var(--g));
+  height: calc(var(--d) + var(--cap));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.slide[data-layout="people"] .people > figure > img,
+.slide[data-layout="people"] .people > figure > .initials {
+  display: block;
+  flex: none;
+  width: var(--d);
+  height: var(--d);
+  border-radius: 50%;
+}
+.slide[data-layout="people"] .people > figure > img { object-fit: cover; object-position: 50% 30%; }
+.slide[data-layout="people"] .people > figure > .initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 2px solid var(--rule);
+  color: var(--muted);
+  font-size: var(--t-head);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.slide[data-layout="people"] .people > figure > figcaption {
+  font-size: var(--t-fine);
+  line-height: 32px;
+  height: auto;
+  margin: 8px 0 0;
+  white-space: normal;
+  text-wrap: balance;
+  width: 100%;
+}
+
+/* ═══ Report: the same slides as a scrolling document with their notes ═════ */
+body.report {
+  margin: 0;
+  background: var(--ground-deep);
+  color: var(--ink);
+  font-family: var(--face);
+  font-weight: 500;
+  font-feature-settings: "lnum" 1;
+}
+.report main { max-width: 1100px; margin: 0 auto; padding: 64px 32px 160px; }
+.report header.deck { margin-bottom: 64px; }
+.report header.deck h1 { font-size: 48px; line-height: 1.1; margin: 0 0 12px; font-weight: 600; }
+.report header.deck p { margin: 4px 0; font-size: 21px; color: var(--muted); }
+.report nav.toc { margin: 32px 0 0; font-size: 20px; line-height: 1.5; }
+.report nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.report nav.toc .outline { color: var(--muted); }
+.report h2.part {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 96px 0 6px;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+.report p.part-outline { font-size: 21px; color: var(--muted); margin: 0 0 32px; }
+.report article { margin: 0 0 72px; }
+.report .viewport { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 6px; box-shadow: 0 1px 6px rgba(27, 22, 17, 0.18); }
+.report .viewport > .slide { transform-origin: 0 0; }
+.report .viewport .chips { display: none; }
+.report .prose { font-size: 21px; line-height: 1.55; margin: 22px 4px 0; max-width: 70ch; }
+.report .prose p { margin: 0 0 0.8em; }
+.report .detail-copy { margin-top: 28px; }
+.report .detail-copy > .label {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-caps: small-caps;
+  font-feature-settings: "smcp" 1;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  margin: 0 0 10px 4px;
+}
+/* the report shows each slide in its final state; presenter-only emphasis is left out */
+.report .slide .fade-out, .report .slide .fade-in-then-out, .report .slide .current-visible, .report .slide mark.spot { display: none; }
+@media print { .slide > .chips { display: none; } }

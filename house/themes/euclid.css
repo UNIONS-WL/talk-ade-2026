@@ -1,0 +1,92 @@
+/* euclid — inside the Euclid Consortium slide frame (the official "Euclid Slide
+   Theme" Google Slides master): Euclid blue #435AA1, a vertical blue band at the
+   left edge carrying the footer, the consortium logo top right, bold
+   headlines in black, a blue subtitle band on the title slide and a blue band
+   on section dividers. Type stays the house EB Garamond. The ground is a pale
+   cool off-white that sits with the blue; plots multiply into it. */
+:root {
+  --ground:       #EBF0F6;
+  --ground-deep:  #E2E7EE;
+  --ink:          #111418;
+  --muted:        #535B67;
+  --accent:       #435AA1;
+  --teal:         #1D6C78;
+  --cobalt:       #2E417C;
+  --ochre:        #9C7414;
+  --rule:         #C6CEDA;
+  --panel:        #E4E9F2;
+  --veil:         rgba(235, 240, 246, 0.86);
+  --figure-card:  transparent;
+  --figure-blend: multiply;
+
+  --band:   #435AA1;
+  --band-w: 49px;
+}
+
+.theme-euclid .slide > h2::after { display: none; }
+.theme-euclid .slide > h2 { padding-right: 240px; }
+.theme-euclid .slide[data-layout="bleed"] > h2 { padding-right: var(--pad-x); }
+.theme-euclid .slide em { font-style: normal; color: var(--accent); }
+
+/* furniture: the left band and the logo */
+.theme-euclid .slide::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: var(--band-w);
+  background: var(--band);
+}
+.theme-euclid .slide::after {
+  content: "";
+  position: absolute;
+  right: 40px;
+  top: 44px;
+  width: 232px;
+  height: 118px;
+  background: url("../../images/euclid_logo.png") right center / contain no-repeat;
+  pointer-events: none;
+}
+
+/* footer: the deck line runs up the band; the number stays bottom right */
+.theme-euclid .slide > .foot > span:first-child {
+  position: absolute;
+  left: calc(-1 * var(--pad-x));
+  bottom: -36px;
+  width: var(--band-w);
+  padding-top: 32px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: var(--band-w);
+  white-space: nowrap;
+  background: var(--band);
+  color: #FFFFFF;
+}
+
+/* title slide: centred, no band, subtitle in a blue band */
+.theme-euclid .slide[data-layout="title"]::before { display: none; }
+.theme-euclid .slide[data-layout="title"] { justify-items: center; text-align: center; padding-top: 170px; }
+.theme-euclid .slide[data-layout="title"] h1 { line-height: 1.08; }
+.theme-euclid .slide[data-layout="title"] .subtitle {
+  justify-self: stretch;
+  margin: 48px -39px 0;
+  padding: 30px 48px 34px;
+  background: var(--band);
+  color: #FFFFFF;
+  max-width: none;
+}
+.theme-euclid .slide[data-layout="title"] .byline { margin-top: 48px; font-weight: 600; }
+.theme-euclid .slide[data-layout="title"] .venue { color: var(--accent); }
+
+/* section divider: the title on a full-width blue band */
+.theme-euclid .slide[data-layout="section"] > h2 {
+  margin: 0 calc(-1 * var(--pad-x)) 0 calc(var(--band-w) - var(--pad-x));
+  padding: 64px var(--pad-x) 72px calc(var(--pad-x) - var(--band-w));
+  background: var(--band);
+  color: #FFFFFF;
+}
+.theme-euclid .slide[data-layout="section"] > .body { margin-top: 8px; }
+
+.theme-euclid .slide[data-layout="quote"] blockquote { border-left-color: var(--band); }
+.theme-euclid .slide[data-layout="closing"] ol > li::before { font-weight: 700; }
+.theme-euclid .slide > .foot { justify-content: flex-end; }
+.theme-euclid .slide[data-layout="statement"] > h2 { padding-right: 0; }

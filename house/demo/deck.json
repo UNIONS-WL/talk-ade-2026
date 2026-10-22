@@ -1,0 +1,54 @@
+{
+  "title": "House deck system",
+  "author": "Cail Daley",
+  "venue": "Demo deck",
+  "date": "2026-10-02",
+  "description": "Every layout and component of the house deck system, on one deck.",
+  "footer": "House deck system · demo · October 2026",
+  "draft": true,
+  "macros": {
+    "Ckk": "C_\\ell^{\\kappa\\kappa}"
+  },
+  "sections": [
+    {
+      "title": "Opening",
+      "outline": "What the system is for, stated as a claim.",
+      "slides": [
+        "title",
+        "statement"
+      ]
+    },
+    {
+      "title": "Text",
+      "outline": "Slides carried by words, equations and numbers.",
+      "slides": [
+        "section-text",
+        "points",
+        "number",
+        "table",
+        "quote"
+      ]
+    },
+    {
+      "title": "Figures",
+      "outline": "Slides carried by pre-rendered figures, with highlights and depth on demand.",
+      "slides": [
+        "section-figures",
+        "figure",
+        "schematic",
+        "figure-text",
+        "compare",
+        "grid",
+        "bleed"
+      ]
+    },
+    {
+      "title": "Closing",
+      "outline": "The people behind the work, then the takeaways, which stay on screen for questions.",
+      "slides": [
+        "people",
+        "closing"
+      ]
+    }
+  ]
+}

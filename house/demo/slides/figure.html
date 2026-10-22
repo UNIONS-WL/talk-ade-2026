@@ -1,0 +1,20 @@
+<section data-layout="figure">
+  <h2>Mock bandpowers follow the model to $\ell \approx 2000$</h2>
+  <figure>
+    <img src="images/house_demo_spectrum.pdf" alt="Mock bandpowers against a model spectrum">
+    <mark class="box fragment fade-in-then-out" data-box="63 38 33 46" data-label="small scales"></mark>
+    <mark class="spot fragment" data-box="1 4 33 62"></mark>
+    <span class="source">Synthetic spectrum made by house/demo/make_demo_figure.py.</span>
+  </figure>
+  <aside class="detail" data-label="Per-bin fits" data-layout="grid">
+    <h2>Each bin fits on its own</h2>
+    <figure><figcaption>bin 1</figcaption><img src="images/house_demo_spectrum.pdf" alt=""></figure>
+    <figure><figcaption>bin 2</figcaption><img src="images/house_demo_spectrum.pdf" alt=""></figure>
+    <figure><figcaption>bin 3</figcaption><img src="images/house_demo_spectrum.pdf" alt=""></figure>
+    <figure><figcaption>bin 4</figcaption><img src="images/house_demo_spectrum.pdf" alt=""></figure>
+  </aside>
+  <aside class="notes">
+    <p>A PDF figure straight from matplotlib, rasterised at build time. The first fragment draws a box around the small-scale points, the second dims everything but the large-scale points. Boxes are placed in percent of the image, so they stay put however the figure is sized.</p>
+    <p>The chip in the lower right opens a detail overlay with per-bin fits; Escape returns to this slide at the same fragment.</p>
+  </aside>
+</section>

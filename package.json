@@ -1,0 +1,22 @@
+{
+  "name": "talks-house",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node house/build.mjs",
+    "check": "node house/check.mjs",
+    "test": "node house/test/run.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/eb-garamond": "5.3.0",
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "image-size": "2.0.4",
+    "linkedom": "0.18.13",
+    "mathjax-full": "3.2.1",
+    "reveal.js": "6.0.2",
+    "sharp": "0.35.4"
+  },
+  "devDependencies": {
+    "puppeteer": "25.12.0"
+  }
+}
