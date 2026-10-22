@@ -16,7 +16,7 @@ The build writes a self-contained deck to `_site/talk-ade-2026/index.html` and a
 
 ## Previous talks
 
-- [Cail Daley · Moriond 2026 UNIONS source](https://github.com/cailmdaley/talks/tree/main/26_Moriond_UNIONS) — source directory confirmed; no matching deck found on the configured Pages site.
+- [Cail Daley · Moriond 2026 UNIONS source](https://cailmdaley.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html) — source directory confirmed; no matching deck found on the configured Pages site.
 - [Sacha Guerrini · Moriond 2026 UNIONS deck](https://sachaguer.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html) — confirmed in the `gh-pages` branch and live.
 
 Cail's configured Pages URL for the directory returned 404; use the source link. Sacha's deck file is present on `gh-pages` and the direct URL is the published HTML file.
