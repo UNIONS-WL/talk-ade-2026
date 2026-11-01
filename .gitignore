@@ -2,3 +2,4 @@ _check/
 _site/
 node_modules/
 figures/.cache/
+media/fp/*.mp4
