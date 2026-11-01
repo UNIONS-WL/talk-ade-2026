@@ -20,6 +20,7 @@
       "outline": "The UNIONS survey and astrophysical applications of weak lensing.",
       "slides": [
         "survey",
+        "landscape",
         "intrinsic-alignments",
         "satellite-stripping",
         "lensing-low",
@@ -47,7 +48,8 @@
         "v2-scale",
         "nz-v2",
         "dv-blinded",
-        "closing"
+        "closing",
+        "thanks"
       ]
     },
     {
