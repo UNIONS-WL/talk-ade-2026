@@ -5,7 +5,8 @@
   "scripts": {
     "build": "node house/build.mjs",
     "check": "node house/check.mjs",
-    "test": "node house/test/run.mjs"
+    "test": "node house/test/run.mjs",
+    "artifact": "node house/build.mjs . && node house/artifact.mjs ."
   },
   "dependencies": {
     "@fontsource-variable/eb-garamond": "5.3.0",

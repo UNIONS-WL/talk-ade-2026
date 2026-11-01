@@ -3,3 +3,4 @@ _site/
 node_modules/
 figures/.cache/
 media/fp/*.mp4
+_artifact/
