@@ -29,6 +29,7 @@ const MIME = {
   '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif',
   '.svg': 'image/svg+xml', '.webp': 'image/webp', '.avif': 'image/avif',
 };
+const VIDEO_MIME = { '.mp4': 'video/mp4', '.webm': 'video/webm' };
 
 export class BuildError extends Error {
   constructor(problems) {
@@ -265,7 +266,7 @@ async function resolveAssets(assets, ground) {
 
 function assetScript(assets) {
   const dict = JSON.stringify(Object.fromEntries(assets));
-  return `<script>(function(){var A=${dict};document.querySelectorAll('img[data-asset]').forEach(function(i){i.src=A[i.getAttribute('data-asset')];});})();</script>`;
+  return `<script>(function(){var A=${dict};document.querySelectorAll('img[data-asset]').forEach(function(i){i.src=A[i.getAttribute('data-asset')];});document.querySelectorAll('video[data-asset]').forEach(function(v){v.poster=A[v.getAttribute('data-poster')];v.src=A[v.getAttribute('data-asset')];});})();</script>`;
 }
 
 function frameFigures(frame, deckDir, problems, where, assets) {
@@ -276,6 +277,29 @@ function frameFigures(frame, deckDir, problems, where, assets) {
     svg.removeAttribute('width'); svg.removeAttribute('height');
     const fig = svg.parentElement;
     moveMarks(fig, wrapInFrame(fig, svg, vb[2] / vb[3]), problems, where);
+  }
+  // videos: inlined like images, never blended; the required poster gives the
+  // aspect ratio and is what the checker, the report and a paused deck show
+  for (const video of [...frame.querySelectorAll('figure > video')]) {
+    const src = video.getAttribute('src') || '', poster = video.getAttribute('poster') || '';
+    const file = path.resolve(deckDir, src), pfile = path.resolve(deckDir, poster);
+    const mime = VIDEO_MIME[path.extname(src).toLowerCase()];
+    if (!src || !fs.existsSync(file)) { problems.push(`${where}: missing video ${src}`); continue; }
+    if (!mime) { problems.push(`${where}: ${src}: unsupported video type (mp4 or webm)`); continue; }
+    if (!poster || !fs.existsSync(pfile)) { problems.push(`${where}: <video src="${src}"> needs a poster image (house/video.py writes one)`); continue; }
+    let pim;
+    try { pim = loadImage(pfile); } catch (e) { problems.push(`${where}: ${poster}: ${e.message}`); continue; }
+    const buf = fs.readFileSync(file);
+    const vim = { buf, mime, uri: () => `data:${mime};base64,${buf.toString('base64')}` };
+    video.removeAttribute('src'); video.removeAttribute('poster');
+    video.setAttribute('data-asset', addAsset(assets, vim, false));
+    video.setAttribute('data-poster', addAsset(assets, pim, false));
+    video.setAttribute('data-src-path', src);
+    for (const a of ['muted', 'playsinline']) video.setAttribute(a, '');
+    if (!video.hasAttribute('data-once')) video.setAttribute('loop', '');
+    video.setAttribute('preload', 'auto');
+    const fig = video.parentElement;
+    moveMarks(fig, wrapInFrame(fig, video, pim.w && pim.h ? pim.w / pim.h : null), problems, where);
   }
   for (const img of [...frame.querySelectorAll('img')]) {
     const src = img.getAttribute('src') || '';

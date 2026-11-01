@@ -240,11 +240,13 @@ html, body { background: var(--ground); }
 }
 .slide figure.left > .cell { align-items: flex-start; }
 .slide figure.left figcaption, .slide figure.left .source { text-align: left; }
-.slide .frame > img {
+.slide .frame > img,
+.slide .frame > video {
   display: block;
   width: 100%;
   height: 100%;
 }
+.slide .frame > video { object-fit: contain; background: transparent; }
 /* raster figures are multiplied into the ground at build time; SVG images blend here */
 .slide .frame > img[data-blend] { mix-blend-mode: var(--figure-blend); }
 .slide .frame > svg { display: block; width: 100%; height: 100%; overflow: visible; }
@@ -558,7 +560,8 @@ html, body { background: var(--ground); }
 .slide[data-layout="bleed"] > .body { grid-row: 1; grid-column: 1; display: grid; }
 .slide[data-layout="bleed"] > .body > figure { height: 1080px; }
 .slide[data-layout="bleed"] .frame { width: 100cqw; height: 100cqh; aspect-ratio: auto; }
-.slide[data-layout="bleed"] .frame > img { object-fit: cover; }
+.slide[data-layout="bleed"] .frame > img,
+.slide[data-layout="bleed"] .frame > video { object-fit: cover; }
 .slide[data-layout="bleed"] > h2 {
   grid-row: 1;
   grid-column: 1;
@@ -770,3 +773,7 @@ body.report {
 /* the report shows each slide in its final state; presenter-only emphasis is left out */
 .report .slide .fade-out, .report .slide .fade-in-then-out, .report .slide .current-visible, .report .slide mark.spot { display: none; }
 @media print { .slide > .chips { display: none; } }
+
+/* notes card: a skim list opens the Sources & notes card, one line per thing
+   on the slide; depth follows in <details> blocks */
+.notes .skim { padding-left: 0; list-style: none; }

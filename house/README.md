@@ -142,6 +142,7 @@ A `<figure>` holds an optional `<figcaption>` (a one-line label above), one imag
 - `.kicker` — small-caps label above a block. `.source` — attribution in the fine size. `.num` — a key number inline. `.tag` — a pill.
 - Hyphens next to a digit (SPT-3G, DR1-KP, KP2-3) are made non-breaking by the build, so names never split across lines.
 - `.accent`, `.muted`, `.teal`, `.cobalt` — colour emphasis. `.small`, `.fine` — the two smaller sizes, for secondary lines.
+- `<ul class="skim">` in `aside.notes` — opens the notes card: 3–5 lines, one per thing on the slide, each `<strong>Name</strong> — …`; depth goes in `<details>` blocks after it.
 - `<div class="cols">` — two or more equal columns inside a `points` body.
 - `<pre><code>` — code in the mono face at the fine size.
 - Fragments are reveal's: `class="fragment"` on any element, with reveal's variants (`fade-in-then-out`, `semi-fade-out`, …).

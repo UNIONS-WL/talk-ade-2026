@@ -1,22 +1,89 @@
-/* house — warm paper, ink, one cinnabar accent. EB Garamond throughout. */
+/* unions — drawn from the UNIONS weak-lensing logo: black wordmark, hibiscus
+   orange, monstera teal, hibiscus yellow, on warm paper. A thin
+   teal · orange · yellow strip runs along the foot of every slide, the
+   transparent logo sits bottom right, the title slide carries it large, and
+   section dividers are set on monstera teal. Type stays the house EB Garamond;
+   plots multiply into the paper ground. */
 :root {
-  --ground:       #F7F0E1;
-  --ground-deep:  #EDE2CE;
-  --ink:          #1B1611;
-  --muted:        #685D4B;
-  --accent:       #B03E32;
-  --teal:         #33746B;
-  --cobalt:       #3D5BA0;
-  --ochre:        #C49333;
-  --rule:         #C5B89E;
-  --panel:        #F1E3D3;
-  --veil:         rgba(247, 240, 225, 0.82);
+  --ground:       #F7F2E8;
+  --ground-deep:  #EEE6D6;
+  --ink:          #15171A;
+  --muted:        #5D625F;
+  --accent:       #A9461A;
+  --teal:         #2F7465;
+  --cobalt:       #2B4C7E;
+  --ochre:        #A87C0C;
+  --rule:         #D3C9B5;
+  --panel:        #F0E7D6;
+  --veil:         rgba(247, 242, 232, 0.86);
   --figure-card:  transparent;
   --figure-blend: multiply;
+
+  --u-orange: #E07030;
+  --u-teal:   #408070;
+  --u-yellow: #F0C040;
+  --strip-h:  10px;
 }
 
-/* UNIONS mark on every frame, including the title. */
-.slide::after {
-  content: ""; position: absolute; right: 52px; bottom: 24px;
-  width: 150px; height: 50px; background: url("unions_wl_logo.png") center / contain no-repeat;
+/* the strip: teal · orange · yellow in the logo's proportions */
+.theme-unions .slide::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--strip-h);
+  background: linear-gradient(90deg,
+    var(--u-teal) 0 46%, var(--u-orange) 46% 86%, var(--u-yellow) 86% 100%);
+  pointer-events: none;
 }
+
+/* the logo, bottom right, clear of the slide number */
+.theme-unions .slide::after {
+  content: "";
+  position: absolute;
+  right: 40px;
+  bottom: 26px;
+  width: 172px;
+  height: 44px;
+  background: url("unions_logo.png") right center / contain no-repeat;
+  pointer-events: none;
+}
+.theme-unions .slide > .foot { right: 236px; }
+.theme-unions .slide > h2::after { background: var(--u-orange); width: 96px; }
+
+/* title: the logo large above the title, a wider strip */
+.theme-unions .slide[data-layout="title"] { padding-top: 330px; }
+.theme-unions .slide[data-layout="title"]::before { height: 22px; }
+.theme-unions .slide[data-layout="title"]::after {
+  left: var(--pad-x);
+  right: auto;
+  top: 96px;
+  bottom: auto;
+  width: 640px;
+  height: 163px;
+  background-position: left center;
+}
+.theme-unions .slide[data-layout="title"] .venue { color: var(--teal); }
+
+/* section divider: monstera teal, paper type, a yellow rule */
+.theme-unions .slide[data-layout="section"] { background: #22574B; color: var(--ground); }
+.theme-unions .slide[data-layout="section"] > h2 { color: var(--ground); }
+.theme-unions .slide[data-layout="section"] > h2::after { background: var(--u-yellow); }
+.theme-unions .slide[data-layout="section"] > .body { color: #E6EEEA; }
+.theme-unions .slide[data-layout="section"] > .foot { color: #DCE7E2; }
+
+/* bleed: strip and logo stay, the logo on a veil */
+.theme-unions .slide[data-layout="bleed"]::after {
+  background-color: var(--veil);
+  border-radius: 6px;
+  background-origin: content-box;
+  padding: 6px 10px;
+  bottom: 22px;
+}
+
+.theme-unions .slide[data-layout="closing"] ol > li::before { color: var(--u-orange); }
+.theme-unions .slide[data-layout="quote"] blockquote { border-left-color: var(--u-teal); }
+
+/* the wordmark is black: on the teal divider the strip carries the identity */
+.theme-unions .slide[data-layout="section"]::after { display: none; }
+.theme-unions .slide[data-layout="section"] > .foot { right: var(--pad-x); }
+.theme-unions .reveal .progress { bottom: var(--strip-h); height: 3px; }

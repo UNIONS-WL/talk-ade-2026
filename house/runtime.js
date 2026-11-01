@@ -54,6 +54,17 @@
 
   Reveal.on('slidechanged', close);
 
+  // Videos play from the start while their slide is current, and pause otherwise.
+  function syncVideos() {
+    var cur = Reveal.getCurrentSlide();
+    document.querySelectorAll('.reveal video').forEach(function (v) {
+      if (cur && cur.contains(v)) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      else v.pause();
+    });
+  }
+  Reveal.on('ready', syncVideos);
+  Reveal.on('slidechanged', syncVideos);
+
   // Hooks for the checker and for scripted capture.
   window.House = { open: open, close: close };
 })();

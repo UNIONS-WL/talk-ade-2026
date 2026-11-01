@@ -132,8 +132,8 @@ function lintBlock(el, where, vocab, out, isDetail) {
   }
   for (const fig of el.querySelectorAll('figure')) {
     if (fig.parentElement?.classList.contains('people')) continue;
-    const visuals = [...fig.children].filter(c => c.localName === 'img' || c.localName === 'svg' || c.classList.contains('placeholder'));
-    if (visuals.length !== 1) out.errors.push(`${where}: a <figure> holds exactly one <img>, inline <svg> or .placeholder (has ${visuals.length})`);
+    const visuals = [...fig.children].filter(c => c.localName === 'img' || c.localName === 'svg' || c.localName === 'video' || c.classList.contains('placeholder'));
+    if (visuals.length !== 1) out.errors.push(`${where}: a <figure> holds exactly one <img>, <video>, inline <svg> or .placeholder (has ${visuals.length})`);
   }
   for (const d of [el, ...el.querySelectorAll('*')]) {
     if (d.localName === 'aside' && d !== el && d.classList.contains('detail') && d.parentElement === el) continue;
@@ -149,9 +149,10 @@ function lintBlock(el, where, vocab, out, isDetail) {
     if (d.localName === 'section' && d !== el) out.errors.push(`${where}: nested <section>; decks are strictly linear (use an <aside class="detail">)`);
     if (d.localName === 'mark' && d.parentElement?.localName !== 'figure') out.errors.push(`${where}: <mark> highlights belong directly inside a <figure>`);
     if (d.localName === 'mark' && !d.hasAttribute('data-box')) out.errors.push(`${where}: <mark> needs data-box="x y w h"`);
+    if (d.localName === 'video' && d.parentElement?.localName !== 'figure') out.errors.push(`${where}: a <video> belongs directly inside a <figure>`);
     if (d.localName === 'img' && !d.hasAttribute('alt')) out.warnings.push(`${where}: <img src="${d.getAttribute('src')}"> has no alt text`);
-    if (['font', 'center', 'script', 'style', 'link', 'iframe', 'object', 'embed', 'video', 'audio', 'source', 'image', 'use', 'foreignobject'].includes(d.localName))
-      out.errors.push(`${where}: <${d.localName}> is not supported in a slide (the build inlines only <img> and inline <svg> drawing)`);
+    if (['font', 'center', 'script', 'style', 'link', 'iframe', 'object', 'embed', 'audio', 'source', 'image', 'use', 'foreignobject'].includes(d.localName))
+      out.errors.push(`${where}: <${d.localName}> is not supported in a slide (the build inlines only <img>, <video> in a figure, and inline <svg> drawing)`);
   }
 }
 
