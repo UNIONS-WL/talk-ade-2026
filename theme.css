@@ -125,8 +125,8 @@
 .reveal .stat-value { font-size: 64px; line-height: 1; font-weight: 600; color: var(--accent); }
 .reveal .stat-label { font-size: 21px; line-height: 1.35; color: var(--ink-soft); }
 .reveal ul.people-list { list-style: none; margin: 0; padding: 0; }
-.reveal ul.people-list li { display: flex; align-items: center; gap: 14px; font-size: 22px; margin: 0 0 12px; }
-.reveal img.avatar { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; margin: 0; }
+.reveal ul.people-list li { display: flex; align-items: center; gap: 16px; font-size: 26px; margin: 0 0 16px; }
+.reveal img.avatar { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; margin: 0; }
 .reveal ol.closing li { font-size: 24px; line-height: 1.4; margin: 0 0 14px; }
 .reveal ol.closing li::marker { color: var(--u-orange); font-weight: 600; }
 .reveal .contact { font-size: 20px; color: var(--accent-2); }

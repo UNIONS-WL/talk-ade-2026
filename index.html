@@ -387,51 +387,27 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <!-- Cail · consensus -->
       <section>
         <h2>Cosmic shear benefits from independent measurements</h2>
-        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">$S_8$ seems to be converging as systematics improve; consensus is important!</p>
-        <video class="plot" src="media/survey_consensus.mp4" poster="media/survey_consensus.jpg" muted="" playsinline="" loop="" data-autoplay="" aria-label="S8 from five Stage III cosmic-shear analyses beside a rotating celestial globe showing DES, KiDS, HSC, LSST and Euclid survey footprints" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;object-fit:contain;"></video>
-        <div class="fragment"><div class="hl-box" style="position:absolute;left:480px;top:198px;width:340px;height:151px;"></div><p class="hl-label" style="position:absolute;left:420px;top:355px;width:460px;margin:0;">But the northern sky has no wide-field lensing surveys</p></div>
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">DES/KiDS/LSST MOCs · HSC Y3 fields · ESA Euclid Wide / DR1 VIS. Band: CMB.</p>
+        <img class="plot" src="images/s8_stage3.png" alt="S8 from five Stage III cosmic-shear analyses, oldest at the top, against the CMB band" style="position:absolute;left:150px;top:112px;width:379px;height:540px;">
+        <div class="textcol" style="position:absolute;left:640px;top:200px;width:580px;font-size:28px;">
+    <p style="font-size:28px;">$S_8$ seems to be converging as systematics improve; consensus is important!</p>
+    <p class="fragment" style="font-size:28px;margin-top:28px;">UNIONS adds an independent measurement from the northern sky: different instrument, on-sky systematics and sample variance</p></div>
         <aside class="notes"><ul class="skim">
-      <li><strong>Left</strong> — published Stage III cosmic-shear $S_8$, oldest at the top; the band is the CMB.</li>
-      <li><strong>Right</strong> — DES, KiDS and HSC overlap one another, almost all at or below the equator (HSC's small HECTOMAP field at Dec +43° is the exception). Dashed outlines show LSST WFD and Euclid Wide; the solid outline shows observed Euclid DR1.</li>
-      <li><strong>Reading</strong> — the newer analyses (KiDS-Legacy, DES Y6) have moved towards the CMB as systematics control improved; nothing north of $+30^\circ$ adds an independent measurement.</li>
+      <li><strong>Whisker</strong> — published Stage III cosmic-shear $S_8$, oldest at the top; the band is the CMB. The newer analyses (KiDS-Legacy, DES Y6) moved towards the CMB as systematics control improved.</li>
+      <li><strong>Callback</strong> — Calum's globe already showed that DES, KiDS and HSC share the southern and equatorial sky; UNIONS is the independent northern measurement.</li>
     </ul>
-    <details><summary>Numbers</summary><p>KiDS-1000 $0.759^{+0.024}_{-0.021}$; DES Y3 $0.759^{+0.025}_{-0.023}$; HSC Y3 $0.769^{+0.031}_{-0.034}$; KiDS-Legacy $0.815^{+0.016}_{-0.021}$; DES Y6 $0.798^{+0.014}_{-0.015}$; CMB $0.836^{+0.012}_{-0.013}$. Values as in the Moriond 2026 UNIONS talk.</p></details>
-    <details><summary>Sources</summary><p>Globe by figures/survey_globe.py; S8 comparison by figures/s8_landscape.py. Footprint products and caveats in figures/data/footprints/README.md (Euclid Wide from ESA's RSD_2026A pointing list). Camera at Dec +40°; one turn takes 24 s.</p></details></aside>
-      </section>
-
-      <!-- Cail · north -->
-      <section>
-        <h2>UNIONS adds deep wide-field lensing constraints in the North</h2>
-        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">Different instrument, on-sky systematics, sample variance; new cross-correlations</p>
-        <video class="plot" src="media/survey_north.mp4" poster="media/survey_north.jpg" muted="" playsinline="" loop="" data-autoplay="" aria-label="The same S8 comparison and rotating celestial globe, with UNIONS DR6 filled in purple across the north" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;object-fit:contain;"></video>
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">DES/KiDS/LSST MOCs · HSC Y3 · ESA Euclid Wide / DR1 VIS · UNIONS DR6.</p>
-        <aside class="notes"><ul class="skim">
-      <li><strong>Purple</strong> — the UNIONS DR6 tiles, mostly above declination $+30^\circ$, with essentially no overlap with DES or KiDS; only HSC's small HECTOMAP field lies inside it.</li>
-      <li><strong>Why it matters</strong> — a different telescope (CFHT/MegaCam), different on-sky systematics and independent sample variance.</li>
-      <li><strong>Cross-correlations</strong> — the northern sky holds DESI spectroscopy and CMB lensing from Planck and ACT.</li>
-    </ul></aside>
-      </section>
-
-      <!-- Cail · team -->
-      <section class="bleed">
-        <img src="images/unions_team_paris.jpg" alt="Ten members of the UNIONS weak-lensing team standing on a lawn in front of a stone wall in Paris, autumn leaves on the grass" style="position:absolute;left:0;top:0;width:1280px;height:720px;object-fit:cover;">
-        <h2 class="on-veil">The 2D cosmic shear team</h2>
-        <aside class="notes"><ul class="skim">
-      <li><strong>The team</strong> — the core 2D team at the team meeting in Paris; many others have contributed over the years.</li>
-    </ul></aside>
+    <details><summary>Numbers</summary><p>KiDS-1000 $0.759^{+0.024}_{-0.021}$; DES Y3 $0.759^{+0.025}_{-0.023}$; HSC Y3 $0.769^{+0.031}_{-0.034}$; KiDS-Legacy $0.815^{+0.016}_{-0.021}$; DES Y6 $0.798^{+0.014}_{-0.015}$; CMB $0.836^{+0.012}_{-0.013}$. Values as in the Moriond 2026 UNIONS talk; figure by figures/s8_landscape.py.</p></details></aside>
       </section>
 
       <!-- Cail · culmination -->
       <section>
         <h2>UNIONS-3500 constraints are the culmination of ~10 years of work</h2>
-        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;"><li>A small team of ~10 people</li>
+        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;">
     <li>Non-tomographic, about 2400 deg² effective area</li>
     <li>Inference with correlation functions $\xi_\pm(\theta)$ and band powers $C_\ell$</li></ul>
-        <ul class="people-list" style="position:absolute;left:60px;top:294px;width:1160px;margin:0;"><li><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><strong>Paper I</strong>: shape catalog (Hervas-Peters et al.)</li>
-    <li><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><strong>Paper II</strong>: B-mode validation (Daley et al.)</li>
-    <li><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><strong>Paper III</strong>: configuration-space constraints (Goh et al.)</li>
-    <li><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><strong>Paper IV</strong>: harmonic-space constraints (Guerrini et al.)</li></ul>
+        <ul class="people-list" style="position:absolute;left:60px;top:270px;width:1160px;margin:0;"><li><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><span><strong>Paper I</strong>: shape catalog (Hervas-Peters et al.)</span></li>
+    <li><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><span><strong>Paper II</strong>: B-mode validation (Daley et al.)</span></li>
+    <li><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><span><strong>Paper III</strong>: configuration-space constraints (Goh et al.)</span></li>
+    <li><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><span><strong>Paper IV</strong>: harmonic-space constraints (Guerrini et al.)</span></li></ul>
         <aside class="notes"><ul class="skim">
       <li><strong>The release</strong> — companion papers from one blinded catalog, built by about ten people over roughly a decade of survey development; one slide on each follows.</li>
       <li><strong>One redshift bin</strong> — only $r$-band across the footprint, so $n(z)$ comes from a SOM calibration on external deep fields; tomography comes at the end of the talk.</li>
@@ -447,7 +423,7 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><p class="num">3648 deg²</p>
     <p class="num">$n_{\rm eff} = 4.96$ arcmin$^{-2}$</p>
     <p class="num">$\sigma_\epsilon = 0.27$</p>
-    <p class="small">$r$-band, PSF FWHM 0.71″; ShapePipe metacalibration shapes.</p>
+    <p class="small">ShapePipe metacalibration shapes.</p>
     <p class="accent">The catalog goes public on acceptance, in the next few months.</p></div>
         <aside class="notes"><ul class="skim">
       <li><strong>Paper I</strong> — the UNIONS-3500 shape catalog (Hervas-Peters et al.): 61.4 million galaxies over 3648 deg² of CFHT $r$-band imaging.</li>
