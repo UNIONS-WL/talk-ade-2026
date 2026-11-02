@@ -1,0 +1,17 @@
+{
+  "source": "Euclid Collaboration: Scaramella et al. 2022, A&A 662, A112, Fig. 46",
+  "source_url": "https://doi.org/10.1051/0004-6361/202141938",
+  "reference_definition": "RSD_2021A, 14,514 deg2; paper describes it as a good proxy for the final solution, not an as-built final mask.",
+  "digitization": "Figure 46 page 35, Mollweide equatorial map. Six year-fill colors segmented at RGB distance <=32, closed with a 2-pixel disk in source raster and a 1-degree disk on the 0.25-degree sky grid, then sampled by inverse Mollweide.",
+  "hole_treatment": "Enclosed holes are filled for an outer survey outline; this is presentation geometry, not a science mask.",
+  "sampled_area_before_hole_fill_deg2": 14971.9,
+  "sampled_area_after_hole_fill_deg2": 15257.0,
+  "published_reference_area_deg2": 14514.0,
+  "grid": "RA 360 to 0 deg and Dec -90 to +90 deg, 0.25 deg spacing; shape (721, 1441).",
+  "frame_pixels_at_160dpi": {
+    "center_x": 669.4,
+    "center_y": 456.0,
+    "half_width": 536.0,
+    "half_height": 266.0
+  }
+}

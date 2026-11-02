@@ -3,14 +3,15 @@
 # ///
 """S8 landscape frames, all on one canvas.
 
-images/s8_consensus.png  Stage III S8 whisker beside the DES Y6 footprint map (no UNIONS)
-images/s8_north.png      the same with the UNIONS outline on the map
+images/s8_consensus.png  Stage III S8 whisker beside the survey footprint map (no UNIONS)
+images/s8_north.png      the same with the UNIONS DR6 footprint on the map
 images/s8_unions.png     the whisker alone, wide, with the two published UNIONS results
 
 Stage III and CMB values as in Cail's Moriond 2026 deck; UNIONS values are the
 published ones: Goh+2026 xi_pm 0.831 +0.067 -0.078, Guerrini+2026 C_ell 0.891 +0.057 -0.084.
 """
 import matplotlib.pyplot as plt
+import argparse
 import numpy as np
 from PIL import Image
 from _style import *
@@ -20,7 +21,6 @@ STAGE3 = [("KiDS-1000", 0.759, 0.021, 0.024), ("DES Y3", 0.759, 0.023, 0.025), (
           ("KiDS-Legacy", 0.815, 0.021, 0.016), ("DES Y6", 0.798, 0.015, 0.014)]
 UNIONS = [(r"UNIONS $\xi_\pm$", 0.831, 0.078, 0.067), (r"UNIONS $C_\ell$", 0.891, 0.084, 0.057)]
 CMB = (0.836, 0.013, 0.012)
-TALKS = "/n17data/cdaley/unions/docs/talks/images/"
 
 
 def whisker(ax, rows, xlim, ms=22):
@@ -47,7 +47,6 @@ def landscape(map_png, out):
     whisker(ax, [(n, v, l, h, INK) for n, v, l, h in STAGE3], (0.715, 0.87))
     ax.set_xticks([0.75, 0.85])
     im = np.asarray(Image.open(map_png).convert("RGB"))
-    im = im[6:-6, 90:-6]  # trim the frame line
     axm = fig.add_axes([0.31, 0.02, 0.69, 0.96])
     axm.imshow(im, interpolation="lanczos"); axm.axis("off")
     fig.savefig(IMAGES / out, dpi=DPI)
@@ -67,6 +66,10 @@ def unions_whisker(out):
 
 
 if __name__ == "__main__":
-    landscape(TALKS + "des_y6_footprints.png", "s8_consensus.png")
-    landscape(TALKS + "des_y6_footprints_unions.png", "s8_north.png")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--no-dr1", action="store_true", help="Use the public-only footprint variants")
+    args = parser.parse_args()
+    suffix = "_nodr1" if args.no_dr1 else ""
+    landscape(IMAGES / f"footprints{suffix}.png", "s8_consensus.png")
+    landscape(IMAGES / f"footprints_unions{suffix}.png", "s8_north.png")
     unions_whisker("s8_unions.png")
