@@ -22,7 +22,7 @@ from _style import COBALT, TEAL, ORANGE, YELLOW, MUTED, ROOT, setup
 
 W, H, FPS, N = 2000, 860, 30, 720
 CX, CY, R, ELEV = 1020, 425, 395, np.radians(40)
-GROUND = '#F7F2E8'
+GROUND = '#FFFFFF'  # the Lectern deck's white ground
 G = {}
 
 
@@ -130,10 +130,13 @@ def render(i):
 
 
 def main():
+    global GROUND
     ap = argparse.ArgumentParser()
     ap.add_argument('--frames', help='Comma-separated preview frames')
     ap.add_argument('--jobs',type=int,default=4)
+    ap.add_argument('--ground',default=GROUND,help='slide ground colour behind the globe and whisker')
     a=ap.parse_args()
+    GROUND=a.ground
     setup()
     masks=load_masks(ROOT/'figures/.cache/euclid_dr1_observed_wide_moc.fits')
     out=ROOT/'figures/.cache/globe'

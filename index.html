@@ -388,26 +388,26 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <section>
         <h2>Cosmic shear benefits from independent measurements</h2>
         <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">$S_8$ seems to be converging as systematics improve; consensus is important!</p>
-        <img class="plot" src="images/s8_consensus.png" alt="S8 from five Stage III cosmic-shear analyses beside a sky map of the DES, KiDS and HSC footprints with LSST, Euclid Wide and Euclid DR1 outlines" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;">
-        <div class="fragment"><div class="hl-box" style="position:absolute;left:533px;top:194px;width:552px;height:81px;"></div><p class="hl-label" style="position:absolute;left:533px;top:281px;width:552px;margin:0;">But the northern sky has no wide-field lensing surveys</p></div>
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Footprints from public survey products and Euclid DR1 tiles. Band: CMB.</p>
+        <video class="plot" src="media/survey_consensus.mp4" poster="media/survey_consensus.jpg" muted="" playsinline="" loop="" data-autoplay="" aria-label="S8 from five Stage III cosmic-shear analyses beside a rotating celestial globe showing DES, KiDS, HSC, LSST and Euclid survey footprints" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;object-fit:contain;"></video>
+        <div class="fragment"><div class="hl-box" style="position:absolute;left:480px;top:198px;width:340px;height:151px;"></div><p class="hl-label" style="position:absolute;left:420px;top:355px;width:460px;margin:0;">But the northern sky has no wide-field lensing surveys</p></div>
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">DES/KiDS/LSST MOCs · HSC Y3 fields · ESA Euclid Wide / DR1 VIS. Band: CMB.</p>
         <aside class="notes"><ul class="skim">
       <li><strong>Left</strong> — published Stage III cosmic-shear $S_8$, oldest at the top; the band is the CMB.</li>
-      <li><strong>Right</strong> — where those surveys sit on the sky: DES, KiDS and HSC (filled) overlap one another, all at or below the equator; dashed are the Stage IV footprints, LSST WFD and Euclid Wide final, and Euclid DR1 as observed.</li>
+      <li><strong>Right</strong> — DES, KiDS and HSC overlap one another, almost all at or below the equator (HSC's small HECTOMAP field at Dec +43° is the exception). Dashed outlines show LSST WFD and Euclid Wide; the solid outline shows observed Euclid DR1.</li>
       <li><strong>Reading</strong> — the newer analyses (KiDS-Legacy, DES Y6) have moved towards the CMB as systematics control improved; nothing north of $+30^\circ$ adds an independent measurement.</li>
     </ul>
     <details><summary>Numbers</summary><p>KiDS-1000 $0.759^{+0.024}_{-0.021}$; DES Y3 $0.759^{+0.025}_{-0.023}$; HSC Y3 $0.769^{+0.031}_{-0.034}$; KiDS-Legacy $0.815^{+0.016}_{-0.021}$; DES Y6 $0.798^{+0.014}_{-0.015}$; CMB $0.836^{+0.012}_{-0.013}$. Values as in the Moriond 2026 UNIONS talk.</p></details>
-    <details><summary>Sources</summary><p>Map by figures/footprints.py (products and caveats in its README: HSC Y3 and Euclid Wide are digitised reference outlines); composite by figures/s8_landscape.py.</p></details></aside>
+    <details><summary>Sources</summary><p>Globe by figures/survey_globe.py; S8 comparison by figures/s8_landscape.py. Footprint products and caveats in figures/data/footprints/README.md (Euclid Wide from ESA's public reference-survey map). Camera at Dec +40°; one turn takes 24 s.</p></details></aside>
       </section>
 
       <!-- Cail · north -->
       <section>
         <h2>UNIONS adds deep wide-field lensing constraints in the North</h2>
         <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">Different instrument, on-sky systematics, sample variance; new cross-correlations</p>
-        <img class="plot" src="images/s8_north.png" alt="The same S8 whisker and sky map, with the UNIONS DR6 footprint filled in the north" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Footprints from public survey products, Euclid DR1 tiles and UNIONS DR6 tiles.</p>
+        <video class="plot" src="media/survey_north.mp4" poster="media/survey_north.jpg" muted="" playsinline="" loop="" data-autoplay="" aria-label="The same S8 comparison and rotating celestial globe, with UNIONS DR6 filled in purple across the north" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;object-fit:contain;"></video>
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">DES/KiDS/LSST MOCs · HSC Y3 · ESA Euclid Wide / DR1 VIS · UNIONS DR6.</p>
         <aside class="notes"><ul class="skim">
-      <li><strong>Purple</strong> — the UNIONS DR6 tiles, mostly above declination $+30^\circ$, with no overlap with DES, KiDS or HSC.</li>
+      <li><strong>Purple</strong> — the UNIONS DR6 tiles, mostly above declination $+30^\circ$, with essentially no overlap with DES or KiDS; only HSC's small HECTOMAP field lies inside it.</li>
       <li><strong>Why it matters</strong> — a different telescope (CFHT/MegaCam), different on-sky systematics and independent sample variance.</li>
       <li><strong>Cross-correlations</strong> — the northern sky holds DESI spectroscopy and CMB lensing from Planck and ACT.</li>
     </ul></aside>
