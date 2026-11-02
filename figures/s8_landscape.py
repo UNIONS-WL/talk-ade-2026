@@ -38,7 +38,7 @@ def whisker(ax, rows, xlim, ms=22):
     ax.set_ylim(len(rows) - 0.5, -1.35)
     ax.set_xlim(*xlim)
     ax.spines["left"].set_visible(False)
-    ax.set_xlabel(r"$S_8$", labelpad=10)
+    ax.set_xlabel(r"Cosmic shear $S_8$", labelpad=10)
 
 
 def landscape(map_png, out):
@@ -72,6 +72,7 @@ def stage3_whisker():
         ax = fig.add_axes([0.51, 0.22, 0.46, 0.72])
         whisker(ax, [(n,v,l,h,INK) for n,v,l,h in STAGE3], (0.715,0.87))
         ax.texts[0].set_fontsize(72)
+        ax.xaxis.label.set_x(1.0); ax.xaxis.label.set_horizontalalignment('right')
         ax.set_xticks([0.75,0.85])
         fig.canvas.draw()
         for text in [*ax.get_yticklabels(), *ax.get_xticklabels(), ax.xaxis.label, *ax.texts]:
