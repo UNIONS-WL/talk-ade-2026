@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["numpy", "pillow", "scipy", "healpy"]
+# dependencies = ["numpy", "pillow", "scipy", "healpy", "imageio-ffmpeg"]
 # ///
 """UNIONS DR6 shear-catalogue production filling in on a turning globe.
 
@@ -8,8 +8,9 @@ Draws its own frames in the palette and type of the production status page:
 an orthographic celestial sphere textured with the Gaia EDR3 all-sky map
 (galactic, transformed to equatorial), seen from a fixed elevation and turning
 at a constant rate about the pole, settling to a stop as the run ends. Every DR6 tile is a pale veil until its
-batch is processed and teal after. Overlays: catalogue objects so far, the
-date, and cumulative completed area (deg²) against time.
+batch is processed and teal after. A thin pale line outlines the DR6 footprint
+throughout. Overlays: catalogue objects so far, the date, and cumulative
+completed area (deg²) against time.
 
 Inputs (live): production/status.json (tile universe, batch timeline, latest
 build) and production/tile_history.json (processed_at per tile). Tiles that
@@ -19,9 +20,14 @@ status timeline (see `time_missing`).
 With `--massmap FILE` (the final full-area Kaiser–Squires κ_E map, HEALPix, in
 units of its noise σ unless a `series.json` beside it gives `sigma_final`), each
 tile's patch of that map appears as the tile finishes, coloured with the shared
-press palette (`massmap_style.py`); the remaining tiles keep their veil.
+press palette (`massmap_style.py`); where the map is masked the Gaia sky shows
+through. Tiles still pending keep their veil through the run; the veil of tiles
+that never finished lifts in the hold, so the last frame is map, sky and outline.
 
-    uv run replay_globe.py [--jobs 8] [--frames 0,300,600] [--massmap FILE]
+Inputs beside the script: assets/gaia_edr3_colour_equirectangular.png (ESA/Gaia/DPAC,
+CC BY-SA 3.0 IGO) and assets/EBGaramond-{Regular,Medium}.otf.
+
+    uv run replay_globe.py [--jobs 8] [--frames 0,300,600] [--massmap assets/display.fits]
     → shots/replay/dr6_globe.mp4, shots/replay/dr6_globe_sheet.jpg
 """
 import argparse
@@ -34,6 +40,7 @@ import pathlib
 import subprocess
 import urllib.request
 
+import imageio_ffmpeg
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 from scipy.spatial import cKDTree
@@ -43,12 +50,13 @@ HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE))
 from massmap_style import colorize  # noqa: E402
 OUT = HERE / "shots" / "replay"
-GAIA = pathlib.Path.home() / "Downloads/unions-eiffel-composites/assets/gaia_edr3_colour_equirectangular.png"
+ASSETS = HERE / "assets"
+GAIA = ASSETS / "gaia_edr3_colour_equirectangular.png"
 
 W, H, SS = 1920, 1080, 2           # output size, supersampling factor
 FPS = 30
-INTRO_S, SIM_S, HOLD_S = 0.7, 17.0, 5.0
-TURNS = 0.8                        # globe turns over the whole clip at the run's spin rate
+INTRO_S, SIM_S, HOLD_S = 0.7, 30.0, 5.0
+SPIN = 0.8 / 22.7                  # globe turns per second while the run plays
 SETTLE_S = 2.0                     # the spin eases to a stop over the hold's first seconds
 ELEV = 55.0                        # camera latitude (deg)
 PHI_CAP = 195.0                    # RA of the main footprint cap, faced mid-burst (deg)
@@ -75,12 +83,10 @@ CORE_YEARS = 32                    # the run's total compute, Cail's final count
 PREVIOUS = "previous runs  >  1 year"
 A_TODO, A_DONE = 0.50, 0.92        # tile opacity over the sky
 
-FONTS = {
-    "serif": pathlib.Path.home() / "Library/Fonts/EBGaramond-Regular.otf",
-    "serif-medium": pathlib.Path.home() / "Library/Fonts/EBGaramond-Medium.otf",
-}
-FALLBACK = {"serif": "/System/Library/Fonts/Supplemental/Georgia.ttf",
-            "serif-medium": "/System/Library/Fonts/Supplemental/Georgia.ttf"}
+OUTLINE = RAG                      # footprint outline colour
+A_OUTLINE = 0.8
+
+FONTS = {"serif": ASSETS / "EBGaramond-Regular.otf", "serif-medium": ASSETS / "EBGaramond-Medium.otf"}
 
 # J2000 equatorial → galactic rotation
 EQ2GAL = np.array([[-0.0548755604, -0.8734370902, -0.4838350155],
@@ -89,8 +95,7 @@ EQ2GAL = np.array([[-0.0548755604, -0.8734370902, -0.4838350155],
 
 
 def font(name, px):
-    path = FONTS[name] if FONTS[name].exists() else FALLBACK[name]
-    return ImageFont.truetype(str(path), int(px * SS))
+    return ImageFont.truetype(str(FONTS[name]), int(px * SS))
 
 
 def get(name):
@@ -283,12 +288,14 @@ def load_gaia():
 
 
 def sky(c, r, u, t_eval=None):
-    """Gaia all-sky map on the visible hemisphere: (2R+1)² RGB at output resolution.
+    """Gaia all-sky map on the visible hemisphere: (2R+1)² RGB at output resolution, and the
+    DR6 footprint there as a (2R+1)² boolean mask.
 
     The map is galactic plate carrée with l = 0 at the centre, increasing to the left.
     """
     a, b, mu = G["grid"]
     v = a[:, None] * r + b[:, None] * u + mu[:, None] * c
+    tile = tile_of(v)
     g = v @ EQ2GAL.T
     l = np.degrees(np.arctan2(g[:, 1], g[:, 0]))
     lat = np.degrees(np.arcsin(np.clip(g[:, 2], -1, 1)))
@@ -305,24 +312,31 @@ def sky(c, r, u, t_eval=None):
          + tex[y1, x0] * (1 - fx) * fy + tex[y1, x1] * fx * fy)
     s = (np.array([20, 20, 22], np.float32) + 0.92 * s) * (0.8 + 0.2 * mu)[:, None]   # blacks lifted to slate
     if "kappa" in G and t_eval is not None:
-        rgb, alpha = massmap(v, t_eval)
+        rgb, alpha = massmap(v, tile, t_eval)
         alpha *= np.clip(mu / 0.08, 0, 1)
         s = s * (1 - alpha[:, None]) + 255 * rgb * (0.86 + 0.14 * mu)[:, None] * alpha[:, None]
     n = 2 * R + 1
-    return np.clip(s, 0, 255).astype(np.uint8).reshape(n, n, 3)
+    return np.clip(s, 0, 255).astype(np.uint8).reshape(n, n, 3), (tile >= 0).reshape(n, n)
 
 
-def massmap(v, t_eval):
-    """Mass-map colour and opacity per sky pixel at time t_eval: the final map, shown where its tile is done."""
-    import healpy as hp
-    k = G["kappa"]
-    cur = k["map"][k["lut"][hp.vec2pix(k["nside"], v[:, 0], v[:, 1], v[:, 2])]]
-    # tile of each pixel: ids are 'a.b' with Dec = b/2 − 90, RA = a / (2 cos Dec)
+def tile_of(v):
+    """Index of the DR6 tile holding each unit vector, −1 outside the footprint.
+
+    Tile ids are 'a.b' with Dec = b/2 − 90, RA = a / (2 cos Dec).
+    """
     dec = np.degrees(np.arcsin(np.clip(v[:, 2], -1, 1)))
     ra = np.degrees(np.arctan2(v[:, 1], v[:, 0])) % 360
     b = np.clip(np.round(2 * (dec + 90)).astype(int), 0, 360)
     a = np.round(2 * ra * np.cos(np.radians(b / 2 - 90))).astype(int) % 721
-    tile = G["tile_lut"][b, a]
+    return G["tile_lut"][b, a]
+
+
+def massmap(v, tile, t_eval):
+    """Mass-map colour and opacity per sky pixel at time t_eval: the final map, shown where its tile
+    is done; transparent where the map is masked, so the sky shows through."""
+    import healpy as hp
+    k = G["kappa"]
+    cur = k["map"][k["lut"][hp.vec2pix(k["nside"], v[:, 0], v[:, 1], v[:, 2])]]
     p = np.where(tile >= 0, ease((t_eval - G["t_done"][np.maximum(tile, 0)]) / (TAU_H * 3600)), 0.0)
     rgb = colorize(cur, k["sigma"])
     ok = np.isfinite(rgb[:, 0])
@@ -345,6 +359,20 @@ def fmt_objects(n):
 G = {}
 
 
+def outline(foot):
+    """Opacity of the footprint outline over the full supersampled frame: a thin antialiased line
+    along the boundary of the footprint mask, fading towards the limb like the tiles."""
+    n, S = 2 * R + 1, SS
+    m = Image.fromarray((foot * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))
+    m = np.asarray(m.resize((n * S, n * S), Image.BILINEAR).filter(ImageFilter.GaussianBlur(1.2 * S)), np.float32) / 255
+    line = np.clip(1.8 - 3.5 * np.abs(m - 0.5), 0, 1)
+    mu = np.asarray(Image.fromarray(G["grid"][2].reshape(n, n).astype(np.float32)).resize((n * S, n * S), Image.BILINEAR))
+    a = Image.fromarray((255 * A_OUTLINE * line * np.clip(mu / 0.08, 0, 1)).astype(np.uint8))
+    full = Image.new("L", (W * S, H * S), 0)
+    full.paste(a, ((CX - R) * S, (CY - R) * S))
+    return full
+
+
 def init(state):
     G.update(state)
     G["bg"], G["mask"], G["grid"] = static_layers()
@@ -359,7 +387,8 @@ def render(job):
     c, r, u = basis(phi)
 
     # sky on the sphere
-    disc = Image.fromarray(sky(c, r, u, t_eval)).resize(((2 * R + 1) * S, (2 * R + 1) * S), Image.BILINEAR)
+    rgb, foot = sky(c, r, u, t_eval)
+    disc = Image.fromarray(rgb).resize(((2 * R + 1) * S, (2 * R + 1) * S), Image.BILINEAR)
     img = g["bg"].copy()
     layer = Image.new("RGB", img.size, PARCH)
     layer.paste(disc, ((CX - R) * S, (CY - R) * S))
@@ -385,6 +414,7 @@ def render(job):
     if "kappa" in g:   # the mass map shows through as the veil lifts
         col = np.array(PARCH) + (np.array(OCHRE) - np.array(PARCH)) * (0.85 * run)
         alpha = (A_TODO * (1 - pv[:, 0]) + 0.5 * run[:, 0]) * np.clip(m / 0.08, 0, 1)
+        alpha *= 1 - ~np.isfinite(g["t_done"][vis]) * ease((i - g["i_end"]) / FPS)   # never finished: veil lifts in the hold
     else:
         col = np.array(PARCH) * (1 - pv) + np.array(TEAL) * pv
         col += (np.array(OCHRE) - col) * (0.85 * run)
@@ -395,6 +425,7 @@ def render(job):
     for k in range(len(vis)):
         d.polygon(list(zip(xs[k], ys[k])), fill=tuple(rgba[k]))
     img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
+    img.paste(Image.new("RGB", img.size, OUTLINE), (0, 0), outline(foot))
     d = ImageDraw.Draw(img)
     d.ellipse(((CX - R) * S, (CY - R) * S, (CX + R) * S, (CY + R) * S), outline=MUTED, width=int(1.3 * S))
 
@@ -531,7 +562,7 @@ def main():
     for i in range(N):
         x = min(max(i - state["i_end"], 0), settle)     # frames into the hold, decelerating linearly
         s = min(i, state["i_end"]) + x - x * x / (2 * settle)
-        phi = PHI_CAP + 360 * TURNS * (i_peak - s) / N
+        phi = PHI_CAP + 360 * SPIN * (i_peak - s) / FPS
         if i < n_in:
             t = te = t0
         elif i < n_in + n_sim:
@@ -557,7 +588,7 @@ def main():
                 Image.frombytes("RGB", (W, H), raw).save(OUT / f"globe_{i:04d}.png")
             return
         mp4 = OUT / "dr6_globe.mp4"
-        ff = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
+        ff = subprocess.Popen([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24",
                                "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-", "-c:v", "libx264",
                                "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p",
                                "-movflags", "+faststart", str(mp4)], stdin=subprocess.PIPE)
