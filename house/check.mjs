@@ -378,7 +378,7 @@ function measure({ MIN_PX, MIN_CONTRAST, MAX_WORDS }) {
   // images: present, decoded, and not drawn at zero size
   for (const img of frame.querySelectorAll('img')) {
     if (!img.complete || !img.naturalWidth) errors.push(`image ${img.getAttribute('data-src-path') || '(inline)'} did not load`);
-    else if (visible(img) && !img.closest('.logos, .people')) {
+    else if (visible(img) && !img.closest('.logos, .people') && !img.classList.contains('avatar')) {
       const fr = (img.closest('.frame') || img).getBoundingClientRect();
       if (fr.height < 40 * scale) errors.push(`image ${img.getAttribute('data-src-path')} is drawn ${px(fr.height)}px tall`);
       else if (fr.height < 240 * scale && fr.width < 900 * scale) warnings.push(`image ${img.getAttribute('data-src-path')} is drawn only ${px(fr.width)}×${px(fr.height)}px; check its labels are legible, or give it more room (fewer panels, data-crop)`);

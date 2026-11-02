@@ -100,7 +100,7 @@ Above 60 words of on-screen text the checker warns: the audience reads instead o
 | `statement` | `<h2>`, up to two `<p>` | one claim, vertically centred |
 | `points` | `<h2>`, lists, `<p>`, `div.eq`, `div.cols`, `<pre>`, `.source` | a text slide |
 | `figure` | `<h2>`, one `<figure>` | one figure filling the body |
-| `figure-text` | `<h2>`, one `<figure>`, one `div.text` | figure beside labels or key numbers; `data-split="50|60|70"` is the figure's share (default 60), `data-flip` puts the text left, `data-stack` puts it under the figure at full width |
+| `figure-text` | `<h2>`, one `<figure>`, one `div.text` | figure beside labels or key numbers; `data-split="50|60|70"` is the figure's share (default 60), `data-flip` puts the text left, `data-stack` puts it under the figure at full width, the figure sitting on the text |
 | `compare` | `<h2>`, two `<figure>` | side by side, each with a `figcaption` label |
 | `grid` | `<h2>`, three to six `<figure>` | three columns; four make a 2 × 2; `data-cols="2\|3"` sets the columns |
 | `number` | `<h2>`, one to three `div.stat` | key numbers: `<div class="stat"><span class="value">385</span><span class="label">deg² …</span></div>` |
@@ -137,6 +137,8 @@ A `<figure>` holds an optional `<figcaption>` (a one-line label above), one imag
 - `<div class="placeholder">figure to come</div>` in place of the image marks a figure not made yet; the checker warns while one remains.
 
 ## Components
+
+- `<img class="avatar" src="images/people/…" alt="Name">` — a round headshot at the line height of the text it sits in, e.g. at the start of a list item.
 
 - `<div class="eq"><span class="kicker">Label</span>$$…$$</div>` — a labelled display equation.
 - `.kicker` — small-caps label above a block. `.source` — attribution in the fine size. `.num` — a key number inline. `.tag` — a pill.

@@ -506,6 +506,10 @@ html, body { background: var(--ground); }
 .slide[data-layout="figure-text"][data-flip] > .body > figure { order: 2; }
 .slide[data-layout="figure-text"][data-stack] > .body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; row-gap: var(--s4); }
 .slide[data-layout="figure-text"][data-stack] > .body > .text { justify-content: flex-start; }
+.slide[data-layout="figure-text"][data-stack] > .body > figure > .cell { justify-content: flex-end; }
+.slide li:has(> img.avatar) { list-style: none; }
+.slide li:has(> img.avatar)::before, .slide li:has(> img.avatar)::marker { content: none; }
+.slide img.avatar { width: 1.8em; height: 1.8em; border-radius: 50%; object-fit: cover; object-position: 50% 35%; vertical-align: middle; margin-right: 0.45em; }
 .slide[data-layout="figure-text"] > .body > .text {
   display: flex;
   flex-direction: column;

@@ -40,8 +40,9 @@
       "slides": [
         "consensus",
         "north",
-        "culmination",
         "team",
+        "culmination",
+        "paper-i",
         "paper-ii",
         "paper-iii",
         "paper-iv",
@@ -59,7 +60,8 @@
       "title": "Backup",
       "outline": "References and previous UNIONS talks.",
       "slides": [
-        "references"
+        "references",
+        "robustness"
       ]
     }
   ]
