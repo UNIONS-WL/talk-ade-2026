@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UNIONS ADE Paris</title>
+  <title>UNIONS: weak lensing in the northern sky</title>
   <link rel="stylesheet" href="reveal/dist/reset.css">
   <link rel="stylesheet" href="reveal/dist/reveal.css">
   <link rel="stylesheet" href="theme.css">
@@ -64,6 +64,20 @@ Image: Sacha Guerrini's Moriond 2026 deck (sachaguer.github.io/talks/26_Moriond_
         <p class="caption" style="position:absolute;left:960px;top:460px;width:290px;margin:0;text-align:left;">Orange outline: the final UNIONS footprint (DR6). Filled: UNIONS-3500, the first shear release.</p><aside class="notes">Movie, 12 s, plays once: the globe starts on the southern sky (DES, KiDS-South), swings round the equator (KiDS-North, the HSC equatorial fields) and climbs to the north, where UNIONS sits above Dec +30.
 Footprints: DES Y6 round-19 outline (kadrlica/skymap); KiDS-1000 and HSC-SSP PDR3 Wide drawn as their published RA/Dec field limits, good to a degree or two; UNIONS filled = the UNIONS-3500 shear footprint (from the mass-map globe, visualisation/unions); UNIONS outline = the final footprint, the DR6 tiles (CANFAR ugriz mask_stats, 23,114 tiles, ~5,800 deg²). Note DR6 includes ~100 tiles inside DES (Stripe 82 near RA 330, and the CFHTLS-W1 area near RA 33, Dec −6): the outline shows them as small islands in the south. Background: Gaia EDR3 in equatorial coordinates. RA increases to the left, as on the sky. Script: scripts/globe.py movie.
 Careful with "no overlap": HSC's HectoMap field (RA 200–250, Dec +42.5 to +44.5, ~100 deg²) lies inside the UNIONS footprint, as the last frame shows. Cail's "north" slide says zero overlap with HSC; agree the wording with him.</aside>
+      </section>
+
+      <!-- Cail · landscape -->
+      <section>
+        <h2>UNIONS among weak-lensing surveys: Stage III area, in the north</h2>
+        <img class="plot" src="images/survey_landscape_wright.png" alt="Survey area against effective source density for DLS, CFHTLenS, KiDS, DES Y3, HSC, UNIONS, CSST, LSST, Euclid and Roman, with marker size showing PSF FWHM and colour bars showing photometric bands" style="position:absolute;left:239px;top:112px;width:801px;height:512px;">
+        <div class="fragment"><div class="hl-box" style="position:absolute;left:403px;top:212px;width:104px;height:54px;"></div></div>
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Figure: Angus Wright.</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Axes</strong> — survey area against effective source density; curves of constant total number of lensing sources (1 million to 1 billion).</li>
+      <li><strong>Markers</strong> — the square's dot is the detection PSF FWHM; blue = measured, pink = forecast. Colour bars are each survey's wide-field bands.</li>
+      <li><strong>UNIONS</strong> — area comparable to DES Y3, density a little higher, $ugriz$ from CFHT, Pan-STARRS and Subaru, all in the northern sky.</li>
+      <li><strong>Stage IV</strong> — LSST, Euclid, Roman and CSST sit up and to the right; UNIONS is the large northern Stage III-scale sample before them.</li>
+    </ul></aside>
       </section>
 
       <section>
@@ -361,6 +375,257 @@ Left, 0.20 &lt; z &lt; 0.35: r_p w_g+ with UNIONS shapes for red (colour), late-
 Numbers (A, UNIONS shapes): late-type −0.41 ± 0.10 (z 0.20–0.35), −0.59 ± 0.16 (0.35–0.55), +0.12 ± 0.10 (0.05–0.20); late-type log M★ ≈ 11: −0.99 ± 0.21; blue −0.16 ± 0.08, −0.30 ± 0.14, +0.25 ± 0.10; red +0.17 ± 0.11, +0.56 ± 0.09, +0.76 ± 0.12. Positive = radial. w_g× consistent with zero everywhere.
 The point of this slide: on identical galaxies the UNIONS and Legacy Surveys (Tractor) amplitudes agree for blue and late-type to |ΔA| ≤ 0.10 (paired jackknife), so the tangential disc signal is in the galaxies, not the shape measurement. Red and early-type are 20–40% weaker with UNIONS shapes (z1 red ΔA = −0.23 ± 0.02) with the same sign; cutout tests rule out radial weighting and Tractor misfits, so it is a survey/estimator difference still being understood. Don't quote a red amplitude as "the" value.
 Not the same split as the paper: "late-type" here is the morphology class of the pipeline (iacorr.py), not the paper's blue-disc cut (blue AND Sérsic n &lt; 1.5); significances in the paper are for the full Legacy Surveys footprint. The previous Legacy-shapes figure is fig/ia_blue_discs_wgp.png if wanted as backup.</aside>
+      </section>
+
+      <!-- Cail · handover -->
+      <section data-section="Cosmology" class="divider" data-background-color="#22574B">
+        <h2>Cosmology from UNIONS</h2>
+        <p class="divider-sub">The 2D cosmic-shear release, and the road to tomography.</p>
+        <aside class="notes"><ul class="skim"><li><strong>Handover</strong> — Calum to Cail; the rest of the talk is the cosmology.</li></ul></aside>
+      </section>
+
+      <!-- Cail · consensus -->
+      <section>
+        <h2>Cosmic shear benefits from independent measurements</h2>
+        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">$S_8$ seems to be converging as systematics improve; consensus is important!</p>
+        <img class="plot" src="images/s8_consensus.png" alt="S8 from five Stage III cosmic-shear analyses beside a sky map of the DES, KiDS and HSC footprints with LSST, Euclid Wide and Euclid DR1 outlines" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;">
+        <div class="fragment"><div class="hl-box" style="position:absolute;left:533px;top:194px;width:552px;height:81px;"></div><p class="hl-label" style="position:absolute;left:533px;top:281px;width:552px;margin:0;">But the northern sky has no wide-field lensing surveys</p></div>
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Footprints from public survey products and Euclid DR1 tiles. Band: CMB.</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Left</strong> — published Stage III cosmic-shear $S_8$, oldest at the top; the band is the CMB.</li>
+      <li><strong>Right</strong> — where those surveys sit on the sky: DES, KiDS and HSC (filled) overlap one another, all at or below the equator; dashed are the Stage IV footprints, LSST WFD and Euclid Wide final, and Euclid DR1 as observed.</li>
+      <li><strong>Reading</strong> — the newer analyses (KiDS-Legacy, DES Y6) have moved towards the CMB as systematics control improved; nothing north of $+30^\circ$ adds an independent measurement.</li>
+    </ul>
+    <details><summary>Numbers</summary><p>KiDS-1000 $0.759^{+0.024}_{-0.021}$; DES Y3 $0.759^{+0.025}_{-0.023}$; HSC Y3 $0.769^{+0.031}_{-0.034}$; KiDS-Legacy $0.815^{+0.016}_{-0.021}$; DES Y6 $0.798^{+0.014}_{-0.015}$; CMB $0.836^{+0.012}_{-0.013}$. Values as in the Moriond 2026 UNIONS talk.</p></details>
+    <details><summary>Sources</summary><p>Map by figures/footprints.py (products and caveats in its README: HSC Y3 and Euclid Wide are digitised reference outlines); composite by figures/s8_landscape.py.</p></details></aside>
+      </section>
+
+      <!-- Cail · north -->
+      <section>
+        <h2>UNIONS adds deep wide-field lensing constraints in the North</h2>
+        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">Different instrument, on-sky systematics, sample variance; new cross-correlations</p>
+        <img class="plot" src="images/s8_north.png" alt="The same S8 whisker and sky map, with the UNIONS DR6 footprint filled in the north" style="position:absolute;left:109px;top:146px;width:1061px;height:478px;">
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Footprints from public survey products, Euclid DR1 tiles and UNIONS DR6 tiles.</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Purple</strong> — the UNIONS DR6 tiles, mostly above declination $+30^\circ$, with no overlap with DES, KiDS or HSC.</li>
+      <li><strong>Why it matters</strong> — a different telescope (CFHT/MegaCam), different on-sky systematics and independent sample variance.</li>
+      <li><strong>Cross-correlations</strong> — the northern sky holds DESI spectroscopy and CMB lensing from Planck and ACT.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · team -->
+      <section class="bleed">
+        <img src="images/unions_team_paris.jpg" alt="Ten members of the UNIONS weak-lensing team standing on a lawn in front of a stone wall in Paris, autumn leaves on the grass" style="position:absolute;left:0;top:0;width:1280px;height:720px;object-fit:cover;">
+        <h2 class="on-veil">The 2D cosmic shear team</h2>
+        <aside class="notes"><ul class="skim">
+      <li><strong>The team</strong> — the core 2D team at the team meeting in Paris; many others have contributed over the years.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · culmination -->
+      <section>
+        <h2>UNIONS-3500 constraints are the culmination of ~10 years of work</h2>
+        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;"><li>A small team of ~10 people</li>
+    <li>Non-tomographic, about 2400 deg² effective area</li>
+    <li>Inference with correlation functions $\xi_\pm(\theta)$ and band powers $C_\ell$</li></ul>
+        <ul class="people-list" style="position:absolute;left:60px;top:294px;width:1160px;margin:0;"><li><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><strong>Paper I</strong>: shape catalog (Hervas-Peters et al.)</li>
+    <li><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><strong>Paper II</strong>: B-mode validation (Daley et al.)</li>
+    <li><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><strong>Paper III</strong>: configuration-space constraints (Goh et al.)</li>
+    <li><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><strong>Paper IV</strong>: harmonic-space constraints (Guerrini et al.)</li></ul>
+        <aside class="notes"><ul class="skim">
+      <li><strong>The release</strong> — companion papers from one blinded catalog, built by about ten people over roughly a decade of survey development; one slide on each follows.</li>
+      <li><strong>One redshift bin</strong> — only $r$-band across the footprint, so $n(z)$ comes from a SOM calibration on external deep fields; tomography comes at the end of the talk.</li>
+    </ul>
+    <details><summary>Sources</summary><p>Hervas-Peters et al. 2026 (I); Daley et al. 2026 (II); Goh et al. 2026, arXiv:2605.13547 (III); Guerrini et al. 2026, arXiv:2605.13543 (IV). Wording from the Moriond 2026 talk; headshots from its team slide.</p></details></aside>
+      </section>
+
+      <!-- Cail · paper-i -->
+      <section>
+        <h2>Paper I: a shape catalog of 61 million galaxies in the northern sky</h2>
+        <img class="plot" src="images/paper1_neff_map.png" alt="Map of the effective source density over the UNIONS-3500 footprint, between about 4.5 and 8 galaxies per square arcminute" style="position:absolute;left:40px;top:112px;width:700px;height:467px;">
+        <p class="caption" style="position:absolute;left:40px;top:585px;width:700px;margin:0;">Hervas-Peters et al. 2026</p>
+        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><p class="num">3648 deg²</p>
+    <p class="num">$n_{\rm eff} = 4.96$ arcmin$^{-2}$</p>
+    <p class="num">$\sigma_\epsilon = 0.27$</p>
+    <p class="small">$r$-band, PSF FWHM 0.71″; ShapePipe metacalibration shapes.</p>
+    <p class="accent">The catalog goes public on acceptance, in the next few months.</p></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Paper I</strong> — the UNIONS-3500 shape catalog (Hervas-Peters et al.): 61.4 million galaxies over 3648 deg² of CFHT $r$-band imaging.</li>
+      <li><strong>Map</strong> — effective source density per HEALPix pixel ($N_{\rm side}=512$); the density drops slightly towards the Galactic plane (dust, diffuse light), and the shape noise is very homogeneous across the footprint.</li>
+      <li><strong>Release</strong> — the catalog is public once the papers are accepted, in the next few months.</li>
+      <li><strong>Context</strong> — $n_{\rm eff}$ is close to DES Y3 (5.6) over a comparable area, at a sharper PSF (0.71″ against 0.98″ in $r$).</li>
+    </ul>
+    <details><summary>Sources</summary><p>Hervas-Peters et al. 2026, "UNIONS-3500 Weak Lensing: I. A Galaxy Shape Catalogue in the Northern Sky": abstract and Table 1; Fig. 4 left panel (plots/sky_map_n_eff_healpix.pdf).</p></details></aside>
+      </section>
+
+      <!-- Cail · paper-ii -->
+      <section>
+        <h2>B-modes are mitigated by cutting CCD- and large-scales</h2>
+        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">All scales (left) · fiducial scale cuts (right) · ● configuration, □ harmonic space</p>
+        <img class="plot" src="images/paper2_cosebis_bn.png" alt="COSEBI B-modes in units of their error, for all scales and for the fiducial scale cuts, from configuration and harmonic space" style="position:absolute;left:40px;top:146px;width:1200px;height:228px;">
+        <div class="textcol" style="position:absolute;left:80px;top:442px;width:1120px;"><ul>
+      <li class="fragment">Suggestive of repeating CCD-scale additive bias</li>
+      <li class="fragment">$\xi_\pm^B$, $C_\ell^{BB}$ and $B_n$ do not always agree, due to different weighting of scales</li>
+    </ul></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Paper II</strong> — B-mode validation (Daley et al.): the gatekeeper that chose the catalog version and the scale cuts.</li>
+      <li><strong>Bottom row</strong> — the paper figure's $B_n/\sigma_n$ row ($E_n$ row cropped off). Shaded: modes $n &gt; 6$; the cosmological information sits at $n \le 6$. <strong>Left</strong> — over all scales ($1$–$250'$) COSEBIs fail: the oscillating $B_n$ pattern that Asgari et al. 2019 associated with repeating additive shear bias at the CCD scale. Config- and harmonic-space COSEBIs agree, so it is the filter weighting, not the basis.</li>
+      <li><strong>Right</strong> — with the fiducial cuts, $[12, 83]'$ and $\ell = 300$–$1600$, the B-modes are consistent with zero; all PTEs $&gt; 0.18$.</li>
+      <li><strong>Three statistics</strong> — over the full range $\xi_\pm^B$ and $C_\ell^{BB}$ pass while COSEBIs fail; each weights scales differently, so we require all three to pass. We could not decisively identify the origin.</li>
+    </ul>
+    <details><summary>Sources</summary><p>Paper II (Daley et al. 2026), Figures/harmonic_config_cosebis_full.pdf (E_n top, B_n/σ_n bottom). Same B_n as the Moriond slide 10; since the referee round modes n &gt; 6 are shaded, the cosmological information sitting at n ≤ 6.</p></details></aside>
+      </section>
+
+      <!-- Cail · paper-iii -->
+      <section>
+        <h2>Paper III jointly fits cosmology and PSF leakage in real space</h2>
+        <img class="plot" src="images/paper3_xipm_bestfit.png" alt="xi plus and xi minus data with the best-fit model and the best-fit PSF-leakage systematic, B-mode informed scale cuts shaded" style="position:absolute;left:40px;top:112px;width:1200px;height:474px;">
+        <p class="caption" style="position:absolute;left:40px;top:592px;width:1200px;margin:0;">$\xi_\pm(\theta)$ with best-fit model and leakage systematics · Goh et al. 2026</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Paper III</strong> — takes the validated catalog and scale cuts from Paper II and fits a cosmological model to $\xi_\pm$.</li>
+      <li><strong>Distinctive</strong> — PSF-leakage parameters are inferred from $\rho$ and $\tau$ statistics and carried into the likelihood as Gaussian priors, so PSF uncertainty propagates into the cosmological error budget (red curve: best-fit $\xi_\pm^{\rm sys}$).</li>
+    </ul>
+    <details><summary>Sources</summary><p>Paper III as submitted (Figures/best_fit_xipm_SP_v1.4.6.3_B.pdf); Goh et al. 2026, arXiv:2605.13547.</p></details></aside>
+      </section>
+
+      <!-- Cail · paper-iv -->
+      <section>
+        <h2>Paper IV provides harmonic-space constraints from the same data</h2>
+        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">Same catalog, $n(z)$ and blinding, but different basis and weighting of scales</p>
+        <img class="plot" src="images/paper4_cell_bestfit.png" alt="Cell EE bandpowers with the harmonic-space best fit, its Halofit variant and the configuration-space best fit, scale cuts shaded" style="position:absolute;left:252px;top:146px;width:776px;height:478px;">
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Guerrini et al. 2026</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Paper IV</strong> — the same catalog in harmonic space, with the same blinding and $n(z)$ but a different basis and likelihood code.</li>
+      <li><strong>Agreement</strong> — the orange curve is the configuration-space best fit from Paper III; consistency between the two analyses was a criterion for unblinding.</li>
+    </ul>
+    <details><summary>Sources</summary><p>Paper IV as submitted (Figures/paperplot_Cell_EE_and_best_fit.pdf); Guerrini et al. 2026, arXiv:2605.13543.</p></details></aside>
+      </section>
+
+      <!-- Cail · cosmic-shear -->
+      <section>
+        <h2>$S_8$ to about 8%, consistent with the CMB and Stage III</h2>
+        <img class="plot" src="images/s8_unions.png" alt="S8 whisker: five Stage III surveys, the CMB band, and the two UNIONS results" style="position:absolute;left:42px;top:112px;width:695px;height:540px;">
+        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><span class="kicker">Configuration space</span>
+    <p class="num">$S_8 = 0.831^{+0.067}_{-0.078}$</p>
+    <span class="kicker">Harmonic space</span>
+    <p class="num">$S_8 = 0.891^{+0.057}_{-0.084}$</p>
+    <p class="small">With one redshift bin, the intrinsic-alignment prior dominates the error: dropping IA moves $S_8$ by $0.7\sigma$.</p></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Squares</strong> — the two UNIONS results; circles are the Stage III surveys of the previous slide.</li>
+      <li><strong>Agreement</strong> — both are within $1\sigma$ of the CMB and of Stage III.</li>
+      <li><strong>Limitation</strong> — $A_{\rm IA}$ and $S_8$ are nearly degenerate with one bin; tomography breaks that.</li>
+    </ul>
+    <details><summary>Numbers</summary><p>Goh et al. 2026 ($\xi_\pm$): $S_8 = 0.831^{+0.067}_{-0.078}$. Guerrini et al. 2026 ($C_\ell$): $S_8 = 0.891^{+0.057}_{-0.084}$. The two analyses' $\Delta S_8$ sits at about $2\sigma$ of the scatter between pipelines measured on 350 GLASS mocks. Robustness tests in Goh et al. move $S_8$ by under $0.4\sigma$ except the IA treatment: no IA $-0.71\sigma$, flat $A_{\rm IA}$ prior $+0.38\sigma$.</p></details>
+    <details><summary>Sources</summary><p>Figure made by figures/s8_landscape.py; Stage III and CMB values as on the previous slides.</p></details></aside>
+      </section>
+
+      <!-- Cail · tomography -->
+      <section class="divider" data-background-color="#22574B">
+        <h2>The next year: tomography</h2>
+        <p class="divider-sub">A new shape catalog over the full footprint, released quickly, and the first tomographic UNIONS cosmic shear.</p>
+        <aside class="notes"><ul class="skim"><li><strong>Outlook</strong> — the plan for the coming year; everything from here on is working and blinded.</li></ul></aside>
+      </section>
+
+      <!-- Cail · next-year -->
+      <section>
+        <h2>Next year: a fast catalog release, then tomographic cosmic shear</h2>
+        <div class="textcol" style="position:absolute;left:40px;top:152px;width:600px;"><span class="kicker">v2 shape catalog</span>
+    <p>Shapes over the full DR6 footprint, with its paper; we plan to make it public quickly.</p>
+    <span class="kicker">Tomographic cosmic shear</span>
+    <p>Four redshift bins from DR6 photometry, a blinded analysis on the v2 catalog.</p></div>
+        <p class="label" style="position:absolute;left:760px;top:200px;width:360px;margin:0;text-align:center;">Tomography lead</p>
+        <img src="images/people/klara-bertmann.jpg" alt="Klara Bertmann" style="position:absolute;left:840px;top:236px;width:200px;height:200px;border-radius:50%;object-fit:cover;object-position:50% 35%;">
+        <p class="caption" style="position:absolute;left:760px;top:448px;width:360px;margin:0;">Klara Bertmann · Bochum</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Catalog first</strong> — the v2 catalog and its paper come first, and we intend to release the catalog fast.</li>
+      <li><strong>Tomographic paper</strong> — led by Klara Bertmann (Bochum); multi-band image simulations and a SOM $n(z)$ calibration feed it.</li>
+      <li><strong>What follows</strong> — where that stands today: the footprint, the redshift bins.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · footprint-progress -->
+      <section>
+        <h2>ShapePipe v2 has measured shapes over the full DR6 footprint</h2>
+        <video src="media/dr6_globe.mp4" poster="media/dr6_globe.jpg" muted="" playsinline="" data-autoplay="" style="position:absolute;left:350px;top:112px;width:580px;height:540px;clip-path:circle(207px at 320px 271px);"></video>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Animation</strong> — the v2 production run, 10–27 October 2026: each DR6 tile lights up with the blinded mass map as its shapes complete.</li>
+      <li><strong>Plays once</strong> — and stops on the full footprint, about 5700 deg² of tiles before masking.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · v2-scale -->
+      <section>
+        <h2>A full v2 catalog run now takes about three weeks</h2>
+        <p class="stat-value" style="position:absolute;left:40px;top:280px;width:370px;margin:0;">4690</p>
+        <p class="stat-label" style="position:absolute;left:40px;top:372px;width:370px;margin:0;">deg² of shapes, v2 catalog</p>
+        <p class="stat-value" style="position:absolute;left:440px;top:280px;width:370px;margin:0;">773 M</p>
+        <p class="stat-label" style="position:absolute;left:440px;top:372px;width:370px;margin:0;">objects measured</p>
+        <p class="stat-value" style="position:absolute;left:840px;top:280px;width:370px;margin:0;">~3 wk</p>
+        <p class="stat-label" style="position:absolute;left:840px;top:372px;width:370px;margin:0;">per full run; over a year for the 2D catalog</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Area</strong> — the v2 bound-9 shape sample after masking; the 2D release had about 2400 deg² effective.</li>
+      <li><strong>Objects</strong> — every object ShapePipe measured on the 22,901 DR6 tiles of the first v2 production.</li>
+      <li><strong>Run time</strong> — wall-clock for a full catalog run, against about nine months for the catalog behind the 2D release.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · nz-v2 -->
+      <section>
+        <h2>DR6 photometry splits the v2 sample into four redshift bins</h2>
+        <img class="plot" src="images/nz_v2.png" alt="Four tomographic n(z) curves summing to the full sample's n(z)" style="position:absolute;left:40px;top:112px;width:700px;height:509px;">
+        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><span class="kicker">Working n(z) · BPZ + SOM</span>
+    <p>$\langle z\rangle$ = 0.29, 0.45, 0.61, 0.93</p>
+    <p class="small">Half the shear weight has the photometry, over 3815 deg².</p>
+    <p class="small muted">For validation and null tests, not for parameters.</p></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Colours</strong> — the four bins, each drawn as its share of the shear weight, so they add up to the dashed total.</li>
+      <li><strong>Status</strong> — a working $n(z)$ built for validation; the collaboration's $n(z)$ for parameters comes from the photo-z group.</li>
+    </ul>
+    <details><summary>What is plotted</summary><p>DR6 BPZ photo-z bins calibrated with a SOM on the full-area v2 bound-9 sample, using either $z$ filter where available; 51% of the bound-9 shear weight is retained. Lightly smoothed for display ($\Delta z = 0.01$ grid).</p></details>
+    <details><summary>Sources</summary><p>nz_v2_full products (nz_v2_bound9_full_tomo.txt), drawn by figures/nz_v2.py.</p></details></aside>
+      </section>
+
+      <!-- Cail · closing -->
+      <section>
+        <h2>UNIONS: Weak lensing in the Northern sky</h2>
+        <ol class="closing" style="position:absolute;left:69px;top:122px;width:1140px;margin:0;"><li>First northern-sky cosmic-shear constraints: $S_8$ to about 8%, consistent with the CMB and Stage III</li>
+    <li>One redshift bin leaves $S_8$ degenerate with intrinsic alignments</li>
+    <li>The 2D catalog goes public on acceptance, in the next few months</li>
+    <li>Next year: the full-footprint v2 catalog, released quickly, and tomographic cosmic shear</li></ol>
+        <p class="contact" style="position:absolute;left:40px;top:560px;margin:0;">cail.daley@cea.fr</p>
+        <aside class="notes"><ul class="skim"><li><strong>Summary</strong> — then the team, then the mass map for questions.</li></ul></aside>
+      </section>
+
+      <!-- Cail · massmap-paris -->
+      <section class="bleed">
+        <video src="media/massmap_paris.mp4" poster="media/massmap_paris.jpg" muted="" loop="" playsinline="" data-autoplay="" style="position:absolute;left:0;top:0;width:1280px;height:720px;object-fit:cover;object-position:50% 0;"></video>
+        <h2 class="on-veil">Thank you!</h2>
+        <aside class="notes"><ul class="skim">
+      <li><strong>The map</strong> — a Kaiser–Squires convergence ($\kappa_E$) map of the v2 shape catalogue, 5409 deg² of tiles, smoothed at 30′, composited into the dusk sky over the Eiffel Tower.</li>
+      <li><strong>Questions</strong> — loops while questions run: the new v2 mass map, about 5000 deg², over Paris.</li>
+      <li><strong>Blind</strong> — divided by its own rms, so its amplitude carries no $S_8$ information.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · references -->
+      <section data-section="Backup">
+        <h2>References and previous UNIONS talks</h2>
+        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;"><li><a href="https://cailmdaley.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html">Cail Daley · Moriond 2026 UNIONS source</a></li><li><a href="https://sachaguer.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html">Sacha Guerrini · Moriond 2026 UNIONS</a></li><li>Hervas Peters+2024 · arXiv:2412.01790</li><li>Akhmetshyn+2026 · arXiv:2607.14207</li><li>Campbell+2026 · arXiv:2606.23651</li><li>Goh+2026 · arXiv:2605.13547 · Guerrini+2026 · arXiv:2605.13543</li></ul>
+        <aside class="notes"><p>Sacha’s published HTML was confirmed in gh-pages; Cail’s Pages path returned 404, so link the source.</p></aside>
+      </section>
+
+      <!-- Cail · robustness -->
+      <section>
+        <h2>$S_8$ is robust to analysis choices but sensitive to the IA prior</h2>
+        <img class="plot" src="images/paper3_s8_whisker.png" alt="Whisker plot of S8 under the configuration-space robustness tests" style="position:absolute;left:103px;top:112px;width:574px;height:512px;">
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:700px;margin:0;">Goh et al. 2026</p>
+        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><p>Most robustness tests shift $S_8$ by $\lt 0.4\sigma$</p>
+    <p>$A_\mathrm{IA}$ is the dominant nuisance: largely unconstrained, removing it shifts $S_8$ by $0.7\sigma$</p></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Robustness</strong> — scale cuts, non-linear model, covariance and leakage correction all move $S_8$ little.</li>
+      <li><strong>The exception</strong> — the intrinsic-alignment treatment: $A_{\rm IA}$ follows the degeneracy with one bin; no IA $-0.71\sigma$, flat prior $+0.38\sigma$. Tomography resolves it.</li>
+    </ul>
+    <details><summary>Sources</summary><p>Moriond 2026 slide 14; figure from Paper III as submitted (Figures/S8_whisker_plot.pdf).</p></details></aside>
       </section>
 
     </div>

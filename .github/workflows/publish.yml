@@ -1,4 +1,4 @@
-name: Build and publish deck
+name: Publish deck
 on:
   push:
     branches: [main]
@@ -11,24 +11,19 @@ concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: node house/build.mjs .
-      - run: node house/check.mjs .
-      # Calum's Lectern deck: a separate folder, published next to the house deck
-      - run: cp -R calum "_site/${{ github.event.repository.name }}/calum"
+      # The deck is the Lectern file index.html and what it references; no build step.
+      - run: |
+          mkdir -p _pub
+          cp -R index.html theme.css reveal fonts fig images media _pub/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site/${{ github.event.repository.name }}
+          path: _pub
       - id: deployment
         uses: actions/deploy-pages@v4

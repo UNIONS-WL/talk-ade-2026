@@ -1,5 +1,27 @@
 # UNIONS at Colloque national Dark Energy
 
+Joint 30-minute talk by Calum Murray (~15 min: the survey and its astrophysics) and Cail Daley (~15 min: cosmic
+shear and outlook), Paris, Tuesday 3 November 2026 at 14:30. Live at https://unions-wl.github.io/talk-ade-2026/.
+
+## One deck: `index.html`
+
+Since 2 November the talk is a single [Lectern](https://github.com/calumhrmurray/lectern) deck: `index.html`
+(one `<section>` per slide, speaker notes in `<aside class="notes">`) with `theme.css`, `reveal/` and `fonts/`.
+Open it in any browser (arrow keys; `S` for the speaker view), or edit it on a canvas with
+`npx lectern-editor index.html`; plain HTML edits work too. Pushing to `main` publishes it as it is
+(`.github/workflows/publish.yml`); there is no build step.
+
+- Calum's half: slides 1–21 (figures in `fig/`, videos in `media/`). Cail's half starts at the teal
+  "Cosmology from UNIONS" divider (slide 22; figures in `images/`, videos in `media/`), with two backup slides at the end.
+- Look: Cail's house theme (EB Garamond, the orange headline rule, the small-caps footer, the logo bottom right,
+  the teal · orange · yellow strip along the foot) on a white ground.
+- Cail's slides were ported from the house sources by `tools/house_to_lectern.py` (layouts placed from each
+  figure's aspect ratio; text, maths, highlight boxes and notes carried over; the PDF figures rasterised next to
+  them as PNG). His house sources (`slides/`, `deck.json`, `house/`) are still here but no longer published:
+  edits now go into `index.html`.
+
+## The house version (superseded)
+
 Scaffold for the joint 30-minute talk by Calum Murray (~15 min) and Cail Daley (~10 min), Paris, Tuesday 3 November 2026 at 14:30. Calum owns the survey and astrophysics slides; Cail owns cosmic shear and outlook. One handover separates the sections. Replace the two plot placeholders during preparation.
 
 ## Build and check
