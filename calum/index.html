@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UNIONS ADE Paris</title>
+  <link rel="stylesheet" href="reveal/dist/reset.css">
+  <link rel="stylesheet" href="reveal/dist/reveal.css">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1 · title -->
+      <section class="title-slide">
+        <video src="media/unions_globe.mp4" poster="fig/unions_globe_poster.jpg" muted="" loop="" playsinline="" data-autoplay="" aria-label="A rotating globe of the sky; the UNIONS lensing mass map glows blue" style="position:absolute;left:690px;top:70px;width:580px;height:580px;clip-path:circle(46.6%);"></video>
+        <img src="fig/logo/unions_logo.png" alt="UNIONS" style="position:absolute;left:40px;top:64px;width:400px;height:auto;">
+        <h1 style="position:relative;left:0px;top:40px;max-width:620px;font-size:1.9em;">UNIONS: weak lensing in the northern sky</h1>
+        <p class="meta" style="position:relative;top:40px;"><b>Calum Murray</b>&nbsp;and Cail Daley<br>Colloque national Dark Energy · Paris · 3 November 2026</p>
+        <aside class="notes">Calum's half (~15 min) of the joint talk; Cail follows with the cosmology (UNIONS-WL/talk-ade-2026). The spinning globe is the UNIONS press-release animation (July 2026; calumhrmurray.github.io/press-releases.html, assets/unions/unions_globe.mp4): the UNIONS-3500 convergence map in blue on the Gaia sky. Visualisation: Calum Murray, Cail Daley and Andreas Tersenov; sky background ESA/Gaia/DPAC.</aside>
+      </section>
+
+      <!-- 1c · UNIONS, the people -->
+      <section>
+        <h2>The UNIONS weak-lensing group</h2>
+        <img src="fig/unions_paris_group.jpg" alt="Eleven members of the UNIONS weak-lensing group standing on a lawn in front of an old stone wall, autumn leaves on the grass" style="position:absolute;left:40px;top:110px;width:640px;height:430px;border-radius:6px;">
+        <p class="caption" style="position:absolute;left:40px;top:550px;width:640px;margin:0;text-align:left;">The UNIONS weak-lensing meeting in Paris.</p>
+        <div style="position:absolute;left:720px;top:112px;width:520px;">
+          <p class="label" style="margin:0 0 6px;">Cosmic shear · UNIONS-3500 I–IV</p>
+          <p style="margin:0 0 18px;font-size:18px;line-height:1.45;">L.&nbsp;Baumont · C.&nbsp;Bonini · J.-C.&nbsp;Cuillandre · <strong>C.&nbsp;Daley</strong> · T.&nbsp;de&nbsp;Boer · S.&nbsp;Fabbro · <strong>L.&nbsp;W.&nbsp;K.&nbsp;Goh</strong> · <strong>S.&nbsp;Guerrini</strong> · A.&nbsp;Guinot · <strong>F.&nbsp;Hervas&nbsp;Peters</strong> · H.&nbsp;Hildebrandt · M.&nbsp;J.&nbsp;Hudson · M.&nbsp;Kilbinger · E.&nbsp;Magnier · A.&nbsp;W.&nbsp;McConnachie · C.&nbsp;Murray · A.&nbsp;Paradis · A.&nbsp;Tersenov · L.&nbsp;Van&nbsp;Waerbeke · A.&nbsp;Wittje · A.&nbsp;H.&nbsp;Wright</p>
+          <p class="label" style="margin:0 0 6px;">Astrophysics in this talk</p>
+          <p style="margin:0;font-size:18px;line-height:1.45;"><strong>S.&nbsp;L.&nbsp;Ahad</strong> · <strong>R.&nbsp;Akhmetshyn</strong> · <strong>M.&nbsp;C.&nbsp;T.&nbsp;Campbell</strong> · A.&nbsp;Corinaldi · J.&nbsp;Elvin-Poole · <strong>F.&nbsp;Hervas&nbsp;Peters</strong> · C.&nbsp;T.&nbsp;Mpetha · <strong>R.&nbsp;Paviot</strong> · J.&nbsp;E.&nbsp;Taylor · and the cosmic-shear group</p>
+        </div>
+        <aside class="notes">PHOTO: the group photo from the UNIONS meeting in Paris, taken from slide 5 of Sacha's Moriond 2026 talk (sachaguer.github.io/talks/26_Moriond_UNIONS, images/unions_team.jpg), cropped to the frame. The file carries no date; autumn leaves and a talk given in March 2026 suggest autumn 2025, so the caption gives no year: add it if you know it.
+Names: the union of the author lists of UNIONS-3500 Weak Lensing I–IV (arXiv:2605.13549, 2604.03227, 2605.13547, 2605.13543), alphabetical; bold = first authors (I Hervas Peters, II Daley, III Goh, IV Guerrini). This is the group as the papers define it, not a membership list: CHECK it against the real cosmology-group roster, which I could not find written down; add or drop names before the talk.
+Second line: lead authors of the papers on slides 6–13 in bold (Campbell et al. 2026, Ahad et al. 2025, Akhmetshyn et al. 2026, Hervas Peters et al. 2024, Paviot et al. 2026) plus co-authors not already above; Antonin Corinaldi for the DESI DR1 slide. Plus Sandrine Codis on the IA work if you want her named.</aside>
+      </section>
+
+      <!-- 2 · the survey -->
+      <section>
+        <h2>UNIONS images the northern sky from Mauna Kea</h2>
+        <img src="fig/unions_telescopes.jpg" alt="A UNIONS image strip above the three Mauna Kea telescopes: CFHT, Pan-STARRS and Subaru" style="position:absolute;left:40px;top:100px;width:760px;height:auto;border-radius:4px;">
+        <ul style="position:absolute;left:830px;top:110px;width:410px;margin:0;">
+          <li><b>CFHT</b> r and u, <b>Pan-STARRS</b> i, <b>Subaru</b> g and z</li>
+          <li>More than 5,000 deg² above Dec ≈ +30°</li>
+          <li>Depth comparable to LSST Year 1</li>
+          <li>Median r-band seeing 0.7″: the shapes for weak lensing</li>
+        </ul>
+        <p class="caption" style="position:absolute;left:40px;top:480px;width:760px;margin:0;text-align:left;">UNIONS: Gwyn et al. 2025. Figure from S. Guerrini, Moriond 2026.</p>
+        <aside class="notes">UNIONS = Ultraviolet Near-Infrared Optical Northern Survey: CFIS (CFHT r, u), WISHES and WHIGS (Subaru HSC z, g), Pan-STARRS (i). The numbers on the slide are those in the joint deck's scaffold (more than 5,500 deg², LSST-Y1-like depth, median r seeing 0.7″); "more than 5,000" here, to be safe: check the exact area against Gwyn et al. 2025 before the talk.
+Weak-lensing shapes are measured on the CFHT r band with ShapePipe (Guinot et al. 2022); UNIONS-3500 is the ~3,500 deg² used for Cail's cosmic shear.
+Image: Sacha Guerrini's Moriond 2026 deck (sachaguer.github.io/talks/26_Moriond_UNIONS, images/unions.jpg).</aside>
+      </section>
+
+      <!-- 3 · the globe -->
+      <section>
+        <h2>The south has DES, KiDS and HSC; UNIONS covers the north</h2>
+        <video src="media/globe_surveys.mp4" poster="fig/globe_surveys_south.png" muted="" playsinline="" data-autoplay="" style="position:absolute;left:330px;top:92px;width:620px;height:620px;clip-path:circle(47%);"></video>
+        <ul style="position:absolute;left:960px;top:220px;width:290px;margin:0;">
+          <li>No overlap with the other Stage-III lensing surveys</li>
+          <li>A different telescope, different systematics, independent sky</li>
+        </ul>
+        <p class="caption" style="position:absolute;left:960px;top:460px;width:290px;margin:0;text-align:left;">Orange outline: the final UNIONS footprint (DR6). Filled: UNIONS-3500, the first shear release.</p><aside class="notes">Movie, 12 s, plays once: the globe starts on the southern sky (DES, KiDS-South), swings round the equator (KiDS-North, the HSC equatorial fields) and climbs to the north, where UNIONS sits above Dec +30.
+Footprints: DES Y6 round-19 outline (kadrlica/skymap); KiDS-1000 and HSC-SSP PDR3 Wide drawn as their published RA/Dec field limits, good to a degree or two; UNIONS filled = the UNIONS-3500 shear footprint (from the mass-map globe, visualisation/unions); UNIONS outline = the final footprint, the DR6 tiles (CANFAR ugriz mask_stats, 23,114 tiles, ~5,800 deg²). Note DR6 includes ~100 tiles inside DES (Stripe 82 near RA 330, and the CFHTLS-W1 area near RA 33, Dec −6): the outline shows them as small islands in the south. Background: Gaia EDR3 in equatorial coordinates. RA increases to the left, as on the sky. Script: scripts/globe.py movie.
+Careful with "no overlap": HSC's HectoMap field (RA 200–250, Dec +42.5 to +44.5, ~100 deg²) lies inside the UNIONS footprint, as the last frame shows. Cail's "north" slide says zero overlap with HSC; agree the wording with him.</aside>
+      </section>
+
+      <section>
+        <h2>UNIONS sees sharper than DES: 0.71″ against 0.95″ in r</h2>
+        <p class="big" style="position:absolute;left:40px;top:130px;margin:0;font-size:1.7em;color:var(--accent);">0.71″</p>
+        <p style="position:absolute;left:40px;top:200px;width:360px;margin:0;">median r-band seeing of UNIONS, CFHT on Mauna Kea</p>
+        <p class="big" style="position:absolute;left:40px;top:290px;margin:0;font-size:1.7em;color:var(--ink-soft);">0.95″</p>
+        <p style="position:absolute;left:40px;top:360px;width:360px;margin:0;">DES Y6 (DR2), the Blanco 4 m in Chile</p>
+        <p class="soft" style="position:absolute;left:40px;top:450px;width:360px;margin:0;font-size:20px;line-height:1.4;">Similar depth: r ≈ 24.2 (UNIONS) and 24.4 (DES) at 10σ</p>
+        <img src="fig/seeing/unions_r_stripe82.png" alt="UNIONS r-band image of a 2-arcminute patch of Stripe 82 with a large edge-on disc galaxy; its dust lane and the surrounding stars are crisp" style="position:absolute;left:450px;top:120px;width:390px;height:390px;border-radius:4px;">
+        <img src="fig/seeing/des_dr2_r_stripe82.png" alt="DES DR2 r-band image of the same patch: the same galaxy and stars, visibly softer, with a smoother background" style="position:absolute;left:855px;top:120px;width:390px;height:390px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:450px;top:522px;width:390px;margin:0;color:var(--accent);">UNIONS r · 0.73″ here</p>
+        <p class="label" style="position:absolute;left:855px;top:522px;width:390px;margin:0;color:var(--ink-soft);">DES Y6 r · 0.90″ here</p>
+        <p class="caption" style="position:absolute;left:450px;top:560px;width:795px;margin:0;text-align:left;">The same 2′ of Stripe 82, where the surveys overlap; north up, fluxes matched on the stars, one stretch.</p><aside class="notes">Survey medians, r band: UNIONS 0.71″ (Gwyn et al. 2025, arXiv:2503.13783; also Sacha's Moriond slide 4, "FWHM in the r-band ~0.7″ (DES ~0.98″)"); DES DR2 0.95″ median delivered PSF FWHM (DES Collaboration 2021, arXiv:2101.05765, abstract; DR2 = the six years of DES wide imaging, i.e. the Y6 images). Depths: UNIONS r 24.2 (10σ point source, 2″ aperture, Gwyn+2025 Table 3); DES DR2 r 24.4 (S/N = 10, 1.95″ aperture). So: about as deep, a third sharper.
+Images: the same patch of Stripe 82, centre RA 329.531, Dec +1.009, 120″ across, where UNIONS DR6 overlaps DES (~100 tiles). UNIONS: tile CFIS.659.182.r (vos:cfis/tiles_DR5), 0.186″/px, 1200 s; header IQ 0.80″. DES: DR2 coadd DES2157+0043 r, 0.263″/px, via the NOIRLab Data Lab cutout service. Both north up and east left; the UNIONS fluxes scaled to DES's by the median ratio over 69 matched sources (1.02); one asinh stretch. Measured stellar FWHM (Moffat fits): UNIONS 0.73″ (37 stars), DES 0.90″ (47 stars).
+What to point at: the dust lane in the edge-on disc and the small round galaxies, tighter in UNIONS. The DES background is smoother because this DES coadd is deeper (sky noise 2.6× lower here); the point is the sharpness, which is what shapes need. The few black specks in the UNIONS image are residual cosmic rays or hot pixels.
+Scripts: scripts/seeing/ (pair.py, measure.py, INPUTS.txt).</aside>
+      </section>
+
+      <!-- 6 · lensing is low, the measurement -->
+      <section>
+        <p class="who">Every UNIONS paper on arXiv, November 2026</p>
+        <h2>66 papers so far, from the Milky Way to cosmology</h2>
+        <p class="label" style="position:absolute;left:40px;top:112px;width:600px;margin:0;">Survey and data <span style="color:var(--ink-soft);">· 3 papers</span></p>
+        <ul style="position:absolute;left:40px;top:138px;width:600px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">The survey paper (Gwyn+25); CFIS u band (Ibata+17); calibration (Thanjavur+21)</li></ul>
+        <p class="label" style="position:absolute;left:40px;top:200px;width:600px;margin:0;">Weak lensing pipelines <span style="color:var(--ink-soft);">· 7 papers</span></p>
+        <ul style="position:absolute;left:40px;top:226px;width:600px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">ShapePipe (Guinot+22, Farrens+22); the MCCD PSF model (Liaudat+20)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">PSF systematics (Zhang+24, Guerrini+24)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">UNIONS-3500 shapes and B modes (Hervas&nbsp;Peters+26, Daley+26)</li></ul>
+        <p class="label" style="position:absolute;left:40px;top:352px;width:600px;margin:0;">Cosmology <span style="color:var(--ink-soft);">· 7 papers</span></p>
+        <ul style="position:absolute;left:40px;top:378px;width:600px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Peak counts and their systematics (Ayçoberry+22)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Cosmology from the infall region of clusters (Mpetha+25)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">f<span style="font-size:0.72em;vertical-align:-0.25em;">NL</span> from Lyman-break galaxies × Planck lensing: forecast and first measurement (Payerne+25, +26)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">2D cosmic shear in configuration and harmonic space (Goh+26, Guerrini+26)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Lensing is low, revisited (Campbell+26)</li></ul>
+        <p class="label" style="position:absolute;left:680px;top:112px;width:560px;margin:0;">Clusters and voids <span style="color:var(--ink-soft);">· 7 papers</span></p>
+        <ul style="position:absolute;left:680px;top:138px;width:560px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Cluster dynamical state (Ahad+25); fossil-group central galaxies (Chu+23)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Satellite subhalo masses (Akhmetshyn+26)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">The density profile of voids (Martin+25)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Galaxy haloes: shapes (Robison+22), black holes (Li+24), mergers (Cheng+25)</li></ul>
+        <p class="label" style="position:absolute;left:680px;top:340px;width:560px;margin:0;">Intrinsic alignments <span style="color:var(--ink-soft);">· 3 papers</span></p>
+        <ul style="position:absolute;left:680px;top:366px;width:560px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">BOSS/eBOSS galaxies (Hervas&nbsp;Peters+24)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">DESI DR1, red and blue (Paviot+26)</li><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">Discs in the Perseus-Pisces supercluster (Mondelin+26)</li></ul>
+        <p class="label" style="position:absolute;left:680px;top:470px;width:560px;margin:0;">Strong lensing</p>
+        <ul style="position:absolute;left:680px;top:496px;width:560px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">4 papers</li></ul>
+        <p class="label" style="position:absolute;left:680px;top:532px;width:560px;margin:0;">Galaxy evolution</p>
+        <ul style="position:absolute;left:680px;top:558px;width:560px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">20 papers</li></ul>
+        <p class="label" style="position:absolute;left:680px;top:594px;width:560px;margin:0;">Milky Way and Local Group</p>
+        <ul style="position:absolute;left:680px;top:620px;width:560px;margin:0;"><li style="font-size:19px;line-height:1.35;margin:0 0 4px;">15 papers</li></ul>
+        <aside class="notes">UNIONS papers on arXiv as of 2 November 2026: 66. Search: the arXiv API for UNIONS, CFIS, "Canada-France Imaging Survey" or "Ultraviolet Near-Infrared Optical Northern Survey" in title or abstract (astro-ph); each abstract read, and a paper kept only if it uses UNIONS/CFIS data or is a UNIONS pipeline. This is "papers using UNIONS data", not the collaboration's own publication list: the early CFIS Milky Way papers and Mondelin+25/26 (CFHT imaging, mostly UNIONS) are included on that basis. Dropped on re-reading: Payerne+24 (LBG selection on HSC/CLAUDS degraded to UNIONS depth, no UNIONS data), Mpetha+24 (mainly a Euclid forecast), Farrens+21 (BlendHunter, CFIS-like simulations). Not included: papers that only name UNIONS (roadmaps, a footprint tool, theory follow-ups of Ursa Major III/UNIONS 1). Papers that use UNIONS without saying so in the abstract are missed.
+f_NL (Constantin Payerne, two papers): 2511.22243 forecasts σ(f_NL^loc) ≈ 20–34 from UNIONS u-dropout LBGs × Planck CMB lensing (A&amp;A 709, A70, 2026); 2607.09943 measures the LBG × Planck PR4 lensing cross-spectrum on real UNIONS data, with a first, very uncertain f_NL^loc (not yet competitive). Check the paper before quoting a number.
+"Clusters and voids" also holds three galaxy-scale halo papers (Robison+22, Li+24, Cheng+25), on one line.
+Survey and data (3): Ibata 2017, The Canada-France Imaging Survey: First results from the u-band component, arXiv:1708.06356; Thanjavur 2021, Photometric Cross-Calibration of the SDSS Stripe 82 Standard Stars catalogue with Gaia EDR3, and Comparison with Pan-STARRS1, DES, CFIS and GALEX catalogues, arXiv:2105.08200; Gwyn 2025, UNIONS: The Ultraviolet Near-Infrared Optical Northern Survey, arXiv:2503.13783
+Weak lensing pipelines (7): Liaudat 2020, Multi-CCD Point Spread Function Modelling, arXiv:2011.09835; Guinot 2022, ShapePipe: a new shape measurement pipeline and weak-lensing application to UNIONS/CFIS data, arXiv:2204.04798; Farrens 2022, ShapePipe: A modular weak-lensing processing and analysis pipeline, arXiv:2206.14689; Zhang 2024, Point-Spread Function errors for weak lensing - density cross-correlations. Application to UNIONS, arXiv:2405.03434; Guerrini 2024, Galaxy-Point Spread Function correlations as a probe of weak-lensing systematics with UNIONS data, arXiv:2412.14666; Daley 2026, UNIONS-3500 Weak Lensing: II. B-mode validation for cosmic shear, arXiv:2604.03227; Hervas Peters 2026, UNIONS-3500 Weak Lensing: I. A Galaxy Shape Catalogue in the Northern Sky, arXiv:2605.13549
+Cosmology (7): Ayçoberry 2022, UNIONS: The impact of systematic errors on weak-lensing peak counts, arXiv:2204.06280; Mpetha 2025, Cosmology from UNIONS weak lensing profiles of galaxy clusters, arXiv:2501.09147; Payerne 2025, Forecasting local Primordial Non-Gaussianities from UNIONS Lyman-Break Galaxies and Planck CMB lensing, arXiv:2511.22243; Goh 2026, UNIONS-3500 Weak Lensing: III. 2D Cosmological Constraints in Configuration Space, arXiv:2605.13547; Guerrini 2026, UNIONS-3500 Weak Lensing: IV. 2D cosmological constraints in harmonic space, arXiv:2605.13543; Campbell 2026, Revisiting the 'Lensing is Low' Problem with UNIONS, arXiv:2606.23651; Payerne 2026, Assessing the large-scale angular clustering of UNIONS Lyman Break Galaxies via cross-correlations, arXiv:2607.09943
+Clusters and voids (7): Robison 2022, The shape of dark matter haloes: results from weak lensing in the Ultraviolet Near-Infrared Optical Northern Survey (UNIONS), arXiv:2209.09088; Chu 2023, A UNIONS view of the brightest central galaxies of candidate fossil groups, arXiv:2303.05146; Li 2024, Black-Hole-to-Halo Mass Relation From UNIONS Weak Lensing, arXiv:2402.10740; Cheng 2025, Unions with UNIONS: Using galaxy-galaxy lensing to probe galaxy mergers, arXiv:2502.00584; Martin 2025, Lensing the darkness: The matter density profile in cosmic voids from UNIONS, arXiv:2507.13450; Ahad 2025, Cluster properties as a function of dynamical state in the DESI Legacy x UNIONS surveys, arXiv:2512.14636; Akhmetshyn 2026, Measuring satellite galaxy subhalo masses in redMaPPer clusters with UNIONS weak lensing data, arXiv:2607.14207
+Intrinsic alignments (3): Hervas Peters 2024, UNIONS: a direct measurement of intrinsic alignment with BOSS/eBOSS spectroscopy, arXiv:2412.01790; Mondelin 2026, Dissecting the Perseus-Pisces supercluster observed with CFHT-MegaCam: Exploring late-type galaxy shape alignments within the local cosmic web, arXiv:2605.23338; Paviot 2026, UNIONS: Red and blue alignments of DESI DR1 galaxies, arXiv:2610.40411
+Strong lensing (4): Chan 2021, Discovery of Strongly Lensed Quasars in the Ultraviolet Near Infrared Optical Northern Survey (UNIONS), arXiv:2110.09535; Savary 2021, Strong lensing in UNIONS: Toward a pipeline from discovery to modeling, arXiv:2110.11972; Barroso 2025, Searching for strong lensing by late-type galaxies in UNIONS, arXiv:2503.10610; Storfer 2025, Gravitational Lenses in UNIONS and Euclid (GLUE) I: A Search for Strong Gravitational Lenses in UNIONS with Subaru, CFHT, and Pan-STARRS Data, arXiv:2505.05032
+Galaxy evolution (20): Ellison 2019, A definitive merger-AGN connection at z~0 with CFIS: mergers have an excess of AGN and AGN hosts are more frequently disturbed, arXiv:1905.08830; Bickley 2021, Convolutional neural network identification of galaxy post-mergers in UNIONS using IllustrisTNG, arXiv:2103.09367; Roberts 2021, Ram Pressure Candidates in UNIONS, arXiv:2110.12714; Sola 2022, Characterization of Low Surface Brightness structures in annotated deep images, arXiv:2203.03973; Lim 2022, Constraints on galaxy formation from the cosmic-far-infrared-background\,$-$\,optical-imaging cross-correlation using \textit{Herschel} and UNIONS, arXiv:2203.16545; Bickley 2022, Star formation characteristics of CNN-identified post-mergers in the Ultraviolet Near Infrared Optical Northern Survey (UNIONS), arXiv:2205.14103; Wilkinson 2022, The merger fraction of post-starburst galaxies in UNIONS, arXiv:2207.04152; Ellison 2022, Galaxy mergers can rapidly shut down star formation, arXiv:2209.07613; Ferreira 2024, Galaxy Mergers in UNIONS -- I: A Simulation-driven Hybrid Deep Learning Ensemble for Pure Galaxy Merger Classification, arXiv:2407.18396; Ferreira 2024, Galaxy evolution in the post-merger regime I -- Most merger-induced in-situ stellar mass growth happens post-coalescence, arXiv:2410.06356; Ellison 2024, Galaxy evolution in the post-merger regime. II -- Post-merger quenching peaks within 500 Myr of coalescence, arXiv:2410.06357; Ellison 2024, Galaxy evolution in the post-merger regime. III -- The triggering of active galactic nuclei peaks immediately after coalescence, arXiv:2412.02804; Foster 2025, No Evidence of Asymmetrically Enhanced Star Formation in Infalling Galaxies in UNIONS, arXiv:2502.13123; Sola 2025, Low Surface Brightness structures from annotated deep CFHT images: effects of the host galaxy's properties and environment, arXiv:2503.18480; Yoshida 2025, Dust-obscured Galaxies with Broken Power-law Spectral Energy Distributions Discovered by UNIONS, arXiv:2504.15023; Heesters 2025, Galaxies OBserved as Low-luminosity Identified Nebulae (GOBLIN): a catalog of 43,000 high-probability dwarf galaxy candidates in the UNIONS survey, arXiv:2505.18307; Zhong 2025, UNIONS Optical Identifications for VLASS Radio Sources in the Euclid Sky (UNVEIL) I. A Catalog of ~146,000 Radio Galaxies up to z~5, arXiv:2507.08604; Mondelin 2025, Dissecting the Perseus-Pisces supercluster observed with CFHT-MegaCam: Investigating environmental effects on galaxy morphology, arXiv:2511.05925; Ferreira 2026, Galaxy Mergers in UNIONS -- II: Predicting Timescales in the Post-Merger Regime, arXiv:2601.07604; Chang 2026, Merger Driven or Internal Evolution? A New Morphological Study of Tidal Disruption Event Host Galaxies, arXiv:2602.06839
+Milky Way and Local Group (15): Ibata 2017, Chemical Mapping of the Milky Way With The Canada-France Imaging Survey: A Non-parametric Metallicity-Distance Decomposition of the Galaxy, arXiv:1708.06359; Thomas 2018, A-type stars in the Canada-France Imaging Survey I. The stellar halo of the Milky Way traced to large radius by blue horizontal branch stars, arXiv:1809.08245; Thomas 2018, A-type stars in the Canada-France Imaging Survey II. Tracing the height of the disc at large distances with Blue Stragglers, arXiv:1810.09461; Thomas 2019, Dwarfs or giants? Stellar metallicities and distances in the Canada-France-Imaging-Survey from $ugrizG$ multi-band photometry, arXiv:1910.03076; Fantin 2019, The Canada-France Imaging Survey: Reconstructing the Milky Way Star Formation History from its White Dwarf Population, arXiv:1911.02576; Thomas 2020, The hidden past of M92: Detection and characterization of a newly formed 17° long stellar stream using the Canada-France Imaging Survey, arXiv:2009.04487; Fantin 2021, The Mass and Age Distribution of Halo White Dwarfs in the Canada-France Imaging Survey, arXiv:2103.14721; Jensen 2021, Uncovering fossils of the distant Milky Way with UNIONS: NGC 5466 and its stellar stream, arXiv:2108.04340; Smith 2022, Discovery of a new Local Group Dwarf Galaxy Candidate in UNIONS: Boötes V, arXiv:2209.08242; Smith 2023, The discovery of the faintest known Milky Way satellite using UNIONS, arXiv:2311.10147; Errani 2023, Ursa Major III/UNIONS 1: the darkest galaxy ever discovered?, arXiv:2311.10134; Crnogorčević 2023, Strong Constraints on Dark Matter Annihilation in Ursa Major III/UNIONS 1, arXiv:2311.14611; Smith 2025, Deep in the Fields of the Andromeda Halo: Discovery of the Pegasus VII dwarf galaxy in UNIONS, arXiv:2502.09792; Bayer 2025, A Pristine-UNIONS view on the Galaxy: Kinematics of the distant spur feature of the Sagittarius stream traced by Blue Horizontal Branch stars, arXiv:2502.17319; Cerny 2025, No Observational Evidence for Dark Matter Nor a Large Metallicity Spread in the Extreme Milky Way Satellite Ursa Major III / UNIONS 1, arXiv:2510.02431</aside>
+      </section>
+
+      <!-- 7a · clusters, the idea -->
+      <section data-section="Clusters">
+        <h2>A cluster's centre records how it was assembled</h2>
+        <p class="label" style="position:absolute;left:40px;top:104px;width:430px;margin:0;text-align:center;color:var(--ink);font-size:18px;">Evolved</p>
+        <p class="label" style="position:absolute;left:490px;top:104px;width:430px;margin:0;text-align:center;color:var(--ink);font-size:18px;">Evolving</p>
+        <img src="fig/clusters/abell2261.jpg" alt="Abell 2261: one giant elliptical galaxy at the centre, far brighter than any other cluster member" style="position:absolute;left:40px;top:136px;width:430px;height:430px;clip-path:circle(50%);">
+        <img src="fig/clusters/abell1758n.jpg" alt="Abell 1758N: two clumps of bright galaxies, a cluster merger in progress, with no single dominant galaxy" style="position:absolute;left:490px;top:136px;width:430px;height:430px;clip-path:circle(50%);">
+        <p class="caption" style="position:absolute;left:40px;top:578px;width:430px;margin:0;text-align:center;">Abell 2261, z = 0.22: one dominant galaxy, a large magnitude gap</p>
+        <p class="caption" style="position:absolute;left:490px;top:578px;width:430px;margin:0;text-align:center;">Abell 1758N, z = 0.28: several bright galaxies, a small gap</p>
+        <ul style="position:absolute;left:950px;top:150px;width:290px;margin:0;">
+          <li>Dynamical friction pulls the most massive satellites in first, and the central galaxy absorbs them</li>
+          <li>Early-forming clusters have had time: one dominant galaxy, mass concentrated in the core</li>
+          <li>Light only hints at this; lensing weighs the mass profile itself</li>
+        </ul><aside class="notes">The set-up for Ahad et al. Dynamical friction is strongest on the most massive satellites, so they sink to the centre first and merge with the brightest cluster galaxy (BCG). A cluster that assembled early has had time for this: one dominant BCG, a large gap in magnitude to the next-brightest galaxy (the "fossil group" limit is Δm₁₂ &gt; 2 mag in r). A cluster still assembling, with recent mergers, keeps several bright galaxies of similar luminosity and a small gap.
+Earlier formation also means a more concentrated halo, which is what lensing can test without relying on the light. Ahad et al. select on the magnitude gap between the BCG and the brightest satellite, and on the stellar-mass ratio of the BCG to the third most massive satellite (next slide, left).
+Drawing: schematic, made for this deck.
+The images (Legacy Surveys DR9 grz, fig/clusters/): left, Abell 2261 (z = 0.225, RA 260.613, Dec +32.134; NED), relaxed, with one of the largest BCGs known; the field is 5.5′ ≈ 1.2 Mpc. Right, Abell 1758N (z = 0.278, RA 203.188, Dec +50.542; NED), the northern half of a double cluster, itself a merger of two subclusters, each with its own bright galaxies; 4.75′ ≈ 1.2 Mpc. These are well-known illustrations chosen for this slide, not clusters from Ahad et al.; say so if asked. The faint green haze in the right image is a Legacy Surveys sky-subtraction artefact, not the cluster.</aside>
+      </section>
+
+      <!-- 7 · clusters -->
+      <section>
+        <p class="who">Ahad et al. 2025</p>
+        <h2>Lensing tells evolved clusters from evolving ones</h2>
+        <img class="plot" src="fig/clusters_selection.png" alt="The evolved and evolving cluster selection: magnitude gap between BCG and brightest satellite against the stellar mass ratio of BCG to the third most massive satellite" style="position:absolute;left:40px;top:120px;width:500px;height:auto;">
+        <img class="plot" src="fig/clusters_lensing.png" alt="Weak lensing Delta Sigma and R times Delta Sigma of evolved and evolving clusters" style="position:absolute;left:560px;top:96px;width:330px;height:auto;">
+        <ul style="position:absolute;left:910px;top:130px;width:330px;margin:0;">
+          <li>DESI Legacy clusters, UNIONS shear</li>
+          <li><b>Evolved</b>: one dominant central galaxy; more mass in the core</li>
+          <li><b>Evolving</b>: bright satellites, flatter centre</li>
+          <li>The same split in IllustrisTNG traces different accretion histories</li>
+        </ul><aside class="notes">Ahad et al. 2025, "Cluster properties as a function of dynamical state in the DESI Legacy × UNIONS surveys", arXiv:2512.14636. Left: their Fig. 1 (selection: r-band magnitude gap between the BCG and the brightest satellite against the log stellar-mass ratio of the BCG to the third most massive satellite). Right: their Fig. 8 (ΔΣ of the stacks).
+Clusters photometrically selected from the DESI Legacy Imaging Surveys, crossed with the UNIONS shear catalogue. Beyond 1 Mpc the two profiles agree in amplitude; within 1 Mpc evolved clusters are significantly more concentrated. Evolved: bimodal stellar mass functions dominated by massive BCGs, a deficit of intermediate satellites; evolving: an excess of massive satellites. Mean halo mass ~10^14 and z ~ 0.33 in both.</aside>
+      </section>
+
+      <!-- 8a · tidal stripping, the physics -->
+      <section>
+        <h2>The cluster's tide strips a satellite from the outside in</h2>
+        <img src="fig/clusters/perseus_euclid.jpg" alt="The Perseus cluster imaged by Euclid, with rings around its centre and four satellites falling in; each satellite's dashed dark-matter halo is smaller the closer it is to the centre, while its stars stay the same" style="position:absolute;left:40px;top:110px;width:560px;height:551px;border-radius:4px;">
+        <svg viewBox="0 0 1492 1467" aria-hidden="true" style="position:absolute;left:40px;top:110px;width:560px;height:551px;"><defs><clipPath id="perseus-clip"><rect width="1492" height="1467" rx="10"></rect></clipPath></defs><g clip-path="url(#perseus-clip)"><circle cx="610" cy="989" r="349" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.85"></circle><circle cx="610" cy="989" r="595" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.85"></circle><circle cx="610" cy="989" r="897" fill="none" stroke="#FFFFFF" stroke-width="5" opacity="0.85"></circle><circle cx="933" cy="130" r="101" fill="#488878" fill-opacity="0.18" stroke="#9FD3C4" stroke-width="5" stroke-dasharray="14 10"></circle><ellipse cx="933" cy="130" rx="15" ry="24" fill="#E87838"></ellipse><circle cx="838" cy="349" r="75" fill="#488878" fill-opacity="0.18" stroke="#9FD3C4" stroke-width="5" stroke-dasharray="14 10"></circle><ellipse cx="838" cy="349" rx="15" ry="24" fill="#E87838"></ellipse><circle cx="764" cy="537" r="53" fill="#488878" fill-opacity="0.18" stroke="#9FD3C4" stroke-width="5" stroke-dasharray="14 10"></circle><ellipse cx="764" cy="537" rx="15" ry="24" fill="#E87838"></ellipse><circle cx="677" cy="776" r="25" fill="#488878" fill-opacity="0.18" stroke="#9FD3C4" stroke-width="5" stroke-dasharray="14 10"></circle><ellipse cx="677" cy="776" rx="15" ry="24" fill="#E87838"></ellipse></g></svg>
+        <ul style="position:absolute;left:650px;top:120px;width:590px;margin:0;">
+          <li>A satellite keeps only what its own gravity holds against the cluster's tide</li>
+          <li>Tidal radius \( r_t \approx r \left( \frac{m_{\rm sub}}{3M(&lt;r)} \right)^{1/3} \): smaller nearer the centre</li>
+          <li>Dark matter reaches far beyond the stars, so it goes first; the stars sit deep in the potential</li>
+          <li>Prediction: <b>M<sub>sub</sub>/M<sub>★</sub> falls towards the cluster centre</b></li>
+        </ul>
+        <img src="fig/clusters/ngc2207_hubble.jpg" alt="NGC 2207 and IC 2163, two spiral galaxies, the smaller drawn out into a long tidal tail" style="position:absolute;left:650px;top:452px;width:370px;height:auto;border-radius:4px;">
+        <p class="caption" style="position:absolute;left:1035px;top:470px;width:205px;margin:0;text-align:left;">Stripping, seen: NGC 2207 pulls a tail out of IC 2163. Left: Perseus (Euclid); dashed, each satellite's halo, shrinking towards the centre.</p><aside class="notes">The physics behind the next slide. A satellite orbiting inside a cluster feels the difference between the cluster's pull on its near and far sides. Beyond the tidal (Jacobi) radius that difference beats the satellite's own gravity, and the material there is lost, leading and trailing along the orbit.
+The formula on the slide is the point-mass, circular-orbit Jacobi radius (Binney &amp; Tremaine §8.3). For an extended host it becomes r_t = r [m_sub / ((3 − dlnM/dlnr) M(&lt;r))]^(1/3) (King 1962). For any host whose enclosed mass grows more slowly than r³, which is every real halo, r_t shrinks as the satellite goes deeper.
+Dark-matter halos extend ~10× further than the stellar body, so stripping removes dark matter long before it touches the stars: the subhalo-to-stellar mass ratio falls towards the cluster centre. Simulations show subhalos losing most of their mass after a few pericentres while keeping their stars (e.g. Peñarrubia et al. 2008; Smith et al. 2016).
+Drawing: schematic, made for this deck; sizes not to scale.
+Images: left, the Perseus cluster from the Euclid Early Release Observations (ESA/Euclid/Euclid Consortium/NASA; image processing J.-C. Cuillandre, G. Anselmi; CC BY-SA 3.0 IGO), with Calum's rings and satellites from his IAP seminar (17 February 2026, pages 28–29), redrawn so that each satellite's dark-matter halo (dashed) shrinks with its tidal radius, r_t ∝ r for a fixed mass ratio: the stars (orange) stay the same. Right, NGC 2207 tidally stripping IC 2163 (NASA/ESA and the Hubble Heritage Team, STScI), seminar page 27. The measurement is the next slide, Roman Akhmetshyn's.</aside>
+      </section>
+
+      <!-- 8 · tidal stripping -->
+      <section>
+        <p class="who">Akhmetshyn et al. 2026</p>
+        <h2>Satellites lose their dark matter as they fall into clusters</h2>
+        <img class="plot" src="fig/stripping_smhm.png" alt="Subhalo mass over stellar mass against cluster-centric distance, this paper against earlier measurements" style="position:absolute;left:117px;top:203px;width:560px;height:auto;">
+        <ul style="position:absolute;left:1000px;top:130px;width:250px;margin:0;">
+          <li>Lensing around 330k redMaPPer satellites</li>
+          <li>M<sub>sub</sub>/M<sub>★</sub> rises from <b>12</b> near the centre to <b>34</b> further out</li>
+          <li>Stars stay; dark matter is stripped</li>
+        </ul><aside class="notes">Akhmetshyn et al. 2026, "Measuring satellite galaxy subhalo masses in redMaPPer clusters with UNIONS weak lensing data", arXiv:2607.14207. Left: redrawn for this deck as inline SVG from their halo_demo.png (fig/stripping_demo.png, a Monte-Carlo host-halo term around a satellite at distance r): the lensing around each satellite, measured in annuli centred on it, is the sum of the stars (point mass), the truncated subhalo and the host halo, offset by r. Right: SMHM_comp_updated (M_sub/M★ against cluster-centric distance, green = this paper, others = earlier measurements with CS82, KiDS, DECaLS, CFHTLenS, HSC).
+Data: redMaPPer SDSS DR8 clusters and members × UNIONS ShapePipe v1.3 sources, dsigma. Satellites with P_mem &gt; 0.8 in three bins: 204,000 / 106,586 / 18,865. Best fit M_sub/M★: 12.0 (+3.9 −3.3) at 0.14–0.43 Mpc, 33.7 (+5.5 −5.2) at 0.43–0.86 Mpc; the third bin (0.86–1.23 Mpc) is ~50 on the figure, read off it, not from their table, which was cut in the source I read. Model: stellar + subhalo + offset host-halo terms, BCG miscentring as a Rayleigh distribution.
+Reading: the subhalo-to-stellar mass ratio grows with cluster-centric distance, as tidal stripping predicts. Their own caveat: the simple model fits near the satellite but not the larger distances where the host halo dominates.</aside>
+      </section>
+
+      <!-- 9a · IA, linear alignment (Moriond) -->
+      <!-- 9-0 · IA, the tide on large scales -->
+      <section data-section="Intrinsic alignments">
+        <h2>Every galaxy forms inside the large-scale tide</h2>
+        <img src="fig/tidal_field_large.png" alt="A large patch of a cosmic density field in shades of teal, brushed by the direction in which the tide stretches; small orange elliptical galaxies sit on the overdensities, stretched along the tide, and yellow discs at random angles" style="position:absolute;left:40px;top:110px;width:520px;height:520px;border-radius:6px;">
+        <img src="fig/galaxy_examples/ngc3938.jpg" alt="NGC 3938, a face-on spiral galaxy with blue arms" style="position:absolute;left:630px;top:120px;width:290px;height:290px;border-radius:6px;">
+        <img src="fig/galaxy_examples/ngc4889.jpg" alt="NGC 4889, a giant elliptical galaxy at the centre of the Coma cluster, a smooth yellow glow" style="position:absolute;left:945px;top:120px;width:290px;height:290px;border-radius:6px;">
+        <p class="label" style="position:absolute;left:630px;top:422px;width:290px;margin:0;color:var(--u-teal);">Spiral · NGC 3938</p>
+        <p class="label" style="position:absolute;left:945px;top:422px;width:290px;margin:0;">Elliptical · NGC 4889</p>
+        <ul style="position:absolute;left:640px;top:470px;width:600px;margin:0;">
+          <li>Ellipticals: hot, pressure-supported, <strong>stretched</strong> by the tide</li>
+          <li>Spirals: rotating discs, <strong>spun up</strong> by it</li>
+        </ul>
+        <p class="caption" style="position:absolute;left:40px;top:640px;width:560px;margin:0;text-align:left;">Schematic: a density field, its tide, galaxies on the peaks.</p>
+        <aside class="notes">Opening the IA section. Left: a schematic made for this deck (scripts/tidal_field.py): a 2D Gaussian random field as the density, its potential from the Poisson equation, and the tidal tensor's stretching axis drawn as a line-integral-convolution texture. Galaxies sit on the density peaks: ellipticals (orange) stretched along the local tide, so radially towards the overdensities, discs (yellow) at random angles. Not a simulation; the point is the picture, the tide coherent over tens of Mpc.
+Right: two real galaxies, Legacy Surveys DR9 grz images. NGC 3938, a face-on Sc spiral in Ursa Major (z = 0.0027, ~5′ across); NGC 4889, the giant elliptical at the centre of the Coma cluster (z = 0.0215), with smaller Coma members around it. Both in the UNIONS north.
+The next slides: ellipticals first (linear alignment), then what the real tide looks like in CMASS.</aside>
+      </section>
+
+      <section>
+        <h2>As galaxies form, the tide stretches them</h2>
+        <img src="fig/ia_story/iap_density.jpg" alt="A slab of BOSS CMASS galaxies on a dark background, coloured by local density, showing filaments and knots" style="position:absolute;left:40px;top:110px;width:255px;height:357px;border-radius:4px;">
+        <img src="fig/ia_story/iap_flow.jpg" alt="The reconstructed flow in the same slab: orange and magenta streamlines converging on the densest knots" style="position:absolute;left:307px;top:110px;width:255px;height:357px;border-radius:4px;">
+        <img src="fig/ia_story/iap_shapes.jpg" alt="The galaxy shape field in the same slab: blue streamlines following the orientation of galaxies" style="position:absolute;left:574px;top:110px;width:255px;height:357px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:40px;top:478px;width:255px;margin:0;color:#3E8E3E;">Galaxies · density</p>
+        <p class="label" style="position:absolute;left:307px;top:478px;width:255px;margin:0;color:#C4561C;">Flow · infall</p>
+        <p class="label" style="position:absolute;left:574px;top:478px;width:255px;margin:0;color:#4A5DB0;">Shapes · the tide</p>
+        <p class="caption" style="position:absolute;left:40px;top:510px;width:790px;margin:0;text-align:left;">BOSS CMASS galaxies in one slab, ~180 h⁻¹ Mpc thick, with DECaLS shapes; the same patch in all three. From the IAP intrinsic-alignment workshop, June 2026.</p>
+        <ul style="position:absolute;left:860px;top:120px;width:380px;margin:0;">
+          <li>A pressure-supported elliptical is stretched along the tidal field as it forms</li>
+          <li>Its shape: a random part plus an aligned one, \( \mathbf{e} = \mathbf{e}_r + \gamma_{\rm IA} \)</li>
+          <li>Linear alignment: \( \gamma_{\rm IA} = -\frac{C_1}{4\pi G} \left( \nabla_x^2 - \nabla_y^2,\ 2\nabla_x\nabla_y \right) \mathcal{S}(\Psi) \)</li>
+        </ul>
+        <p class="caption" style="position:absolute;left:860px;top:560px;width:380px;margin:0;text-align:left;">Catelan et al. 2001; Hirata &amp; Seljak 2004.</p><aside class="notes">The three panels are from Calum's IAP IA-workshop talk (June 2026; ../2606_IA_Workshop_IAP, the live "thin slice" views, captured): BOSS CMASS galaxies in a ~180 h⁻¹ Mpc thick slab through the survey shell, all three panels the same patch of sky. Left, the galaxies coloured by local density; middle, the reconstructed flow Ψ (v ∝ −∇Φ), streamlines converging on the nodes; right, the DECaLS shape field, each galaxy's orientation (e₁, e₂) drawn as a streamline, brighter where neighbours agree: the tide, written in the shapes (γ ∝ ∂∂Φ). The old Moriond drawing (fig/ia_story/field_round.jpg, field_stretched.jpg) is still in the folder.
+The linear alignment model: the intrinsic shear is set by the tidal tensor of the primordial potential Ψ, smoothed (S) on the galaxy's scale; C₁ is the normalisation, conventionally 5 × 10⁻¹⁴ (h² M☉ Mpc⁻³)⁻¹ (Brown et al. 2002). A_IA multiplies C₁: A_IA &gt; 0 means stretched along the direction to overdensities, radially around them. This is the alignment of red, pressure-supported galaxies.
+Why it matters for this talk: lensing by the same mass shears background galaxies tangentially, so radially aligned foreground galaxies cancel part of the cosmic-shear signal (the GI term), and aligned neighbours add a spurious one (II). Two slides on.</aside>
+      </section>
+
+      <!-- 9d · IA, why it matters for lensing (Moriond) -->
+      <section>
+        <h2>Aligned galaxies lower the lensing signal</h2>
+        <img class="plot" src="fig/ia_story/ia_lensing_power.png" alt="Cosmic-shear and galaxy-galaxy lensing angular power spectra with and without intrinsic alignments: with IA both are about five per cent lower at all multipoles" style="position:absolute;left:40px;top:110px;width:780px;height:auto;">
+        <ul style="position:absolute;left:850px;top:130px;width:390px;margin:0;">
+          <li>Lensing makes background shapes tangential around mass</li>
+          <li>Radially aligned galaxies cancel part of it</li>
+          <li>Here about 5% of the lensing power, at every scale</li>
+          <li>Cosmic shear marginalises over A<sub>IA</sub>, so its prior matters (Cail)</li>
+        </ul>
+        <aside class="notes">Moriond page 13. Left: cosmic shear (two shapes); right: galaxy-galaxy lensing (a position and a shape); blue without IA, red with; lower panels the fractional change, about −5 to −6% at all multipoles for the configuration in that figure. Check with Calum which A_IA and n(z) the figure assumed before quoting a number beyond "about five per cent".
+A few per cent at every scale is degenerate with the amplitude of the lensing signal, so with S8. Cosmic-shear analyses fit A_IA (and its redshift and luminosity dependence) along with cosmology; a prior from direct measurements, like the next four slides, tightens S8.</aside>
+      </section>
+
+      <!-- 9e · IA, the measurement (Moriond) -->
+      <section>
+        <h2>Alignments are measured like shear, with redshifts</h2>
+        <img class="plot" src="fig/ia_story/eplus_ecross.png" alt="Sticks around a central point. Top left: sticks pointing at the point, radial. Top right: sticks around it, tangential. Bottom: the same rotated by 45 degrees, the cross component" style="position:absolute;left:60px;top:150px;width:560px;height:auto;">
+        <p class="label" style="position:absolute;left:60px;top:116px;width:280px;margin:0;">radial · A<sub>IA</sub> &gt; 0</p>
+        <p class="label" style="position:absolute;left:360px;top:116px;width:260px;margin:0;">tangential · A<sub>IA</sub> &lt; 0</p>
+        <p class="label" style="position:absolute;left:60px;top:500px;width:560px;margin:0;color:var(--ink-soft);">e<sub>×</sub>, rotated by 45°: must vanish</p>
+        <ul style="position:absolute;left:670px;top:130px;width:570px;margin:0;">
+          <li>Average the shapes around galaxy positions: radial or tangential</li>
+          <li>Spectroscopic redshifts keep the pairs physically close, so it is alignment, not lensing</li>
+          <li>The cross component is the null test</li>
+          <li>Here: UNIONS shapes around BOSS and DESI galaxies</li>
+        </ul>
+        <aside class="notes">Moriond page 5 ("Intrinsic alignment shear is written the same as weak lensing shear"), with its labels cropped. SIGN: Moriond labelled the radial pattern ⟨δe₊⟩ &lt; 0, the weak-lensing convention (tangential positive). The IA papers on the next slides use the opposite: w_g+ &gt; 0 and A_IA &gt; 0 for radial alignment, negative for tangential (Paviot et al. 2026, Fig. 4 caption). The slide's labels follow the IA convention, so the numbers on slides 9–12 read directly.
+The measurement: for every position-shape pair at projected separation r_p and line-of-sight separation Π, project the shape onto the line joining them; average and integrate over |Π| &lt; Π_max to get w_g+(r_p), or fit the multipoles of ξ_g+(s, μ). The 45°-rotated w_g× vanishes by parity and is the null test.
+Spectroscopic redshifts (BOSS CMASS, DESI BGS / LRG / ELG) select pairs that are physical neighbours, so lensing between them is negligible. Moriond page 14 made the same point: "we want physical distances: we need redshifts".</aside>
+      </section>
+
+      <!-- 9 · IA: Fabian -->
+      <section>
+        <p class="who">Hervas Peters et al. 2024</p>
+        <h2>UNIONS measures intrinsic alignments directly</h2>
+        <img class="plot" src="fig/ia_hervas_wgp.png" alt="r_t times w_g+ for CMASS, LRG and ELG lenses with UNIONS shapes, with the best-fitting NLA model" style="position:absolute;left:40px;top:110px;width:1200px;height:auto;">
+        <img class="plot" src="fig/ia_hervas_luminosity.png" alt="Intrinsic alignment amplitude against luminosity for different surveys, with the fitted power law" style="position:absolute;left:60px;top:420px;width:280px;height:auto;">
+        <ul style="position:absolute;left:380px;top:440px;width:860px;margin:0;">
+          <li>UNIONS shapes around BOSS/eBOSS CMASS, LRG and ELG</li>
+          <li>Strong detection for the red samples, scaling with luminosity as in DES</li>
+          <li>Used to inform the IA prior of the UNIONS cosmic shear (Cail)</li>
+        </ul>
+        
+        <div hidden="" data-ai-note="done" style="position:absolute;left:26px;top:445px;width:300px;"><p data-by="author">before this we need explanations of IA. please bring in my slides on IA from the paris meeting I organised, place these slides within the talk repo then add some explanations here please</p><p data-by="ai">Copied the IAP IA-workshop decks (June 2026) with their figures, cutouts and talk PDF into the talks repo as 2606_IA_Workshop_IAP (README there). Added three slides before this one: 9a why IA matters for lensing, 9b the LTA templates around a halo and a void from the IAP talk, 9c how w_g+ is measured. The "Intrinsic alignments" section now starts at 9a.</p><p data-by="ai">Revised on Calum's request (chat, 1 Nov): 9a–9e now come from his Moriond talk (linear alignment and tidal torquing on the tidal-field map, IA lowering the lensing spectra, e₊ and e× sticks) and the IAP shape-field view of CMASS.</p></div><aside class="notes">Fabian Hervas Peters et al. 2024, "UNIONS: a direct measurement of intrinsic alignment with BOSS/eBOSS spectroscopy", arXiv:2412.01790. Top: their WGP_all (r_t w_g+ for CMASS-, LRG- and ELG-UNIONS, best-fit NLA, grey = outside the fit). Bottom left: Full_lum (A_IA against luminosity across surveys, CMASS-DES and CMASS-UNIONS scaling alike).
+The third bullet follows Sacha's Moriond slide ("direct measurement used in the cosmological analysis, see Cail's talk"). Check with Cail how exactly the UNIONS-3500 IA prior used it before saying so; his slide 13 at Moriond showed S8 sensitive to the IA prior, a natural hand-off.
+Lineage for the next three slides: Fabian → Antonin (DESI DR1, every galaxy type); Romain → Calum (blue galaxies).</aside>
+      </section>
+
+      <!-- 9f · the DESI galaxy types -->
+      <section>
+        <p class="who">DESI DR1 galaxies; images from the Legacy Surveys</p>
+        <h2>DESI measures four kinds of galaxy, out to z ≈ 1.6</h2>
+        <img src="fig/galaxy_types/bgs_red_1.jpg" alt="DESI red BGS galaxy" style="position:absolute;left:40px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <img src="fig/galaxy_types/bgs_red_2.jpg" alt="DESI red BGS galaxy" style="position:absolute;left:185px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:40px;top:278px;width:285px;margin:0;color:var(--accent);">BGS · red</p>
+        <p style="position:absolute;left:40px;top:310px;width:285px;margin:0;font-size:19px;line-height:1.4;"><strong>z ≈ 0.1–0.4</strong><br>Bright Galaxy Survey, r &lt; 19.5: nearby ellipticals</p>
+        <img src="fig/galaxy_types/bgs_blue_1.jpg" alt="DESI blue BGS galaxy" style="position:absolute;left:345px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <img src="fig/galaxy_types/bgs_blue_2.jpg" alt="DESI blue BGS galaxy" style="position:absolute;left:490px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:345px;top:278px;width:285px;margin:0;color:#2F64A8;">BGS · blue</p>
+        <p style="position:absolute;left:345px;top:310px;width:285px;margin:0;font-size:19px;line-height:1.4;"><strong>z ≈ 0.1–0.4</strong><br>The same survey’s star-forming galaxies, mostly discs</p>
+        <img src="fig/galaxy_types/lrg_1.jpg" alt="DESI luminous red galaxy" style="position:absolute;left:650px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <img src="fig/galaxy_types/lrg_2.jpg" alt="DESI luminous red galaxy" style="position:absolute;left:795px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:650px;top:278px;width:285px;margin:0;color:var(--accent);">LRG</p>
+        <p style="position:absolute;left:650px;top:310px;width:285px;margin:0;font-size:19px;line-height:1.4;"><strong>z ≈ 0.4–1.1</strong><br>Luminous red galaxies: massive ellipticals at the centres of groups</p>
+        <img src="fig/galaxy_types/elg_1.jpg" alt="DESI emission-line galaxy, marked by two ticks" style="position:absolute;left:955px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <img src="fig/galaxy_types/elg_2.jpg" alt="DESI emission-line galaxy, marked by two ticks" style="position:absolute;left:1100px;top:120px;width:140px;height:140px;border-radius:4px;">
+        <p class="label" style="position:absolute;left:955px;top:278px;width:285px;margin:0;color:var(--accent-2);">ELG</p>
+        <p style="position:absolute;left:955px;top:310px;width:285px;margin:0;font-size:19px;line-height:1.4;"><strong>z ≈ 0.8–1.6</strong><br>Emission-line galaxies: small, faint and forming stars</p>
+        <ul style="position:absolute;left:69px;top:440px;width:1140px;margin:0;">
+          <li>Every stamp is 24″ across: the distant galaxies are small and faint, so their shapes are noisier</li>
+          <li>Red or blue, elliptical or disc: the alignment can differ for each</li>
+        </ul><aside class="notes">Two real galaxies per DESI DR1 sample, picked from Romain's catalogues (candide /n09data/rpaviot/DESIxUnions/catalogues: BGS_RED_GMM, BGS_BLUE_GMM, LRG, ELG_LOPnotqso), in the UNIONS north, unmasked, near the typical redshift of each sample and in the larger half by size so they are visible. Images: Legacy Surveys DR9 grz, 0.125″/px; every stamp is 24″ across. The ELGs are r ≈ 23 and barely resolved; the yellow ticks point at them. TARGETIDs, redshifts and masses: fig/galaxy_types/README_picks.txt.
+Shown: BGS red at z = 0.155 and 0.235 (log M★ ≈ 11.0); BGS blue at z = 0.19 and 0.13; LRG at z = 0.56 and 0.52 (log M★ ≈ 11.2–11.4); ELG at z = 0.92 and 1.06 (log M★ ≈ 8.6–9.9).
+Sample medians in Romain's catalogues: z = 0.23 (BGS red and blue), 0.75 (LRG), 1.16 (ELG). The redshift ranges on the slide are the DESI clustering ranges.
+BGS red/blue is Romain's colour split (a Gaussian mixture in colour). CMASS on the next slide is the BOSS equivalent of the LRGs (z ≈ 0.4–0.7).</aside>
+      </section>
+
+      <!-- 10 · IA: Antonin -->
+      <section>
+        <p class="who">A. Corinaldi (PhD), in preparation</p>
+        <h2>With DESI DR1, alignment amplitude depends on galaxy type</h2>
+        <img class="plot" src="fig/ia_overlap_bgs.png" alt="Sky overlap of UNIONS shapes with DESI BGS" style="position:absolute;left:40px;top:110px;width:290px;height:auto;">
+        <img class="plot" src="fig/ia_overlap_lrg.png" alt="Sky overlap with DESI LRG" style="position:absolute;left:340px;top:110px;width:290px;height:auto;">
+        <img class="plot" src="fig/ia_overlap_elg.png" alt="Sky overlap with DESI ELG" style="position:absolute;left:40px;top:270px;width:290px;height:auto;">
+        <img class="plot" src="fig/ia_overlap_cmass.png" alt="Sky overlap with CMASS" style="position:absolute;left:340px;top:270px;width:290px;height:auto;">
+        <img class="plot" src="fig/ia_fig6_gs_monopole_combined.png" alt="Galaxy-shape monopole xi_g+ and xi_gx against separation for BGS, LRG, CMASS and ELG" style="position:absolute;left:660px;top:96px;width:590px;height:auto;">
+        <ul style="position:absolute;left:50px;top:460px;width:580px;margin:0;">
+          <li>UNIONS shapes for 1.8 M spectroscopic galaxies</li>
+          <li>CMASS and LRG align most, BGS less, ELG consistent with zero</li>
+          <li>The cross term ξ<sub>g×</sub> is null</li>
+        </ul>
+        <aside class="notes">ATTRIBUTION TO CHECK: these figures are from Calum's Hefei talk (July 2026, authors Murray, Paviot, Kilbinger, Corinaldi, Codis; slides 13 and 25), which does not say who made them. They are put here as Antonin's line of work (Fabian → Antonin) on Calum's instruction; confirm before the talk.
+Left: UNIONS × DESI DR1 BGS, LRG, ELG and BOSS CMASS on the sky. Right: galaxy-shape monopole ξ_g+,0(s) and the parity null ξ_g×,0 per sample.
+Matched counts: BGS 1,014,347; LRG 329,820; ELG 265,697; CMASS 195,529 (1.8 M in all).
+Antonin's thesis: IA with UNIONS, DESI and Euclid (PhD since Sept 2025, with M. Kilbinger and S. Codis); he is also preparing a paper on tidal-alignment templates with AbacusSummit (Hefei slide 39).</aside>
+      </section>
+
+      <!-- 11 · IA: Romain -->
+      <section>
+        <p class="who">Paviot et al. 2026, arXiv:2610.40411</p>
+        <h2>Red galaxies align radially; massive blue ones tangentially</h2>
+        <img class="plot" src="fig/ia_fig3_aia_vs_mass_red.png" alt="Alignment amplitude of DESI BGS red and LRG galaxies against effective halo mass: nearly flat near 1 to 2 below 1.3e13, rising steeply above, with the broken power-law fit" style="position:absolute;left:40px;top:110px;width:440px;height:auto;">
+        <img class="plot" src="fig/ia_fig6_aia_vs_mass_blue.png" alt="Alignment amplitude against stellar mass for DESI BGS blue and ELG galaxies: low-mass blue consistent with zero, high-mass blue at minus 0.6, ELG consistent with zero" style="position:absolute;left:500px;top:116px;width:450px;height:auto;">
+        <ul style="position:absolute;left:975px;top:130px;width:270px;margin:0;">
+          <li>DESI DR1 with UNIONS shapes, up to 2,400 deg²</li>
+          <li>Red: flat at low mass, steep above 10¹³ h⁻¹ M☉</li>
+          <li>Massive blue: <b>A<sub>IA</sub> = −0.59 ± 0.18</b>, tangential at 3.3σ</li>
+          <li>Low-mass blue and ELG: consistent with zero</li>
+        </ul><aside class="notes">Paviot et al. 2026, "UNIONS: Red and blue alignments of DESI DR1 galaxies", arXiv:2610.40411 (29 October 2026; Paviot, Murray, Kilbinger, Daley, Hervas Peters, Corinaldi, et al.). Public now, so the earlier "ask Romain first" no longer applies; still worth telling him it is shown. Figures are the arXiv versions (results/fig3_aia_vs_mass_red.png, fig6_aia_vs_mass_blue.png of the source).
+Data: DESI DR1 BGS, LRG and ELG × UNIONS shapes, 2,400 deg² for BGS and 1,200–1,250 deg² for LRG and ELG. Fits: the clustering monopole and the galaxy-shape quadrupole of ξ(s, μ) jointly, NLA; w_g+ as a check.
+Left, red: A_IA against an effective halo mass from a CSMF fitted to the BGS red galaxy-galaxy lensing. A single power law fails (χ² 96.8/20); a broken one fits (32.3/18): β₁ = −0.24 ± 0.09 below M_b = 1.3 × 10¹³ h⁻¹ M☉ (log 13.11 ± 0.06), β₂ = 1.74 ± 0.29 above. Below the break A_IA ≈ 1–2, nearly flat: a single power law extrapolated to faint sources mispredicts it both ways. Partly in tension with Fortuna et al. 2025 (KiDS LRGs) over the common mass range.
+Right, blue: BGS blue global A_IA = −0.29 ± 0.11 (2.6σ); low-mass half −0.05 ± 0.11; high-mass half (log M★ ≈ 10.7) −0.59 ± 0.18, 3.3σ (2.2σ model-independent), "to our knowledge the most significant detection of a non-zero alignment of blue galaxies to date". ELG: −0.37 ± 0.53, −1.4 &lt; A_IA &lt; 0.7 at 2σ. TATT is not favoured over NLA; the tangential signal is carried by the tidal-alignment term, not tidal torquing.
+Negative A_IA = tangential alignment, the opposite sign to red galaxies (slide 9e).</aside>
+      </section>
+
+      <!-- 12b · SPHEREx, the cosmic web -->
+      <section>
+        <h2>SPHEREx redshifts trace the cosmic web over the whole sky</h2>
+        <video src="media/spherex_sky_redshift.mp4" poster="fig/spherex_sky_redshift_poster.jpg" muted="" loop="" playsinline="" data-autoplay="" aria-label="Mollweide map of the whole sky filled with SPHEREx galaxies; as redshift climbs from 0.07 to 0.37 and back, filaments and voids drift and change" style="position:absolute;left:120px;top:100px;width:1040px;height:527px;"></video>
+        <img src="fig/spherex_unions_overlay.png" alt="The UNIONS footprint outlined in orange over the map" style="position:absolute;left:120px;top:100px;width:1040px;height:527px;pointer-events:none;">
+        <p class="caption" style="position:absolute;left:120px;top:640px;width:1040px;margin:0;">Legacy Surveys positions, redshifts from SPHEREx alone (LSx, preliminary), z = 0.07 to 0.37. Orange: the UNIONS footprint.</p>
+        <img src="fig/spherex_spacecraft.jpg" alt="The SPHEREx observatory in the clean room, showing its three nested conical photon shields" style="position:absolute;left:40px;top:100px;width:173px;height:auto;border-radius:4px;"><aside class="notes">The LSx v0.9 sky movie from calumhrmurray.github.io/spherex-sky.html (assets/spherex/allsky_redshift_oldstyle.mp4, 37.6 s, 29 MB): shells climb from 0.07 &lt; z &lt; 0.10 to z = 0.37 in ~14 s, then sweep down and up; it loops here. Orange: the final UNIONS footprint (DR6 tiles), drawn in the movie's projection (scripts/spherex_unions_overlay.py). Each point is a Legacy Surveys galaxy with a redshift from its SPHEREx spectrum alone, no optical bands in the fit; this shell holds 1,096,235 galaxies.
+This catalogue is what the next slide uses: Legacy Surveys shapes, positions with SPHEREx redshifts, over the whole extragalactic sky rather than the UNIONS footprint.
+Preliminary: the catalogue report says no number from it may be quoted as a release number. Against DESI and other spectroscopic surveys, σ_NMAD runs from 0.005 at r ≈ 16 to 0.013 at r ≈ 20.5 with a few per cent outliers at the faint end (final_v2 report, §5.2); say "about one per cent" if asked.</aside>
+      </section>
+
+      <!-- 12 · IA: Calum, UNIONS shapes x SPHEREx -->
+      <section>
+        <p class="who">Murray et al., in preparation · UNIONS shapes, SPHEREx redshifts</p>
+        <h2>With UNIONS shapes, discs align tangentially with the tide</h2>
+        <img class="plot" src="fig/ia_unions_spherex_wgp.png" alt="Left: r_p w_g+ at 0.20 &lt; z &lt; 0.35 with UNIONS shapes; red galaxies positive (radial), late-type discs negative (tangential), massive late-types more negative. Right: the amplitude in three redshift bins; red radial in all, blue and late-type tangential above z = 0.2" style="position:absolute;left:120px;top:104px;width:1040px;height:auto;">
+        <ul style="position:absolute;left:69px;top:584px;width:1160px;margin:0;">
+          <li>4.3 M SPHEREx galaxies, UNIONS shapes: same signs as with Legacy Surveys shapes</li>
+          <li>Discs <strong>tangential</strong> above z = 0.2 (massive ones A = −0.99 ± 0.21); red galaxies radial</li>
+        </ul><aside class="notes">Data: UNIONS ShapePipe v1.6 metacal shapes (comprehensive catalogue, ngmix flags = 0, v1.6.9 masks) matched within 1″ to the LSx v0.9 galaxies, whose positions and redshifts come from SPHEREx: 4,258,993 matched shape galaxies over the 5,559 deg² overlap; density tracers are all LSx galaxies of the z bin; 40 jackknife patches. Nibi: ~/intrinsic_alignments/docs/unions_overlap.md and docs/figures/unions/wgp_unions.json (src/probes/unions_figs.py, 2026-10-23). Figure redrawn for this deck from that JSON (scratch script, matched samples only).
+Left, 0.20 &lt; z &lt; 0.35: r_p w_g+ with UNIONS shapes for red (colour), late-type (morphology, all colours) and late-type in the top mass bin (median log M★ = 11.1). Grey band: the 6–70 h⁻¹ Mpc fitting range. Right: the amplitude A = GLS-weighted mean of r_p w_g+ over 6–70 h⁻¹ Mpc, jackknife errors.
+Numbers (A, UNIONS shapes): late-type −0.41 ± 0.10 (z 0.20–0.35), −0.59 ± 0.16 (0.35–0.55), +0.12 ± 0.10 (0.05–0.20); late-type log M★ ≈ 11: −0.99 ± 0.21; blue −0.16 ± 0.08, −0.30 ± 0.14, +0.25 ± 0.10; red +0.17 ± 0.11, +0.56 ± 0.09, +0.76 ± 0.12. Positive = radial. w_g× consistent with zero everywhere.
+The point of this slide: on identical galaxies the UNIONS and Legacy Surveys (Tractor) amplitudes agree for blue and late-type to |ΔA| ≤ 0.10 (paired jackknife), so the tangential disc signal is in the galaxies, not the shape measurement. Red and early-type are 20–40% weaker with UNIONS shapes (z1 red ΔA = −0.23 ± 0.02) with the same sign; cutout tests rule out radial weighting and Tractor misfits, so it is a survey/estimator difference still being understood. Don't quote a red amplitude as "the" value.
+Not the same split as the paper: "late-type" here is the morphology class of the pipeline (iacorr.py), not the paper's blue-disc cut (blue AND Sérsic n &lt; 1.5); significances in the paper are for the full Legacy Surveys footprint. The previous Legacy-shapes figure is fig/ia_blue_discs_wgp.png if wanted as backup.</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="reveal/dist/reveal.js"></script>
+  <script src="reveal/plugin/math/math.js"></script>
+  <script src="reveal/plugin/notes/notes.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, margin: 0.04,
+      center: false, hash: true, transition: 'none',
+      controls: false, progress: true, slideNumber: 'c/t',
+      katex: { local: 'reveal/katex' },
+      plugins: [ RevealMath.KaTeX, RevealNotes ],
+    });
+  </script>
+</body>
+</html>

@@ -25,6 +25,8 @@ jobs:
       - run: npm ci
       - run: node house/build.mjs .
       - run: node house/check.mjs .
+      # Calum's Lectern deck: a separate folder, published next to the house deck
+      - run: cp -R calum "_site/${{ github.event.repository.name }}/calum"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site/${{ github.event.repository.name }}

@@ -1,0 +1,102 @@
+/* UNIONS on white: colours sampled from the UNIONS logo (fig/logo/unions_logo.png).
+   The logo's own orange, teal and yellow are for rules and ornaments; text uses deeper
+   shades of the same hues, which read on white. */
+:root {
+  --paper: #FFFFFF; --paper-2: #F2F7F5; --ink: #111111; --ink-soft: #5B6461; --rule: #DCE3E0;
+  --accent: #C4561C; --accent-2: #2E6E61; --u-orange: #E87838; --u-teal: #488878; --u-yellow: #F8C848;
+  --serif: Georgia, "Times New Roman", Times, serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ---- shared vocabulary ---- */
+.reveal .slides { text-align: left; }
+.reveal .slides section { padding: 24px 40px; box-sizing: border-box; }
+.reveal h1, .reveal h2, .reveal h3 { text-transform: none; letter-spacing: -0.01em; }
+.reveal h1 { font-size: 2.4em; line-height: 1.06; margin: 0; }
+.reveal h2 { font-size: 1.4em; line-height: 1.12; margin: 0 0 0.6em; }
+.reveal h3 { font-size: 1.05em; margin: 0 0 0.4em; }
+.reveal p, .reveal li { font-size: 0.72em; line-height: 1.5; }
+.reveal ul, .reveal ol { margin: 0.2em 0 0.2em 1em; }
+.reveal li { margin: 0.35em 0; }
+.reveal strong { font-weight: 650; }
+.reveal em { font-style: italic; }
+.reveal a { color: var(--accent); }
+.reveal .kicker { font-size: 0.42em; text-transform: uppercase; letter-spacing: 0.22em; font-weight: 600; margin: 0 0 14px; }
+.reveal .caption { font-size: 0.46em; text-align: center; margin-top: 8px; }
+.reveal .cite { position: absolute; left: 40px; right: 40px; bottom: 18px; font-size: 0.46em; margin: 0; }
+.reveal .cols { display: flex; gap: 40px; align-items: flex-start; }
+.reveal .col { flex: 1; min-width: 0; }
+.reveal .card { border-radius: 12px; padding: 18px 22px; }
+.reveal .card p, .reveal .card li { font-size: 0.62em; }
+.reveal table { font-size: 0.56em; border-collapse: collapse; width: 100%; margin: 10px 0; }
+.reveal table th { text-align: left; font-weight: 600; padding: 7px 10px; font-size: 0.85em; letter-spacing: 0.06em; text-transform: uppercase; }
+.reveal table td { padding: 7px 10px; vertical-align: top; }
+.reveal img.fig { max-width: 100%; display: block; margin: 6px auto; border-radius: 6px; }
+.reveal .meta { font-size: 0.58em; line-height: 1.7; }
+.reveal .big { font-size: 1.9em; line-height: 1.16; max-width: 22ch; }
+.reveal section.title-slide { padding-top: 140px; }
+.reveal section.title-slide h1 { max-width: 20ch; }
+.reveal section.title-slide .sub { font-size: 0.95em; margin-top: 0.5em; }
+.reveal section.title-slide .meta { margin-top: 2em; }
+.reveal section.break { padding-top: 180px; }
+.reveal section.break .sub { font-size: 0.72em; margin-top: 0.8em; }
+
+/* ---- Academic ---- */
+.reveal-viewport { background: var(--paper); }
+.reveal { font-family: var(--sans); font-size: 30px; color: var(--ink); }
+.reveal h1, .reveal h2, .reveal h3 { font-family: var(--sans); font-weight: 700; color: var(--ink); }
+.reveal h2 { font-size: 1.2em; font-weight: 750; letter-spacing: -0.012em; padding-bottom: 0.25em; border-bottom: 0; max-width: 1060px;
+  background: linear-gradient(90deg, var(--u-teal) 0 46%, var(--u-orange) 46% 86%, var(--u-yellow) 86% 100%) left bottom / 150px 4px no-repeat; }
+.reveal .kicker { color: var(--accent); }
+.reveal .accent { color: var(--accent); font-weight: 600; }
+.reveal .accent-2 { color: var(--accent-2); font-weight: 600; }
+.reveal .soft { color: var(--ink-soft); }
+.reveal .caption, .reveal .cite { color: var(--ink-soft); }
+.reveal .card { background: var(--paper-2); border-left: 4px solid var(--u-teal); border-radius: 4px; }
+.reveal img.fig { border: 1px solid var(--rule); }
+.reveal table th { color: var(--ink); border-bottom: 2px solid var(--ink); }
+.reveal table td { border-bottom: 1px solid var(--rule); }
+.reveal .meta { color: var(--ink-soft); }
+.reveal .big { color: var(--accent); }
+.reveal section.title-slide h1 { border: 0; }
+.reveal section.title-slide .sub { color: var(--ink-soft); }
+.reveal section.break .sub { color: var(--ink-soft); }
+
+/* ---- this deck ---- */
+.reveal pre.cfg { font-size: 0.4em; line-height: 1.42; background: var(--paper-2); border-left: 4px solid var(--accent); padding: 12px 18px; margin: 0; box-shadow: none; width: auto; }
+.reveal pre.cfg code { font-family: var(--mono); max-height: none; padding: 0; background: none; }
+.reveal pre.cfg .c { color: var(--ink-soft); }
+.reveal table.tight { font-size: 0.5em; margin: 4px 0; }
+.reveal table.tight td, .reveal table.tight th { padding: 4px 8px; }
+.reveal .num { font-variant-numeric: tabular-nums; }
+
+/* ---- the "solved along the way" slides, ported from the cosmostat group-meeting deck (deck.css),
+   in this deck's colours: its teal labels are the accent here, its rust "next" is accent-2 ---- */
+.reveal section.ported h2 { font-size: 1.15em; margin-bottom: 0.5em; text-wrap: balance; }
+.reveal section.ported .caption { font-size: 0.48em; text-align: left; margin-top: 6px; }
+.reveal .steps { position: absolute; margin: 0; }
+.reveal .steps h3 { margin: 0 0 2px; font-size: 0.8em; }
+.reveal .steps h3.next { color: var(--accent-2); }
+.reveal .steps p { margin: 0 0 16px; font-size: 18px; line-height: 1.35; }
+.reveal .figcard { position: absolute; margin: 0; padding: 10px 12px 9px; background: var(--paper); border: 1.4px solid var(--rule); border-radius: 4px; box-sizing: border-box; }
+.reveal .figcard img { display: block; width: 100%; margin: 0; }
+.reveal .figcard .cap { display: block; margin: 6px 0 0; font-size: 13.5px; line-height: 1.35; color: var(--ink-soft); }
+.reveal .figcard .cap b { color: var(--accent-2); font-weight: 600; }
+.reveal .tiles { position: absolute; margin: 0; display: grid; gap: 18px; }
+.reveal .label { margin: 0 0 10px; font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--accent); }
+.reveal .note { position: absolute; margin: 0; font-size: 17px; line-height: 1.4; color: var(--ink); }
+.reveal .note b { color: var(--accent-2); }
+
+/* ---- on every slide: the UNIONS logo top right, a hibiscus-and-monstera wash in the
+   bottom-right corner (the logo's flower, faded), the speaker bottom left ---- */
+.reveal .slides { background: url(fig/logo/unions_flower_wash.png) no-repeat right -70px bottom -80px / 300px; }   /* the 1280×720 box: sections are only as tall as their content */
+.reveal .slides section:not(.stack):not(.title-slide)::before { content: ""; position: absolute; top: 22px; right: 26px; width: 140px; height: 36px; background: url(fig/logo/unions_logo.png) no-repeat right center / contain; pointer-events: none; }
+.reveal .slides section:not(.stack):not(.title-slide)::after { content: "Calum Murray – CEA, Paris-Saclay"; position: absolute; left: 40px; top: 697px; font-size: 16px; line-height: 1; color: var(--ink-soft); pointer-events: none; }
+/* title slide: the big wordmark */
+.reveal section.title-slide h1 { font-weight: 800; }
+.reveal section.title-slide .meta b { color: var(--accent-2); }
+
+/* ---- UNIONS additions ---- */
+.reveal img.plot { mix-blend-mode: multiply; }   /* white plot backgrounds sit on the paper */
+.reveal .who { font-size: 0.42em; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: var(--accent-2); margin: 0 0 6px; }
