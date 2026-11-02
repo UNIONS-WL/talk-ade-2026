@@ -40,7 +40,6 @@
       "slides": [
         "consensus",
         "north",
-        "massmap-paris",
         "release-2d",
         "cosmic-shear",
         "tomography",
@@ -49,7 +48,8 @@
         "v2-scale",
         "nz-v2",
         "closing",
-        "thanks"
+        "thanks",
+        "massmap-paris"
       ]
     },
     {
