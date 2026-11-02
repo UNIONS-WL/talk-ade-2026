@@ -473,13 +473,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     <details><summary>Numbers</summary><p>Goh et al. 2026 ($\xi_\pm$): $S_8 = 0.831^{+0.067}_{-0.078}$. Guerrini et al. 2026 ($C_\ell$): $S_8 = 0.891^{+0.057}_{-0.084}$. Priors from Paper III Table 2: IA width doubled to $\pm0.78$ ("These two reasons motivate the doubling…"); $m$ "multiply the uncertainty by a factor of 3"; $\Delta z$ total $\pm0.018$ = bootstrap + systematic (Papers III and IV state no ×1.4 explicitly; the Moriond talk said ×1.4).</p></details></aside>
       </section>
 
-      <!-- Cail · tomography -->
-      <section class="divider" data-background-color="#22574B">
-        <h2>The next year: tomography</h2>
-        <p class="divider-sub">A new shape catalog over the full footprint, released quickly, and the first tomographic UNIONS cosmic shear.</p>
-        <aside class="notes"><ul class="skim"><li><strong>Outlook</strong> — the plan for the coming year; everything from here on is working and blinded.</li></ul></aside>
-      </section>
-
       <!-- Cail · next-year -->
       <section>
         <h2>Next year: a fast catalog release, then tomographic cosmic shear</h2>
@@ -557,23 +550,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     <details><summary>Sources</summary><p>nz_v2_full products (nz_v2_bound9_full_tomo.txt), drawn by figures/nz_v2.py.</p></details></aside>
       </section>
 
-      <!-- Cail · dv-blinded -->
-      <section>
-        <h2>The blinded tomographic $\xi_\pm$ is measured in all ten bin pairs</h2>
-        <img class="plot" src="images/xi_square_blinded.png" alt="Four-by-four grid of concealed xi plus (upper triangle) and xi minus (lower triangle) for four redshift bins, with the fiducial cosmology prediction" style="position:absolute;left:150px;top:108px;width:567px;height:546px;">
-        <div class="textcol" style="position:absolute;left:770px;top:200px;width:460px;">
-    <p style="font-size:24px;">Concealed data vectors: the amplitude carries no $S_8$ information</p>
-    <p style="font-size:24px;">Line: a fiducial cosmology (Planck 2018, no IA, no baryons), not a fit</p>
-    <p class="small">Shaded: outside the 12–83′ fiducial range.</p></div>
-        <aside class="notes"><ul class="skim">
-      <li><strong>Layout</strong> — upper triangle $\xi_+$ (black), lower $\xi_-$ (blue), both on the diagonal; bins 1–4 with $\langle z\rangle$ 0.29 to 0.93.</li>
-      <li><strong>What to see</strong> — the signal grows from bin 1 to bin 4, as the line does.</li>
-      <li><strong>Do not narrate the offset</strong> — concealed $\xi_+$ sits below the line in most pairs; that is concealment plus a no-IA fiducial, by construction, not a result.</li>
-      <li><strong>Errors</strong> — analytic covariance, v2 footprint (SP_v2.0_tomo).</li>
-    </ul>
-    <details><summary>Sources</summary><p>Rendered on Nibi by cosmo-val-v2-tomo/slides/xi_square_slide.py from cosmo_val/SP_v2.0_tomo.sacc via sacc_io.load(blind="unions").</p></details></aside>
-      </section>
-
       <!-- Cail · closing -->
       <section>
         <h2>UNIONS: Weak lensing in the Northern sky</h2>
@@ -635,6 +611,23 @@ Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a ce
         <div class="textcol" style="position:absolute;left:770px;top:200px;width:460px;">
     <p style="font-size:24px;">Concealed data vectors: the amplitude carries no $S_8$ information</p>
     <p style="font-size:24px;">The signal grows with redshift in every bin pair</p>
+    <p class="small">Shaded: outside the 12–83′ fiducial range.</p></div>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Layout</strong> — upper triangle $\xi_+$ (black), lower $\xi_-$ (blue), both on the diagonal; bins 1–4 with $\langle z\rangle$ 0.29 to 0.93.</li>
+      <li><strong>What to see</strong> — the signal grows from bin 1 to bin 4, as the line does.</li>
+      <li><strong>Do not narrate the offset</strong> — concealed $\xi_+$ sits below the line in most pairs; that is concealment plus a no-IA fiducial, by construction, not a result.</li>
+      <li><strong>Errors</strong> — analytic covariance, v2 footprint (SP_v2.0_tomo).</li>
+    </ul>
+    <details><summary>Sources</summary><p>Rendered on Nibi by cosmo-val-v2-tomo/slides/xi_square_slide.py from cosmo_val/SP_v2.0_tomo.sacc via sacc_io.load(blind="unions").</p></details></aside>
+      </section>
+
+      <!-- Cail · backup: dv-blinded -->
+      <section>
+        <h2>The blinded tomographic $\xi_\pm$ is measured in all ten bin pairs</h2>
+        <img class="plot" src="images/xi_square_blinded.png" alt="Four-by-four grid of concealed xi plus (upper triangle) and xi minus (lower triangle) for four redshift bins, with the fiducial cosmology prediction" style="position:absolute;left:150px;top:108px;width:567px;height:546px;">
+        <div class="textcol" style="position:absolute;left:770px;top:200px;width:460px;">
+    <p style="font-size:24px;">Concealed data vectors: the amplitude carries no $S_8$ information</p>
+    <p style="font-size:24px;">Line: a fiducial cosmology (Planck 2018, no IA, no baryons), not a fit</p>
     <p class="small">Shaded: outside the 12–83′ fiducial range.</p></div>
         <aside class="notes"><ul class="skim">
       <li><strong>Layout</strong> — upper triangle $\xi_+$ (black), lower $\xi_-$ (blue), both on the diagonal; bins 1–4 with $\langle z\rangle$ 0.29 to 0.93.</li>
