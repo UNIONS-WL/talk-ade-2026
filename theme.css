@@ -99,7 +99,7 @@
 /* ---- on every slide: the strip along the foot, the logo bottom right, the footer line ---- */
 .reveal .slides { background: linear-gradient(90deg, var(--u-teal) 0 46%, var(--u-orange) 46% 86%, var(--u-yellow) 86% 100%) left bottom / 100% 7px no-repeat; }   /* the 1280×720 box: sections are only as tall as their content */
 .reveal .slides section:not(.stack):not(.title-slide):not(.divider)::before { content: ""; position: absolute; top: 676px; right: 30px; width: 104px; height: 26px; background: url(fig/logo/unions_logo.png) no-repeat right center / contain; pointer-events: none; }
-.reveal .slides section:not(.stack):not(.title-slide):not(.divider):not(.bleed)::after { content: "UNIONS · Colloque national Dark Energy · Paris · 3 November 2026"; position: absolute; left: 40px; top: 684px; font-size: 15px; line-height: 1; font-variant-caps: small-caps; letter-spacing: 0.02em; color: var(--ink-soft); pointer-events: none; }
+.reveal .slides section:not(.stack):not(.title-slide):not(.divider):not(.bleed)::after { content: "Calum Murray & Cail Daley · UNIONS · Colloque national Dark Energy · Paris · 3 November 2026"; position: absolute; left: 40px; top: 684px; font-size: 15px; line-height: 1; font-variant-caps: small-caps; letter-spacing: 0.02em; color: var(--ink-soft); pointer-events: none; }
 .reveal .slide-number { right: 158px; bottom: 15px; background: none; color: var(--ink-soft); font-family: var(--sans); font-size: 15px; }
 .reveal .slide-number a { color: inherit; }
 .reveal .progress { bottom: 7px; height: 3px; color: var(--u-orange); }
