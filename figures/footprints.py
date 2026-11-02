@@ -1,5 +1,5 @@
 # /// script
-# dependencies = ["matplotlib", "numpy", "mocpy", "astropy", "pillow", "fonttools", "brotli", "scipy"]
+# dependencies = ["matplotlib", "numpy", "mocpy", "astropy", "pillow", "fonttools", "brotli"]
 # ///
 """Survey coverage on the equatorial sky; provenance in data/footprints/README.md."""
 import json
@@ -12,7 +12,6 @@ from matplotlib.patches import Patch
 from astropy.coordinates import SkyCoord
 from astropy import units as u
 from mocpy import MOC
-from scipy.ndimage import label
 from _style import setup, IMAGES, COBALT, TEAL, ORANGE, YELLOW, MUTED
 
 DATA = Path(__file__).parent / "data" / "footprints"
@@ -50,32 +49,50 @@ def hsc_mask():
     return np.load(DATA / "hsc_y3.npz")["mask"]
 
 
+def load_masks(dr1=None):
+    """Shared equatorial geometry and physical gates for maps and globes."""
+    masks = {name:moc_mask(name) for name in ["des", "kids", "lsst"]}
+    if dr1:
+        masks["euclid_dr1"] = MOC.from_fits(dr1).contains_lonlat(RA.ravel()*u.deg, DEC.ravel()*u.deg).reshape(RA.shape)
+    wide_product = np.load(DATA / "euclid_wide.npz")
+    assert np.array_equal(wide_product['ra_deg'],RA[0]), 'Euclid RA axis must run 360→0'
+    assert np.array_equal(wide_product['dec_deg'],DEC[:,0]), 'Euclid Dec axis must run −90→+90'
+    masks.update(unions=unions_mask(), hsc_y3=hsc_mask(), euclid_wide=wide_product['mask'])
+    weights = np.cos(Y[:,:-1])*.25**2
+    wide = masks['euclid_wide'][:,:-1]
+    area = np.sum(wide*weights)
+    reference_area = json.loads((DATA/'euclid_wide_source.json').read_text())['published_reference_area_deg2']
+    assert abs(area/reference_area-1) < .05, ('Euclid Wide area',area,reference_area)
+    b = SkyCoord(RA*u.deg,DEC*u.deg).galactic.b.deg[:,:-1]
+    low_lat_area = np.sum(wide*(np.abs(b)<15)*weights)
+    assert low_lat_area < 5, ('Euclid Wide Galactic-plane coverage',low_lat_area)
+    if dr1:
+        observed = masks['euclid_dr1'][:,:-1]
+        contained = np.sum(observed*wide*weights)/np.sum(observed*weights)
+        # Observed VIS mosaics include non-Wide/calibration tiles; the public
+        # reference and observed footprint need not have identical boundaries.
+        assert contained >= .95, ('DR1 contained in Wide',contained)
+        print(f'Euclid DR1 containment: {contained:.4%}')
+    print(f'Euclid Wide: {area:.1f} deg2; |b|<15: {low_lat_area:.2f} deg2')
+    return masks
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dr1", type=Path, help="Authorized observed DR1 MOC, kept outside tracked data")
     parser.add_argument("--output-dir", type=Path, default=IMAGES)
+    parser.add_argument("--projection", choices=['mollweide','mercator'], default='mollweide')
     args = parser.parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     setup()
     plt.rcParams.update({"font.size":48, "axes.linewidth":1.4})
     coords = SkyCoord(RA*u.deg, DEC*u.deg, frame="icrs")
     galactic = np.abs(coords.galactic.b.deg) < 10
-    masks = {name:moc_mask(name) for name in ["des", "kids", "lsst"]}
-    if args.dr1:
-        masks["euclid_dr1"] = MOC.from_fits(args.dr1).contains_lonlat(RA.ravel()*u.deg, DEC.ravel()*u.deg).reshape(RA.shape)
-    masks["unions"] = unions_mask()
-    masks["hsc_y3"] = hsc_mask()
-    masks["euclid_wide"] = np.load(DATA / "euclid_wide.npz")["mask"]
-    # Remove isolated raster specks from the published background image.
-    components, count = label(masks["euclid_wide"])
-    areas = np.bincount(components.ravel(), weights=np.cos(Y).ravel())*.25**2
-    keep = areas > 25
-    keep[0] = False
-    masks["euclid_wide"] = keep[components]
+    masks = load_masks(args.dr1)
     # These broad coverage checks reject a planned HSC map or an intermediate-year
     # Stage IV map substituted for the products documented beside the inputs.
     area_ranges = {"des":(4800,5500), "kids":(800,1000), "hsc_y3":(350,650),
-                   "lsst":(17000,19000), "euclid_wide":(14000,16000),
+                   "lsst":(17000,19000), "euclid_wide":(12500,16000),
                    "euclid_dr1":(2300,2400), "unions":(5000,6500)}
     for name, mask in masks.items():
         assert mask.shape == RA.shape, (name, mask.shape)
@@ -85,19 +102,30 @@ def main():
         print(f"{name}: raster coverage {area:.1f} deg2")
     for unions in [False, True]:
         fig = plt.figure(figsize=(23.62,15.42), dpi=100)
-        ax = fig.add_axes([.055,.32,.90,.66], projection="mollweide")
-        ax.contourf(X,Y,galactic.astype(float),levels=[.5,1.5],colors=["#EAE6DE"],antialiased=False)
+        mercator = args.projection == 'mercator'
+        if mercator:
+            ax = fig.add_axes([.055,.32,.90,.66])
+            px = X
+            py = np.log(np.tan(np.pi/4+np.radians(np.clip(DEC,-85,85))/2))
+            ax.set_ylim(-2.44,2.44)  # Declinations −80° to +80°.
+            ax.set_xlim(-np.pi,np.pi)
+        else:
+            ax = fig.add_axes([.055,.32,.90,.66], projection="mollweide")
+            px,py = X,Y
+        ax.contourf(px,py,galactic.astype(float),levels=[.5,1.5],colors=["#EAE6DE"],antialiased=False)
         for name, color in [("des",COBALT),("kids",TEAL),("hsc_y3",ORANGE)]+([("unions",PURPLE)] if unions else []):
             if name in masks:
-                ax.contourf(X,Y,masks[name].astype(float),levels=[.5,1.5],colors=[color],alpha=.78,antialiased=False)
+                ax.contourf(px,py,masks[name].astype(float),levels=[.5,1.5],colors=[color],alpha=.78,antialiased=False)
         for name,color,lw in [("lsst",MUTED,3.8),("euclid_wide",YELLOW,4.5),("euclid_dr1",ORANGE,3.2)]:
             if name in masks:
-                ax.contour(X,Y,masks[name].astype(float),levels=[.5],colors=[color],linewidths=lw,linestyles="--")
+                ax.contour(px,py,masks[name].astype(float),levels=[.5],colors=[color],linewidths=lw,linestyles="--")
         ax.set_xticks(np.radians([-120,-60,0,60,120]),["300°","240°","180°","120°","60°"])
-        ax.set_yticks(np.radians([-60,-30,0,30,60]),["−60°","−30°","0°","30°","60°"])
+        lat_ticks = np.radians([-60,-30,0,30,60])
+        ax.set_yticks(np.log(np.tan(np.pi/4+lat_ticks/2)) if mercator else lat_ticks,["−60°","−30°","0°","30°","60°"])
         ax.tick_params(axis="both",labelsize=48,pad=16,length=0)
         ax.grid(color="#B8B1A3",alpha=.4,lw=1.2)
-        ax.spines["geo"].set_color("#B8B1A3")
+        for spine in ax.spines.values():
+            spine.set_color("#B8B1A3")
         handles = [Patch(facecolor=c,alpha=.78,label=n) for n,c in [("DES",COBALT),("KiDS-1000",TEAL),("HSC Y3",ORANGE)]]
         if unions:
             handles.append(Patch(facecolor=PURPLE,alpha=.78,label="UNIONS DR6"))
@@ -108,6 +136,8 @@ def main():
             handles.append(Line2D([0],[0],color=ORANGE,lw=4,ls="--",label="Euclid DR1"))
         fig.legend(handles=handles,loc="lower center",bbox_to_anchor=(.52,.005),ncol=2,frameon=False,fontsize=46,handlelength=1.5,columnspacing=1.5,labelspacing=.1)
         stem = "footprints_unions" if unions else "footprints"
+        if mercator:
+            stem += '_mercator'
         fig.savefig(args.output_dir / (stem + ("" if args.dr1 else "_nodr1") + ".png"),dpi=100)
         plt.close(fig)
 

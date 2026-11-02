@@ -65,10 +65,27 @@ def unions_whisker(out):
     plt.close(fig)
 
 
+def stage3_whisker():
+    """Portrait comparison for the rotating survey globe, at slide text size."""
+    with plt.rc_context({'font.size':72}):
+        fig = plt.figure(figsize=(11.5, 16.4), dpi=DPI)
+        ax = fig.add_axes([0.51, 0.15, 0.46, 0.79])
+        whisker(ax, [(n,v,l,h,INK) for n,v,l,h in STAGE3], (0.715,0.87))
+        ax.texts[0].set_fontsize(72)
+        ax.set_xticks([0.75,0.85])
+        fig.canvas.draw()
+        for text in [*ax.get_yticklabels(), *ax.get_xticklabels(), ax.xaxis.label, *ax.texts]:
+            box = text.get_window_extent(fig.canvas.get_renderer())
+            assert box.x0 >= 0 and box.x1 <= fig.bbox.width, (text.get_text(),box)
+        fig.savefig(IMAGES/'s8_stage3.png', dpi=DPI)
+        plt.close(fig)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--no-dr1", action="store_true", help="Use the public-only footprint variants")
     args = parser.parse_args()
+    stage3_whisker()
     suffix = "_nodr1" if args.no_dr1 else ""
     landscape(IMAGES / f"footprints{suffix}.png", "s8_consensus.png")
     landscape(IMAGES / f"footprints_unions{suffix}.png", "s8_north.png")

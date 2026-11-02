@@ -1,167 +1,162 @@
 #!/usr/bin/env python3
-"""Digitize the RSD_2021A wide footprint from Scaramella et al. Fig. 46.
+# /// script
+# dependencies = ["numpy", "pillow", "scipy", "astropy"]
+# ///
+"""Reproduce the public ESA Euclid Wide Galactic reference-survey mask.
 
-The source is a published reference realization, not an as-built final mask.
-The resulting regular-grid mask is for a talk outline only, not science cuts.
-Requires Ghostscript and ImageMagick's `convert`; no Python packages are used.
+The published PNG places a Galactic Mollweide sky image inside a black oval.
+This script fits that frame, samples the blue overlay in Galactic coordinates,
+transforms it to a regular ICRS grid, and reports area/latitude checks.
+The output is a talk-map proxy, not a science mask.
 """
-from collections import deque
-import json
-import math
 from pathlib import Path
-import struct
-import subprocess
-import sys
-import tempfile
-import zipfile
+import argparse
+import hashlib
+import json
+import numpy as np
+from PIL import Image
+from scipy.optimize import least_squares
+from astropy.coordinates import SkyCoord
+from astropy import units as u
 
-SOURCE = "https://doi.org/10.1051/0004-6361/202141938"
-PAPER = "Euclid Collaboration: Scaramella et al. 2022, A&A 662, A112, Fig. 46"
-PUBLISHED_AREA = 14514.0
-WIDTH, HEIGHT = 1323, 1871  # page 35 rendered at 160 dpi by Ghostscript
-FRAME = (669.4, 456.0, 536.0, 266.0)  # centre x/y, half-width/height in that render
-PALETTE = ((85,196,147),(243,104,109),(85,153,204),(248,172,106),(146,115,182),(255,246,85))
-TOLERANCE = 32  # RGB distance, retaining blended survey-color pixels
-CLOSING_RADIUS = 2  # source-raster pixels; closes sub-degree seams between patches
+OUT = Path(__file__).resolve().parent / 'euclid_wide'
+PUBLISHED_AREA = 13345.0
+ENVELOPE_RADIUS_DEG = .5
 
 
-def ppm_pixels(path):
-    data = Path(path).read_bytes()
-    pos = 0
-    def token():
-        nonlocal pos
-        while True:
-            while data[pos] in b" \t\r\n": pos += 1
-            if data[pos] == 35:
-                while data[pos] not in (10,13): pos += 1
-            else: break
-        start = pos
-        while data[pos] not in b" \t\r\n": pos += 1
-        return data[start:pos]
-    assert token() == b"P6", "expected raw PPM"
-    width, height, maximum = map(int, (token(), token(), token()))
-    while data[pos] in b" \t\r\n": pos += 1
-    pixels = data[pos:]
-    assert maximum == 255 and len(pixels) == width * height * 3
-    return width, height, pixels
+def dilate(mask, dec_deg, radius_deg):
+    """Great-circle dilation on a periodic RA grid without a duplicate seam."""
+    dec = np.radians(dec_deg)
+    nrow, ncol = mask.shape
+    out = np.zeros_like(mask)
+    reach = int(np.ceil(radius_deg/.25))
+    sin_dec, cos_dec = np.sin(dec), np.cos(dec)
+    cos_radius = np.cos(np.radians(radius_deg))
+    for j in range(nrow):
+        for i in range(max(0,j-reach), min(nrow,j+reach+1)):
+            denominator = cos_dec[j]*cos_dec[i]
+            if denominator < 1e-14:
+                dx = ncol//2
+            else:
+                cosine = (cos_radius-sin_dec[j]*sin_dec[i])/denominator
+                dx = int(np.floor(np.arccos(np.clip(cosine,-1,1))/np.radians(.25)+1e-10))
+                dx = min(dx,ncol//2)
+            if dx == ncol//2:
+                out[j] |= np.any(mask[i])
+            else:
+                for shift in range(-dx,dx+1):
+                    out[j] |= np.roll(mask[i],shift)
+    return out
 
 
-def mollweide_pixel(ra, dec):
-    cx, cy, rx, ry = FRAME
-    lam, phi = math.radians(180.0 - ra), math.radians(dec)
-    if abs(abs(phi) - math.pi/2) < 1e-12:
-        theta = math.copysign(math.pi/2, phi)
-    else:
-        theta = phi
-        for _ in range(12):
-            derivative = 2 + 2*math.cos(2*theta)
-            if abs(derivative) < 1e-10: break
-            delta = (2*theta + math.sin(2*theta) - math.pi*math.sin(phi)) / derivative
-            theta -= delta
-            if abs(delta) < 1e-12: break
-    x = (2*math.sqrt(2)/math.pi) * lam * math.cos(theta)
-    y = math.sqrt(2) * math.sin(theta)
-    return round(cx + rx*x/(2*math.sqrt(2))), round(cy - ry*y/math.sqrt(2))
+def presentation_envelope(raw, dec_deg):
+    """Close photographic pinholes then remove isolated color detections."""
+    def grow(mask):
+        return dilate(mask, dec_deg, ENVELOPE_RADIUS_DEG)
+    mask = raw[:,:-1]
+    closed = ~grow(~grow(mask))
+    opened = grow(~grow(~closed))
+    return np.column_stack([opened,opened[:,0]])
 
 
-def fill_enclosed(mask, nrow, ncol):
-    """Fill enclosed holes on the periodic-RA grid for a presentation outline."""
-    visited = bytearray(len(mask))
-    queue = deque()
-    def seed(index):
-        if not mask[index] and not visited[index]:
-            visited[index] = 1
-            queue.append(index)
-    for x in range(ncol):
-        seed(x); seed((nrow-1)*ncol+x)
-    for y in range(nrow):
-        seed(y*ncol); seed(y*ncol+ncol-1)
-    while queue:
-        i = queue.popleft(); y, x = divmod(i, ncol)
-        for yy, xx in ((y-1,x),(y+1,x),(y,(x-1)%ncol),(y,(x+1)%ncol)):
-            if 0 <= yy < nrow:
-                j = yy*ncol+xx
-                if not mask[j] and not visited[j]:
-                    visited[j] = 1; queue.append(j)
-    filled = bytearray(mask)
-    for i, value in enumerate(filled):
-        if not value and not visited[i]: filled[i] = 1
-    return filled
+def fit_mollweide_frame(image):
+    height, width = image.shape[:2]
+    points = []
+    for y in range(30, 1700):
+        x = np.flatnonzero(np.all(image[y] < 20, axis=1))
+        left, right = x[x < width // 2], x[x >= width // 2]
+        if len(left) and len(right) and left[0] < 500 and right[-1] > 2800:
+            points.extend(((float(left[0]), float(y), -1.),
+                           (float(right[-1]), float(y), 1.)))
+    points = np.asarray(points)
+    def residual(params):
+        cx, cy, rx, ry = params
+        x, y, side = points.T
+        yy = (y - cy) / ry
+        return x - (cx + side * rx * np.sqrt(np.clip(1 - yy * yy, 0, 1)))
+    fit = least_squares(residual, (1680, 866, 1580, 790),
+                        loss='soft_l1', f_scale=1.)
+    return fit.x, float(np.sqrt(np.mean(residual(fit.x) ** 2))), len(points)
 
 
-def area_deg2(mask, nrow, ncol):
-    total = 0.0
-    for iy in range(nrow):
-        dec = -90 + iy*.25
-        lo, hi = max(-90,dec-.125), min(90,dec+.125)
-        pixel_area = math.radians(.25)*math.radians(hi-lo)*math.cos(math.radians(dec))*(180/math.pi)**2
-        total += sum(mask[iy*ncol:(iy+1)*ncol])*pixel_area
-    return total
+def mollweide_theta(latitude_deg):
+    phi = np.deg2rad(latitude_deg)
+    theta = phi.copy()
+    for _ in range(12):
+        denominator = 2 + 2 * np.cos(2 * theta)
+        delta = np.divide(2 * theta + np.sin(2 * theta) - np.pi * np.sin(phi),
+                          denominator, out=np.zeros_like(theta),
+                          where=np.abs(denominator) > 1e-10)
+        theta -= delta
+    return theta
 
 
-def main(pdf):
-    outdir = Path(__file__).resolve().parent
-    with tempfile.TemporaryDirectory(prefix="euclid-rsd-") as temp:
-        page = Path(temp)/"page.ppm"
-        raw_mask = Path(temp)/"mask.pgm"
-        closed_mask = Path(temp)/"closed.pgm"
-        subprocess.run(["gs","-q","-dNOPAUSE","-dBATCH","-sDEVICE=ppmraw","-r160","-dFirstPage=35","-dLastPage=35",f"-sOutputFile={page}",str(pdf)],check=True)
-        width,height,pixels = ppm_pixels(page)
-        assert (width,height)==(WIDTH,HEIGHT), (width,height)
-        raw = bytearray(width*height)
-        tol2 = TOLERANCE*TOLERANCE
-        for j in range(width*height):
-            q = pixels[3*j:3*j+3]
-            distance = min(sum((q[k]-color[k])**2 for k in range(3)) for color in PALETTE)
-            raw[j] = 255 if distance <= tol2 else 0
-        raw_mask.write_bytes(f"P5\n{width} {height}\n255\n".encode()+raw)
-        subprocess.run(["convert",str(raw_mask),"-morphology",f"Close",f"Disk:{CLOSING_RADIUS}",str(closed_mask)],check=True)
-        pgm = closed_mask.read_bytes(); pos = pgm.index(b"\n255\n")+5
-        # The source page is sampled onto the talk renderer's 0.25-degree grid.
-        nrow,ncol = 721,1441
-        initial = bytearray(nrow*ncol)
-        raster = pgm[pos:]
-        for iy in range(nrow):
-            dec = -90 + iy*.25
-            for ix in range(ncol):
-                ra = 360 - ix*.25
-                x,y = mollweide_pixel(ra,dec)
-                if 0 <= x < width and 0 <= y < height and raster[y*width+x] > 0:
-                    initial[iy*ncol+ix] = 1
-        # A one-degree close on the final grid joins sub-degree field seams.
-        grid_raw = Path(temp)/"grid.pgm"
-        grid_closed = Path(temp)/"grid-closed.pgm"
-        grid_raw.write_bytes(f"P5\n{ncol} {nrow}\n255\n".encode()+bytes(255 if v else 0 for v in initial))
-        subprocess.run(["convert",str(grid_raw),"-morphology","Close","Disk:4",str(grid_closed)],check=True)
-        grid_data = grid_closed.read_bytes(); grid_pos = grid_data.index(b"\n255\n")+5
-        initial = bytearray(1 if value else 0 for value in grid_data[grid_pos:])
-        # RA=0 and RA=360 are the same meridian.
-        for iy in range(nrow): initial[iy*ncol+ncol-1] = initial[iy*ncol]
-        before = area_deg2(initial,nrow,ncol)
-        mask = fill_enclosed(initial,nrow,ncol)
-        after = area_deg2(mask,nrow,ncol)
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('source', type=Path, help='ESA ReferenceSurveyGAL PNG downloaded from the source URL in the metadata')
+    args = parser.parse_args()
+    image = np.asarray(Image.open(args.source).convert('RGB')).astype(np.int16)
+    (cx, cy, rx, ry), frame_rms, nframe = fit_mollweide_frame(image)
+    ra, dec = np.meshgrid(360 - np.arange(1441) * .25,
+                          np.linspace(-90, 90, 721))
+    coords = SkyCoord(ra * u.deg, dec * u.deg, frame='icrs')
+    galactic = coords.galactic
+    longitude = galactic.l.to_value(u.deg)
+    latitude = galactic.b.to_value(u.deg)
+    # The central bulge is at image center (l=0); Galactic longitude increases
+    # toward image-left.
+    lam = (longitude + 180) % 360 - 180
+    theta = mollweide_theta(latitude)
+    x = cx - rx * (lam / 180) * np.cos(theta)
+    y = cy - ry * np.sin(theta)
+    xi = np.clip(np.rint(x).astype(int), 0, image.shape[1] - 1)
+    yi = np.clip(np.rint(y).astype(int), 0, image.shape[0] - 1)
+    rgb = image[yi, xi]
+    red, green, blue = (rgb[..., i] for i in range(3))
+    # The ESA overlay's blue-white color has a large B-G contrast. Requiring
+    # low R/G rejects the photographic Milky Way and stars with similar blue hue.
+    raw_mask = ((red < 55) & (red < .70 * green) & (blue - green > 18) &
+            (blue > 1.2 * green) & (green > 24))
+    mask = presentation_envelope(raw_mask,dec[:,0])
 
-    # NumPy-compatible boolean NPY inside NPZ, built with the standard library.
-    header = f"{{'descr': '|b1', 'fortran_order': False, 'shape': ({nrow}, {ncol}), }}".encode('latin1')
-    header += b' '*((16-((10+len(header)+1)%16))%16)+b'\n'
-    npy = b'\x93NUMPY'+bytes([1,0])+struct.pack('<H',len(header))+header+mask
-    with zipfile.ZipFile(outdir/'euclid_wide.npz','w',zipfile.ZIP_DEFLATED,6) as archive:
-        archive.writestr('mask.npy',npy)
-    metadata = {
-        'source':PAPER,'source_url':SOURCE,
-        'reference_definition':'RSD_2021A, 14,514 deg2; paper describes it as a good proxy for the final solution, not an as-built final mask.',
-        'digitization':'Figure 46 page 35, Mollweide equatorial map. Six year-fill colors segmented at RGB distance <=32, closed with a 2-pixel disk in source raster and a 1-degree disk on the 0.25-degree sky grid, then sampled by inverse Mollweide.',
-        'hole_treatment':'Enclosed holes are filled for an outer survey outline; this is presentation geometry, not a science mask.',
-        'sampled_area_before_hole_fill_deg2':round(before,1),
-        'sampled_area_after_hole_fill_deg2':round(after,1),
-        'published_reference_area_deg2':PUBLISHED_AREA,
-        'grid':'RA 360 to 0 deg and Dec -90 to +90 deg, 0.25 deg spacing; shape (721, 1441).',
-        'frame_pixels_at_160dpi':{'center_x':FRAME[0],'center_y':FRAME[1],'half_width':FRAME[2],'half_height':FRAME[3]},
+    weights = np.cos(np.deg2rad(dec[:, :-1])) * .25 ** 2
+    wide = mask[:, :-1]
+    area = float(np.sum(wide * weights))
+    low15 = float(np.sum(wide * (np.abs(latitude[:, :-1]) < 15) * weights))
+
+    np.savez_compressed(str(OUT) + '.npz', mask=mask, raw_mask=raw_mask,
+                        ra_deg=ra[0], dec_deg=dec[:, 0])
+    result = {
+        'source': 'ESA Euclid Wide and Deep Survey, Galactic Mollweide reference-survey graphic, version 65',
+        'source_sha256': hashlib.sha256(args.source.read_bytes()).hexdigest(),
+        'source_url': 'https://www.cosmos.esa.int/documents/10647/2199742/EuclidWideRegionOfInterest.65.MollweideReferenceSurveyGAL.MOL.Logos.png',
+        'interpretation': 'Digitized public reference-survey graphic for visualization; not an as-built science mask.',
+        'published_reference_area_deg2': PUBLISHED_AREA,
+        'digitized_area_deg2': round(area, 1),
+        'raw_color_selection_area_deg2': round(float(np.sum(raw_mask[:,:-1]*weights)),1),
+        'presentation_envelope': 'Great-circle binary close then open at fixed radius 0.5 deg; periodic RA; photographic pinholes and isolated detections suppressed, broad gaps retained.',
+        'fraction_of_published_area': round(area / PUBLISHED_AREA, 5),
+        'galactic_abs_b_lt_15_area_deg2': round(low15, 2),
+        'frame_fit': {
+            'method': 'robust least-squares ellipse fit to the outer black oval scanline endpoints',
+            'center_x_px': round(float(cx), 3), 'center_y_px': round(float(cy), 3),
+            'semi_major_x_px': round(float(rx), 3), 'semi_minor_y_px': round(float(ry), 3),
+            'ellipse_ratio': round(float(rx / ry), 6),
+            'rms_edge_residual_px': round(frame_rms, 3),
+            'fitted_edge_points': nframe,
+            'longitude_center_deg': 0.0,
+            'longitude_increases': 'toward image-left',
+            'latitude_positive': 'toward image-top',
+        },
+        'pixel_selection': {
+            'rule': 'R<55, R<0.70*G, B-G>18, B>1.2*G, G>24',
+            'reason': 'blue/teal survey fill versus photographic sky; threshold remains image-calibrated and area is reported without rescaling',
+            'grid': 'ICRS RA 360..0 deg and Dec -90..+90 deg at 0.25 deg; shape 721x1441, with duplicate RA seam column',
+        },
     }
-    (outdir/'euclid_wide_source.json').write_text(json.dumps(metadata,indent=2)+'\n')
-    print(json.dumps(metadata,indent=2))
+    (OUT.parent/'euclid_wide_source.json').write_text(json.dumps(result, indent=2) + '\n')
+    print(json.dumps(result, indent=2))
+
 
 if __name__ == '__main__':
-    if len(sys.argv)!=2:
-        raise SystemExit('usage: euclid_wide_digitize.py RSD_2021A_paper.pdf')
-    main(sys.argv[1])
+    main()

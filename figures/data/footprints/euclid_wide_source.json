@@ -1,17 +1,30 @@
 {
-  "source": "Euclid Collaboration: Scaramella et al. 2022, A&A 662, A112, Fig. 46",
-  "source_url": "https://doi.org/10.1051/0004-6361/202141938",
-  "reference_definition": "RSD_2021A, 14,514 deg2; paper describes it as a good proxy for the final solution, not an as-built final mask.",
-  "digitization": "Figure 46 page 35, Mollweide equatorial map. Six year-fill colors segmented at RGB distance <=32, closed with a 2-pixel disk in source raster and a 1-degree disk on the 0.25-degree sky grid, then sampled by inverse Mollweide.",
-  "hole_treatment": "Enclosed holes are filled for an outer survey outline; this is presentation geometry, not a science mask.",
-  "sampled_area_before_hole_fill_deg2": 14971.9,
-  "sampled_area_after_hole_fill_deg2": 15257.0,
-  "published_reference_area_deg2": 14514.0,
-  "grid": "RA 360 to 0 deg and Dec -90 to +90 deg, 0.25 deg spacing; shape (721, 1441).",
-  "frame_pixels_at_160dpi": {
-    "center_x": 669.4,
-    "center_y": 456.0,
-    "half_width": 536.0,
-    "half_height": 266.0
+  "source": "ESA Euclid Wide and Deep Survey, Galactic Mollweide reference-survey graphic, version 65",
+  "source_sha256": "bbaff4c76a9576980591741858043f717fed76605cec27f7b20685e71de9251e",
+  "source_url": "https://www.cosmos.esa.int/documents/10647/2199742/EuclidWideRegionOfInterest.65.MollweideReferenceSurveyGAL.MOL.Logos.png",
+  "interpretation": "Digitized public reference-survey graphic for visualization; not an as-built science mask.",
+  "published_reference_area_deg2": 13345.0,
+  "digitized_area_deg2": 13409.0,
+  "raw_color_selection_area_deg2": 12959.9,
+  "presentation_envelope": "Great-circle binary close then open at fixed radius 0.5 deg; periodic RA; photographic pinholes and isolated detections suppressed, broad gaps retained.",
+  "fraction_of_published_area": 1.00479,
+  "galactic_abs_b_lt_15_area_deg2": 0.0,
+  "frame_fit": {
+    "method": "robust least-squares ellipse fit to the outer black oval scanline endpoints",
+    "center_x_px": 1679.496,
+    "center_y_px": 866.289,
+    "semi_major_x_px": 1576.034,
+    "semi_minor_y_px": 790.411,
+    "ellipse_ratio": 1.993942,
+    "rms_edge_residual_px": 0.293,
+    "fitted_edge_points": 2096,
+    "longitude_center_deg": 0.0,
+    "longitude_increases": "toward image-left",
+    "latitude_positive": "toward image-top"
+  },
+  "pixel_selection": {
+    "rule": "R<55, R<0.70*G, B-G>18, B>1.2*G, G>24",
+    "reason": "blue/teal survey fill versus photographic sky; threshold remains image-calibrated and area is reported without rescaling",
+    "grid": "ICRS RA 360..0 deg and Dec -90..+90 deg at 0.25 deg; shape 721x1441, with duplicate RA seam column"
   }
 }
