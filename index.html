@@ -479,20 +479,21 @@ Not the same split as the paper: "late-type" here is the morphology class of the
 
       <!-- Cail · cosmic-shear -->
       <section>
-        <h2>$S_8$ to about 8%, consistent with the CMB and Stage III</h2>
+        <h2>Our errors are large because we marginalize conservatively</h2>
         <img class="plot" src="images/s8_unions.png" alt="S8 whisker: five Stage III surveys, the CMB band, and the two UNIONS results" style="position:absolute;left:42px;top:112px;width:695px;height:540px;">
-        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><span class="kicker">Configuration space</span>
-    <p class="num">$S_8 = 0.831^{+0.067}_{-0.078}$</p>
-    <span class="kicker">Harmonic space</span>
-    <p class="num">$S_8 = 0.891^{+0.057}_{-0.084}$</p>
-    <p class="small">With one redshift bin, the intrinsic-alignment prior dominates the error: dropping IA moves $S_8$ by $0.7\sigma$.</p></div>
+        <div class="textcol" style="position:absolute;left:770px;top:150px;width:470px;">
+    <span class="kicker">Intrinsic alignments</span>
+    <p style="font-size:24px;">Degenerate with $S_8$ without tomography: prior from direct measurements, width $\times 2$</p>
+    <span class="kicker">Redshifts</span>
+    <p style="font-size:24px;">$\Delta z$ prior: bootstrap error plus a systematic term</p>
+    <span class="kicker">Shear calibration</span>
+    <p style="font-size:24px;">$m$ from image simulations, error $\times 3$</p></div>
         <aside class="notes"><ul class="skim">
-      <li><strong>Squares</strong> — the two UNIONS results; circles are the Stage III surveys of the previous slide.</li>
-      <li><strong>Agreement</strong> — both are within $1\sigma$ of the CMB and of Stage III.</li>
-      <li><strong>Limitation</strong> — $A_{\rm IA}$ and $S_8$ are nearly degenerate with one bin; tomography breaks that.</li>
+      <li><strong>Squares</strong> — the two UNIONS results ($\xi_\pm$ and $C_\ell$); circles are the Stage III surveys of the consensus slide. Both UNIONS points sit within $1\sigma$ of the CMB and of Stage III.</li>
+      <li><strong>Why the error bars are wide</strong> — conservative nuisance priors. IA: $A_{\rm IA} \sim \mathcal N(0.83, 0.78)$, the measured width doubled (Calum's IA slides: the prior matters). Redshifts: $\Delta z \sim \mathcal N(-0.003, 0.018)$. Shear: $m = -0.057 \pm 0.0047$ from the sims, error tripled to $0.014$.</li>
+      <li><strong>Robustness</strong> — dropping IA moves $S_8$ by $-0.7\sigma$, a flat $A_{\rm IA}$ prior by $+0.4\sigma$; everything else by less than $0.4\sigma$ (backup slide).</li>
     </ul>
-    <details><summary>Numbers</summary><p>Goh et al. 2026 ($\xi_\pm$): $S_8 = 0.831^{+0.067}_{-0.078}$. Guerrini et al. 2026 ($C_\ell$): $S_8 = 0.891^{+0.057}_{-0.084}$. The two analyses' $\Delta S_8$ sits at about $2\sigma$ of the scatter between pipelines measured on 350 GLASS mocks. Robustness tests in Goh et al. move $S_8$ by under $0.4\sigma$ except the IA treatment: no IA $-0.71\sigma$, flat $A_{\rm IA}$ prior $+0.38\sigma$.</p></details>
-    <details><summary>Sources</summary><p>Figure made by figures/s8_landscape.py; Stage III and CMB values as on the previous slides.</p></details></aside>
+    <details><summary>Numbers</summary><p>Goh et al. 2026 ($\xi_\pm$): $S_8 = 0.831^{+0.067}_{-0.078}$. Guerrini et al. 2026 ($C_\ell$): $S_8 = 0.891^{+0.057}_{-0.084}$. Priors from Paper III Table 2: IA width doubled to $\pm0.78$ ("These two reasons motivate the doubling…"); $m$ "multiply the uncertainty by a factor of 3"; $\Delta z$ total $\pm0.018$ = bootstrap + systematic (Papers III and IV state no ×1.4 explicitly; the Moriond talk said ×1.4).</p></details></aside>
       </section>
 
       <!-- Cail · tomography -->
@@ -516,6 +517,24 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <li><strong>Catalog first</strong> — the v2 catalog and its paper come first, and we intend to release the catalog fast.</li>
       <li><strong>Tomographic paper</strong> — led by Klara Bertmann (Bochum); multi-band image simulations and a SOM $n(z)$ calibration feed it.</li>
       <li><strong>What follows</strong> — where that stands today: the footprint, the redshift bins.</li>
+    </ul></aside>
+      </section>
+
+      <!-- Cail · m-bias -->
+      <section>
+        <h2>Shear calibration for v2 is approaching the percent level</h2>
+        <p class="stat-value" style="position:absolute;left:40px;top:250px;width:370px;margin:0;">−5.7%</p>
+        <p class="stat-label" style="position:absolute;left:40px;top:342px;width:370px;margin:0;">2D release: $m$ from image simulations, prior $\pm 1.4\%$</p>
+        <p class="stat-value" style="position:absolute;left:440px;top:250px;width:370px;margin:0;">≈ 0</p>
+        <p class="stat-label" style="position:absolute;left:440px;top:342px;width:370px;margin:0;">v2 ShapePipe metacalibration, consistent with zero (M. Kilbinger)</p>
+        <p class="stat-value" style="position:absolute;left:840px;top:250px;width:400px;margin:0;">0.3 ± 0.8%</p>
+        <p class="stat-label" style="position:absolute;left:840px;top:342px;width:400px;margin:0;">AnaCal, first runs: $m_1 = +0.31 \pm 0.78\%$, $m_2 = +0.20 \pm 0.76\%$ (Shurui)</p>
+        <p class="caption" style="position:absolute;left:40px;top:560px;width:1200px;margin:0;">Very preliminary: isolated galaxies in F. Hervas Peters' image simulations; blending not yet included.</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>2D release</strong> — $m = -0.057 \pm 0.0047$ from the image simulations (WCS-offset bug, SExtractor-flag selection, blending), error tripled for the cosmology prior.</li>
+      <li><strong>v2</strong> — Martin's runs on 144 tiles of Fabian's isolated-galaxy simulations: $m_1$, $m_2$ consistent with zero with DES-style weights, once the weight response is included (UNIONS meeting, Napoli, 16 Oct).</li>
+      <li><strong>AnaCal</strong> — Shurui's first runs on the same simulations (subset of single exposures, trained on LSST sims): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
+      <li><strong>Caveat</strong> — isolated galaxies only; blending added about $-1.7\%$ in the 2D release.</li>
     </ul></aside>
       </section>
 
