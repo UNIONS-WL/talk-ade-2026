@@ -526,6 +526,21 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     <details><summary>Sources</summary><p>nz_v2_full products (nz_v2_bound9_full_tomo.txt), drawn by figures/nz_v2.py; Martin's m-bias from the 6 Oct tomography & 3x2pt telecon slides; AnaCal from Martin's #weak-lensing-3x2 post, 2 Nov.</p></details></aside>
       </section>
 
+      <!-- Cail · 3x2pt -->
+      <section>
+        <h2>3×2pt with UNIONS × SPHEREx lenses, narrower than DES Y6</h2>
+        <img class="plot" src="images/lsx_nz_desy6.svg" alt="Tomographic n(z), each scaled to peak 1: six LSx v0.9 bins below z = 0.5 against the six DES Y6 lens bins" style="position:absolute;left:30px;top:130px;width:640px;height:auto;">
+        <video src="media/spherex_sky_redshift.mp4" poster="fig/spherex_sky_redshift_poster.jpg" muted="" loop="" playsinline="" data-autoplay="" aria-label="SPHEREx galaxies over the whole sky as redshift climbs, with the UNIONS footprint outlined" style="position:absolute;left:690px;top:140px;width:560px;height:284px;"></video>
+        <img src="fig/spherex_unions_overlay.png" alt="The UNIONS footprint outlined in orange over the map" style="position:absolute;left:690px;top:140px;width:560px;height:284px;pointer-events:none;">
+        <p class="accent" style="position:absolute;left:690px;top:450px;width:560px;margin:0;font-size:22px;">On the same timescale as tomographic cosmic shear</p>
+        <div class="credit" style="position:absolute;left:40px;top:590px;"><span class="avatar" style="display:inline-block;width:56px;height:56px;border-radius:50%;background:var(--rule,#ddd);"></span><span><span class="cname">Calum Murray</span><br><span class="arx">leads the UNIONS 3×2pt</span></span></div>
+        <p class="caption" style="position:absolute;left:40px;top:540px;width:1200px;margin:0;">Lens sample: SPHEREx redshifts (LSx v0.9), n(z) from DESI DR1 matches, against the DES Y6 lens bins (arXiv:2601.14559); each scaled to peak 1. Preliminary.</p>
+        <aside class="notes">3×2pt slide (Calum: name it UNIONS × SPHEREx, the lens sample will move to UNIONS positions). Formerly a backup, added at Calum's request: the DESI Legacy Surveys × SPHEREx (LSx) catalogue's tomographic n(z) against DES Y6, from the UNIONS × SPHEREx deck (talks/2611_UNIONS_SPHEREx, fig/allsky/new/lsx_nz_desy6.svg).
+Catalogue: SPHEREx forced photometry at 92 M Legacy Surveys positions, redshifts from SPHEREx alone; quality sample ~41 M galaxies, σ_NMAD 0.009 and ~1% outliers against DESI.
+Figure: six z_est bins (0, 0.10, 0.16, 0.22, 0.30, 0.40, 0.50); n(z) = DIR from DESI DR1 BGS_ANY matches, each weighted by N_catalogue / N_truth in its (z_est 0.02 × r 0.25 mag) cell so the faint end counts; against the DES Y6 MagLim++ lens bins (arXiv:2601.14559, Fig. 2; bin 2 dashed, dropped before unblinding). Each scaled to peak 1: shapes and widths only.
+Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a cell have the same true-z distribution as bright ones. In the 0–0.1 bin the weights move ⟨z⟩ from 0.080 to 0.104 (effective N ~7,500), so that bin's tail is uncertain. Preliminary: not a release number.</aside>
+      </section>
+
       <!-- Cail · closing -->
       <section>
         <h2>UNIONS: Weak lensing in the Northern sky</h2>
@@ -570,15 +585,7 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       </section>
 
       <!-- Cail · backup: LSx n(z) against DES Y6 -->
-      <section>
-        <h2>SPHEREx × Legacy Surveys: lens redshifts narrower than DES Y6</h2>
-        <img class="plot" src="images/lsx_nz_desy6.svg" alt="Tomographic n(z), each scaled to peak 1: six LSx v0.9 bins below z = 0.5 against the six DES Y6 lens bins" style="position:absolute;left:95px;top:112px;width:1090px;height:auto;">
-        <p class="caption" style="position:absolute;left:40px;top:560px;width:1200px;margin:0;">LSx v0.9 (Legacy Surveys positions, SPHEREx redshifts), n(z) from DESI DR1 matches, against the DES Y6 lens bins (arXiv:2601.14559); each scaled to peak 1. Preliminary.</p>
-        <aside class="notes">Backup for Cail, added at Calum's request: the DESI Legacy Surveys × SPHEREx (LSx) catalogue's tomographic n(z) against DES Y6, from the UNIONS × SPHEREx deck (talks/2611_UNIONS_SPHEREx, fig/allsky/new/lsx_nz_desy6.svg).
-Catalogue: SPHEREx forced photometry at 92 M Legacy Surveys positions, redshifts from SPHEREx alone; quality sample ~41 M galaxies, σ_NMAD 0.009 and ~1% outliers against DESI.
-Figure: six z_est bins (0, 0.10, 0.16, 0.22, 0.30, 0.40, 0.50); n(z) = DIR from DESI DR1 BGS_ANY matches, each weighted by N_catalogue / N_truth in its (z_est 0.02 × r 0.25 mag) cell so the faint end counts; against the DES Y6 MagLim++ lens bins (arXiv:2601.14559, Fig. 2; bin 2 dashed, dropped before unblinding). Each scaled to peak 1: shapes and widths only.
-Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a cell have the same true-z distribution as bright ones. In the 0–0.1 bin the weights move ⟨z⟩ from 0.080 to 0.104 (effective N ~7,500), so that bin's tail is uncertain. Preliminary: not a release number.</aside>
-      </section>
+      
 
       <!-- Cail · backup: dv-blinded, data only (swap its src into the main slide to use it) -->
       <section>
