@@ -415,8 +415,8 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <section>
         <h2>B-modes are mitigated by cutting CCD- and large-scales</h2>
         <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">All scales (left) · fiducial scale cuts (right) · ● configuration, □ harmonic space</p>
-        <img class="plot" src="images/paper2_cosebis_bn.png" alt="COSEBI B-modes in units of their error, for all scales and for the fiducial scale cuts, from configuration and harmonic space" style="position:absolute;left:40px;top:146px;width:1200px;height:228px;">
-        <div class="textcol" style="position:absolute;left:80px;top:442px;width:1120px;"><ul>
+        <img class="plot" src="images/paper2_cosebis_bn.png" alt="COSEBI B-modes in units of their error, for all scales and for the fiducial scale cuts, from configuration and harmonic space" style="position:absolute;left:40px;top:146px;width:1200px;height:248px;">
+        <div class="textcol" style="position:absolute;left:80px;top:430px;width:1120px;"><ul>
       <li class="fragment">Suggestive of repeating CCD-scale additive bias</li>
       <li class="fragment">$\xi_\pm^B$, $C_\ell^{BB}$ and $B_n$ do not always agree, due to different weighting of scales</li>
     </ul></div>
@@ -655,9 +655,20 @@ Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a ce
     Reveal.initialize({
       width: 1280, height: 720, margin: 0.04,
       center: false, hash: true, transition: 'none',
-      controls: false, progress: true, slideNumber: 'c/t',
+      controls: false, progress: true, slideNumber: false,
       katex: { local: 'reveal/katex' },
       plugins: [ RevealMath.KaTeX, RevealNotes ],
+    });
+    // Page numbers live inside each slide, in slide coordinates, so they sit beside the logo at any window size.
+    Reveal.on('ready', () => {
+      const slides = Reveal.getSlides();
+      slides.forEach((s, i) => {
+        if (s.matches('.title-slide, .divider')) return;
+        const n = document.createElement('div');
+        n.className = 'page-number';
+        n.textContent = `${i + 1} / ${slides.length}`;
+        s.appendChild(n);
+      });
     });
   </script>
 </body>
