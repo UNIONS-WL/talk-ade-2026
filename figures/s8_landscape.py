@@ -34,7 +34,7 @@ def whisker(ax, rows, xlim, ms=22):
     for t, r in zip(ax.get_yticklabels(), rows):
         t.set_color(r[4])
     ax.tick_params(axis="y", length=0, pad=24)
-    ax.text(c, -0.95, "CMB", ha="center", va="center", fontsize=60, color=ORANGE)
+    ax.text(c - lo - 0.004, -0.95, "CMB", ha="right", va="center", fontsize=60, color=ORANGE)
     ax.set_ylim(len(rows) - 0.5, -1.35)
     ax.set_xlim(*xlim)
     ax.spines["left"].set_visible(False)
@@ -69,14 +69,14 @@ def stage3_whisker():
     """Portrait comparison for the rotating survey globe, at slide text size."""
     with plt.rc_context({'font.size':72}):
         fig = plt.figure(figsize=(11.5, 16.4), dpi=DPI)
-        ax = fig.add_axes([0.51, 0.15, 0.46, 0.79])
+        ax = fig.add_axes([0.51, 0.22, 0.46, 0.72])
         whisker(ax, [(n,v,l,h,INK) for n,v,l,h in STAGE3], (0.715,0.87))
         ax.texts[0].set_fontsize(72)
         ax.set_xticks([0.75,0.85])
         fig.canvas.draw()
         for text in [*ax.get_yticklabels(), *ax.get_xticklabels(), ax.xaxis.label, *ax.texts]:
             box = text.get_window_extent(fig.canvas.get_renderer())
-            assert box.x0 >= 0 and box.x1 <= fig.bbox.width, (text.get_text(),box)
+            assert 0 <= box.x0 and box.x1 <= fig.bbox.width and 0 <= box.y0 and box.y1 <= fig.bbox.height, (text.get_text(), box)
         fig.savefig(IMAGES/'s8_stage3.png', dpi=DPI)
         plt.close(fig)
 
