@@ -494,7 +494,7 @@ html, body { background: var(--ground); }
 /* figure — headline and one figure filling the body */
 .slide[data-layout="figure"] > .body { display: grid; min-height: 0; }
 
-/* figure-text — figure and a text column; data-split = figure share (50/60/70), data-flip puts text left */
+/* figure-text — figure and a text column; data-split = figure share (50/60/70), data-flip puts text left, data-stack puts text under the figure */
 .slide[data-layout="figure-text"] > .body {
   display: grid;
   grid-template-columns: 6fr 4fr;
@@ -504,6 +504,8 @@ html, body { background: var(--ground); }
 .slide[data-layout="figure-text"][data-split="50"] > .body { grid-template-columns: 1fr 1fr; }
 .slide[data-layout="figure-text"][data-split="70"] > .body { grid-template-columns: 7fr 3fr; }
 .slide[data-layout="figure-text"][data-flip] > .body > figure { order: 2; }
+.slide[data-layout="figure-text"][data-stack] > .body { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; row-gap: var(--s4); }
+.slide[data-layout="figure-text"][data-stack] > .body > .text { justify-content: flex-start; }
 .slide[data-layout="figure-text"] > .body > .text {
   display: flex;
   flex-direction: column;

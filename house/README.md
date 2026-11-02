@@ -100,7 +100,7 @@ Above 60 words of on-screen text the checker warns: the audience reads instead o
 | `statement` | `<h2>`, up to two `<p>` | one claim, vertically centred |
 | `points` | `<h2>`, lists, `<p>`, `div.eq`, `div.cols`, `<pre>`, `.source` | a text slide |
 | `figure` | `<h2>`, one `<figure>` | one figure filling the body |
-| `figure-text` | `<h2>`, one `<figure>`, one `div.text` | figure beside labels or key numbers; `data-split="50|60|70"` is the figure's share (default 60), `data-flip` puts the text left |
+| `figure-text` | `<h2>`, one `<figure>`, one `div.text` | figure beside labels or key numbers; `data-split="50|60|70"` is the figure's share (default 60), `data-flip` puts the text left, `data-stack` puts it under the figure at full width |
 | `compare` | `<h2>`, two `<figure>` | side by side, each with a `figcaption` label |
 | `grid` | `<h2>`, three to six `<figure>` | three columns; four make a 2 × 2; `data-cols="2\|3"` sets the columns |
 | `number` | `<h2>`, one to three `div.stat` | key numbers: `<div class="stat"><span class="value">385</span><span class="label">deg² …</span></div>` |

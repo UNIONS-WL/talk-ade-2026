@@ -77,8 +77,8 @@ function lintBlock(el, where, vocab, out, isDetail) {
   const schema = SCHEMA[layout];
   if (!schema) { out.errors.push(`${where}: unknown layout "${layout}" (one of ${LAYOUTS.join(', ')})`); return; }
   if (isDetail && !el.getAttribute('data-label')) out.errors.push(`${where}: detail needs data-label (the chip text)`);
-  if (el.hasAttribute('data-stack') && !(layout === 'people' && el.querySelector(':scope > div.text')))
-    out.errors.push(`${where}: data-stack goes on a people slide with a div.text`);
+  if (el.hasAttribute('data-stack') && !(['people', 'figure-text'].includes(layout) && el.querySelector(':scope > div.text')))
+    out.errors.push(`${where}: data-stack goes on a people or figure-text slide with a div.text`);
   if (el.hasAttribute('data-cols') && !(layout === 'grid' && ['2', '3'].includes(el.getAttribute('data-cols'))))
     out.errors.push(`${where}: data-cols is 2 or 3, on a grid slide`);
   if (el.hasAttribute('data-split') && !['50', '60', '70'].includes(el.getAttribute('data-split')))
