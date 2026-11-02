@@ -375,23 +375,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     <details><summary>Numbers</summary><p>KiDS-1000 $0.759^{+0.024}_{-0.021}$; DES Y3 $0.759^{+0.025}_{-0.023}$; HSC Y3 $0.769^{+0.031}_{-0.034}$; KiDS-Legacy $0.815^{+0.016}_{-0.021}$; DES Y6 $0.798^{+0.014}_{-0.015}$; CMB $0.836^{+0.012}_{-0.013}$. Values as in the Moriond 2026 UNIONS talk; figure by figures/s8_landscape.py.</p></details></aside>
       </section>
 
-      <!-- Cail · culmination -->
-      <section>
-        <h2>UNIONS-3500 constraints are the culmination of ~10 years of work</h2>
-        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;">
-    <li>Non-tomographic, about 2400 deg² effective area</li>
-    <li>Inference with correlation functions $\xi_\pm(\theta)$ and band powers $C_\ell$</li></ul>
-        <ul class="people-list" style="position:absolute;left:60px;top:270px;width:1160px;margin:0;"><li><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><span><strong>Paper I</strong>: shape catalog (Hervas-Peters et al.)</span></li>
-    <li><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><span><strong>Paper II</strong>: B-mode validation (Daley et al.)</span></li>
-    <li><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><span><strong>Paper III</strong>: configuration-space constraints (Goh et al.)</span></li>
-    <li><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><span><strong>Paper IV</strong>: harmonic-space constraints (Guerrini et al.)</span></li></ul>
-        <aside class="notes"><ul class="skim">
-      <li><strong>The release</strong> — companion papers from one blinded catalog, built by about ten people over roughly a decade of survey development; one slide on each follows.</li>
-      <li><strong>One redshift bin</strong> — only $r$-band across the footprint, so $n(z)$ comes from a SOM calibration on external deep fields; tomography comes at the end of the talk.</li>
-    </ul>
-    <details><summary>Sources</summary><p>Hervas-Peters et al. 2026 (I); Daley et al. 2026 (II); Goh et al. 2026, arXiv:2605.13547 (III); Guerrini et al. 2026, arXiv:2605.13543 (IV). Wording from the Moriond 2026 talk; headshots from its team slide.</p></details></aside>
-      </section>
-
       <!-- Cail · paper-i -->
       <section>
         <h2>Paper I: a shape catalog of 61 million galaxies in the northern sky</h2>
@@ -490,24 +473,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     </ul></aside>
       </section>
 
-      <!-- Cail · m-bias -->
-      <section>
-        <h2>Shear calibration for v2 is approaching the percent level</h2>
-        <p class="stat-value" style="position:absolute;left:40px;top:250px;width:370px;margin:0;">−5.7%</p>
-        <p class="stat-label" style="position:absolute;left:40px;top:342px;width:370px;margin:0;">2D release: $m$ from image simulations, prior $\pm 1.4\%$</p>
-        <p class="stat-value" style="position:absolute;left:440px;top:250px;width:370px;margin:0;">≈ 0</p>
-        <p class="stat-label" style="position:absolute;left:440px;top:342px;width:370px;margin:0;">v2 ShapePipe metacalibration, consistent with zero (M. Kilbinger)</p>
-        <p class="stat-value" style="position:absolute;left:840px;top:250px;width:400px;margin:0;">0.3 ± 0.8%</p>
-        <p class="stat-label" style="position:absolute;left:840px;top:342px;width:400px;margin:0;">AnaCal, first runs: $m_1 = +0.31 \pm 0.78\%$, $m_2 = +0.20 \pm 0.76\%$ (Shurui)</p>
-        <p class="caption" style="position:absolute;left:40px;top:560px;width:1200px;margin:0;">Very preliminary: isolated galaxies in F. Hervas Peters' image simulations; blending not yet included.</p>
-        <aside class="notes"><ul class="skim">
-      <li><strong>2D release</strong> — $m = -0.057 \pm 0.0047$ from the image simulations (WCS-offset bug, SExtractor-flag selection, blending), error tripled for the cosmology prior.</li>
-      <li><strong>v2</strong> — Martin's runs on 144 tiles of Fabian's isolated-galaxy simulations: $m_1$, $m_2$ consistent with zero with DES-style weights, once the weight response is included (UNIONS meeting, Napoli, 16 Oct).</li>
-      <li><strong>AnaCal</strong> — Shurui's first runs on the same simulations (subset of single exposures, trained on LSST sims): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
-      <li><strong>Caveat</strong> — isolated galaxies only; blending added about $-1.7\%$ in the 2D release.</li>
-    </ul></aside>
-      </section>
-
       <!-- Cail · footprint-progress -->
       <section>
         <h2>ShapePipe v2 has measured shapes over the full DR6 footprint</h2>
@@ -534,20 +499,27 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     </ul></aside>
       </section>
 
-      <!-- Cail · nz-v2 -->
+      <!-- Cail · promising -->
       <section>
-        <h2>DR6 photometry splits the v2 sample into four redshift bins</h2>
-        <img class="plot" src="images/nz_v2.png" alt="Four tomographic n(z) curves summing to the full sample's n(z)" style="position:absolute;left:40px;top:112px;width:700px;height:509px;">
-        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><span class="kicker">Working n(z) · BPZ + SOM</span>
-    <p>$\langle z\rangle$ = 0.29, 0.45, 0.61, 0.93</p>
-    <p class="small">Half the shear weight has the photometry, over 3815 deg².</p>
-    <p class="small muted">For validation and null tests, not for parameters.</p></div>
+        <h2>Things are looking promising for the next release</h2>
+        <img class="plot" src="images/nz_v2.png" alt="Four tomographic n(z) curves summing to the full sample's n(z)" style="position:absolute;left:40px;top:150px;width:580px;height:422px;">
+        <p class="caption" style="position:absolute;left:40px;top:578px;width:580px;margin:0;">Four bins from DR6 photometry, BPZ + SOM: $\langle z\rangle$ = 0.29, 0.45, 0.61, 0.93</p>
+        <span class="kicker" style="position:absolute;left:680px;top:140px;">Shear calibration</span>
+        <p style="position:absolute;left:680px;top:178px;width:560px;margin:0;font-size:22px;"><strong style="font-size:30px;">−5.7%</strong>&nbsp; 2D release, image simulations</p>
+        <p style="position:absolute;left:680px;top:232px;width:560px;margin:0;font-size:22px;"><strong style="font-size:30px;">−0.6 ± 0.4%</strong>&nbsp; ShapePipe v2 (Martin Kilbinger)</p>
+        <p class="small muted" style="position:absolute;left:680px;top:270px;width:560px;margin:0;font-size:18px;">$m_1 = -0.62 \pm 0.38\%$, $m_2 = -0.57 \pm 0.46\%$, metacalibration</p>
+        <img class="avatar" src="images/people/shurui-lin.jpg" alt="Shurui Lin" style="position:absolute;left:680px;top:318px;width:64px;height:64px;border-radius:50%;object-fit:cover;">
+        <p style="position:absolute;left:760px;top:318px;width:480px;margin:0;font-size:22px;"><strong style="font-size:30px;">+0.3 ± 0.8%</strong>&nbsp; AnaCal (Shurui Lin)</p>
+        <p class="small muted" style="position:absolute;left:760px;top:356px;width:480px;margin:0;font-size:18px;">$m_1 = +0.31 \pm 0.78\%$, $m_2 = +0.20 \pm 0.76\%$, first runs</p>
+        <span class="kicker" style="position:absolute;left:680px;top:420px;">Redshifts</span>
+        <p style="position:absolute;left:680px;top:456px;width:560px;margin:0;font-size:22px;">Half the shear weight has DR6 photometry, over 3815 deg²</p>
+        <p style="position:absolute;left:640px;top:540px;width:620px;margin:0;text-align:center;font-size:58px;font-weight:700;letter-spacing:0.04em;color:#C62828;transform:rotate(-4deg);">VERY PRELIMINARY</p>
         <aside class="notes"><ul class="skim">
-      <li><strong>Colours</strong> — the four bins, each drawn as its share of the shear weight, so they add up to the dashed total.</li>
-      <li><strong>Status</strong> — a working $n(z)$ built for validation; the collaboration's $n(z)$ for parameters comes from the photo-z group.</li>
+      <li><strong>Shear calibration</strong> — 2D release $m = -0.057 \pm 0.0047$ from the image simulations, error tripled for the prior. v2: Martin's ShapePipe metacalibration on Fabian's isolated-galaxy grid simulations (4 grids, 148 tiles), inverse-variance mean $m_1 = -0.0062 \pm 0.0038$, $m_2 = -0.0057 \pm 0.0046$; the joint Sheldon+2020 response gives the same within errors. AnaCal (Shurui Lin, UIUC; trained on LSST sims, subset of single exposures): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
+      <li><strong>Caveat</strong> — isolated galaxies only; blending added about $-1.7\%$ in the 2D release.</li>
+      <li><strong>$n(z)$</strong> — a working $n(z)$ for validation and null tests, each bin drawn as its share of the shear weight; the $n(z)$ for parameters comes from the photo-z group.</li>
     </ul>
-    <details><summary>What is plotted</summary><p>DR6 BPZ photo-z bins calibrated with a SOM on the full-area v2 bound-9 sample, using either $z$ filter where available; 51% of the bound-9 shear weight is retained. Lightly smoothed for display ($\Delta z = 0.01$ grid).</p></details>
-    <details><summary>Sources</summary><p>nz_v2_full products (nz_v2_bound9_full_tomo.txt), drawn by figures/nz_v2.py.</p></details></aside>
+    <details><summary>Sources</summary><p>nz_v2_full products (nz_v2_bound9_full_tomo.txt), drawn by figures/nz_v2.py; Martin's m-bias from the 6 Oct tomography & 3x2pt telecon slides; AnaCal from Martin's #weak-lensing-3x2 post, 2 Nov.</p></details></aside>
       </section>
 
       <!-- Cail · closing -->
@@ -577,6 +549,23 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <h2>References and previous UNIONS talks</h2>
         <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;"><li><a href="https://cailmdaley.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html">Cail Daley · Moriond 2026 UNIONS source</a></li><li><a href="https://sachaguer.github.io/talks/26_Moriond_UNIONS/26_Moriond_UNIONS.html">Sacha Guerrini · Moriond 2026 UNIONS</a></li><li>Hervas Peters+2024 · arXiv:2412.01790</li><li>Akhmetshyn+2026 · arXiv:2607.14207</li><li>Campbell+2026 · arXiv:2606.23651</li><li>Goh+2026 · arXiv:2605.13547 · Guerrini+2026 · arXiv:2605.13543</li></ul>
         <aside class="notes"><p>Sacha’s published HTML was confirmed in gh-pages; Cail’s Pages path returned 404, so link the source.</p></aside>
+      </section>
+
+      <!-- Cail · culmination -->
+      <section>
+        <h2>UNIONS-3500 constraints are the culmination of ~10 years of work</h2>
+        <ul style="position:absolute;left:69px;top:122px;width:1140px;margin:0;">
+    <li>Non-tomographic, about 2400 deg² effective area</li>
+    <li>Inference with correlation functions $\xi_\pm(\theta)$ and band powers $C_\ell$</li></ul>
+        <ul class="people-list" style="position:absolute;left:60px;top:270px;width:1160px;margin:0;"><li><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><span><strong>Paper I</strong>: shape catalog (Hervas-Peters et al.)</span></li>
+    <li><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><span><strong>Paper II</strong>: B-mode validation (Daley et al.)</span></li>
+    <li><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><span><strong>Paper III</strong>: configuration-space constraints (Goh et al.)</span></li>
+    <li><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><span><strong>Paper IV</strong>: harmonic-space constraints (Guerrini et al.)</span></li></ul>
+        <aside class="notes"><ul class="skim">
+      <li><strong>The release</strong> — companion papers from one blinded catalog, built by about ten people over roughly a decade of survey development; one slide on each follows.</li>
+      <li><strong>One redshift bin</strong> — only $r$-band across the footprint, so $n(z)$ comes from a SOM calibration on external deep fields; tomography comes at the end of the talk.</li>
+    </ul>
+    <details><summary>Sources</summary><p>Hervas-Peters et al. 2026 (I); Daley et al. 2026 (II); Goh et al. 2026, arXiv:2605.13547 (III); Guerrini et al. 2026, arXiv:2605.13543 (IV). Wording from the Moriond 2026 talk; headshots from its team slide.</p></details></aside>
       </section>
 
       <!-- Cail · robustness -->
@@ -652,14 +641,15 @@ Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a ce
       katex: { local: 'reveal/katex' },
       plugins: [ RevealMath.KaTeX, RevealNotes ],
     });
-    // Page numbers live inside each slide, in slide coordinates, so they sit beside the logo at any window size.
+    // Page numbers live inside each slide, in slide coordinates, so they sit beside the logo at any window size; backup slides count outside the total.
     Reveal.on('ready', () => {
       const slides = Reveal.getSlides();
+      const main = slides.findIndex(s => s.dataset.section === 'Backup');
       slides.forEach((s, i) => {
         if (s.matches('.title-slide, .divider')) return;
         const n = document.createElement('div');
         n.className = 'page-number';
-        n.textContent = `${i + 1} / ${slides.length}`;
+        n.textContent = i < main ? `${i + 1} / ${main}` : `${i + 1}`;
         s.appendChild(n);
       });
     });
