@@ -42,7 +42,3 @@ The purple UNIONS colour is reserved for that layer.
 
 To rebuild Euclid Wide, run `uv run figures/data/footprints/euclid_wide_rsd.py` (it downloads `rsd2026a.txt` into the ignored `figures/.cache/`).
 The source hash and fitted Mollweide frame are recorded in `euclid_wide_source.json`.
-The measured fraction of rasterized observed DR1 inside the presentation envelope is 96.34%; 87.9 deg² lies outside.
-Calibration/non-Wide tiles, changes to the survey plan and raster uncertainty can contribute; the graphic alone does not distinguish them.
-The envelope has zero sampled area within |b| < 15°.
-The unsmoothed color selection contains 95.27% of DR1 and has 3.29 deg² at |b| < 15°; nearby color thresholds change its total area by about 1%.
