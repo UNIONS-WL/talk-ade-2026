@@ -383,7 +383,7 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <section>
         <h2>Paper I: a shape catalog of 61 million galaxies in the northern sky</h2>
         <img class="plot" src="images/paper1_neff_map.png" alt="Map of the effective source density over the UNIONS-3500 footprint, between about 4.5 and 8 galaxies per square arcminute" style="position:absolute;left:40px;top:112px;width:700px;height:467px;">
-        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><p class="num" style="color:var(--accent);">Hervas-Peters et al. 2026</p>
+        <div class="textcol" style="position:absolute;left:780px;top:152px;width:460px;"><div class="credit" style="margin:0 0 22px;"><img class="avatar" src="images/people/fabian-hervas-peters.jpg" alt="Fabian Hervas-Peters"><span><span class="cname">Hervas-Peters et al. 2026</span><br><span class="arx">arXiv:2605.13549</span></span></div>
     <p class="num">3648 deg²</p>
     <p class="num">$n_{\rm eff} = 4.96$ arcmin$^{-2}$</p>
     <p class="num">$\sigma_\epsilon = 0.27$</p>
@@ -400,12 +400,13 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <!-- Cail · paper-ii -->
       <section>
         <h2>Paper II: B-modes are mitigated by cutting CCD- and large-scales</h2>
-        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">All scales (left) · fiducial scale cuts (right) · ● configuration, □ harmonic space</p>
+        <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">All scales (left) · fiducial scale cuts (right) · <span style="color:#537c9e;">● real space</span>, <span style="color:#cd7853;">□ harmonic space</span></p>
         <img class="plot" src="images/paper2_cosebis_bn.png" alt="COSEBI B-modes in units of their error, for all scales and for the fiducial scale cuts, from configuration and harmonic space" style="position:absolute;left:40px;top:146px;width:1200px;height:248px;">
         <div class="textcol" style="position:absolute;left:80px;top:430px;width:1120px;"><ul>
       <li class="fragment">Suggestive of repeating CCD-scale additive bias</li>
       <li class="fragment">$\xi_\pm^B$, $C_\ell^{BB}$ and $B_n$ do not always agree, due to different weighting of scales</li>
     </ul></div>
+        <div class="credit" style="position:absolute;left:40px;top:566px;"><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><span><span class="cname">Daley et al. 2026</span><br><span class="arx">arXiv:2604.03227</span></span></div>
         <aside class="notes"><ul class="skim">
       <li><strong>Paper II</strong> — B-mode validation (Daley et al.): the gatekeeper that chose the catalog version and the scale cuts.</li>
       <li><strong>Bottom row</strong> — the paper figure's $B_n/\sigma_n$ row ($E_n$ row cropped off). Shaded: modes $n &gt; 6$; the cosmological information sits at $n \le 6$. <strong>Left</strong> — over all scales ($1$–$250'$) COSEBIs fail: the oscillating $B_n$ pattern that Asgari et al. 2019 associated with repeating additive shear bias at the CCD scale. Config- and harmonic-space COSEBIs agree, so it is the filter weighting, not the basis.</li>
@@ -419,7 +420,8 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       <section>
         <h2>Paper III: cosmology and PSF leakage are fit jointly in real space</h2>
         <img class="plot" src="images/paper3_xipm_bestfit.png" alt="xi plus and xi minus data with the best-fit model and the best-fit PSF-leakage systematic, B-mode informed scale cuts shaded" style="position:absolute;left:40px;top:112px;width:1200px;height:474px;">
-        <p class="caption" style="position:absolute;left:40px;top:592px;width:1200px;margin:0;">$\xi_\pm(\theta)$ with best-fit model and leakage systematics · Goh et al. 2026</p>
+        <div class="credit" style="position:absolute;left:40px;top:592px;"><img class="avatar" src="images/people/lisa-goh.jpg" alt="Lisa Goh"><span><span class="cname">Goh et al. 2026</span><br><span class="arx">arXiv:2605.13547</span></span></div>
+        <p class="caption" style="position:absolute;left:640px;top:610px;width:600px;margin:0;text-align:right;">$\xi_\pm(\theta)$ with best-fit model and leakage systematics</p>
         <aside class="notes"><ul class="skim">
       <li><strong>Paper III</strong> — takes the validated catalog and scale cuts from Paper II and fits a cosmological model to $\xi_\pm$.</li>
       <li><strong>Distinctive</strong> — PSF-leakage parameters are inferred from $\rho$ and $\tau$ statistics and carried into the likelihood as Gaussian priors, so PSF uncertainty propagates into the cosmological error budget (red curve: best-fit $\xi_\pm^{\rm sys}$).</li>
@@ -432,7 +434,7 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <h2>Paper IV: harmonic space gives a higher $S_8$</h2>
         <p class="figcap" style="position:absolute;left:40px;top:112px;width:1200px;margin:0;">Same catalog, $n(z)$ and blinding, but different basis and weighting of scales</p>
         <img class="plot" src="images/paper4_cell_bestfit.png" alt="Cell EE bandpowers with the harmonic-space best fit, its Halofit variant and the configuration-space best fit, scale cuts shaded" style="position:absolute;left:252px;top:146px;width:776px;height:478px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Guerrini et al. 2026</p>
+        <div class="credit" style="position:absolute;left:40px;top:470px;width:220px;flex-direction:column;align-items:flex-start;gap:8px;"><img class="avatar" src="images/people/sacha-guerrini.jpg" alt="Sacha Guerrini"><span><span class="cname">Guerrini et al. 2026</span><br><span class="arx">arXiv:2605.13543</span></span></div>
         <aside class="notes"><ul class="skim">
       <li><strong>Paper IV</strong> — the same catalog in harmonic space, with the same blinding and $n(z)$ but a different basis and likelihood code.</li>
       <li><strong>Agreement</strong> — the orange curve is the configuration-space best fit from Paper III; consistency between the two analyses was a criterion for unblinding.</li>

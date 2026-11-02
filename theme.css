@@ -135,3 +135,7 @@
 .reveal section.divider h2 { color: #FFFFFF; font-size: 1.7em; background-image: linear-gradient(var(--u-yellow), var(--u-yellow)); background-size: 64px 4px; }
 .reveal section.divider .divider-sub { color: #E6EEEA; font-size: 26px; max-width: 900px; margin-top: 18px; }
 .reveal aside.notes details summary { font-weight: 600; }
+.reveal .credit { display: flex; align-items: center; gap: 14px; margin: 0; font-size: 24px; line-height: 1.25; }
+.reveal .credit img.avatar { width: 56px; height: 56px; flex: none; }
+.reveal .credit .cname { font-weight: 600; color: var(--accent); }
+.reveal .credit .arx { color: var(--ink-soft); font-size: 20px; }
