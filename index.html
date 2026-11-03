@@ -460,13 +460,13 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <span class="kicker" style="position:absolute;left:640px;top:122px;">New shape catalog</span>
         <div class="credit lead" style="position:absolute;left:640px;top:152px;width:600px;"><img class="avatar" src="images/people/cail-daley.png" alt="Cail Daley"><span>Over 5000 deg² and 750 million objects</span></div>
         <ul class="plainpts" style="position:absolute;left:714px;top:222px;width:526px;margin:0;">
-          <li>27 core-years in under three weeks <span class="sub">(previous run: more than a year)</span></li>
+          <li>27 core-years in under three weeks <span class="sub" style="display:block;">(previous run: more than a year)</span></li>
           <li class="accent">No comparable lensing measurements of this sky until Euclid DR3</li>
         </ul>
         <span class="kicker" style="position:absolute;left:640px;top:420px;">Tomographic cosmic shear</span>
         <div class="credit lead" style="position:absolute;left:640px;top:450px;width:600px;"><img class="avatar" src="images/people/klara-bertmann.jpg" alt="Klara Bertmann" style="object-position:50% 35%;"><span>Constraints competitive with Stage III and Year-1 Stage IV surveys</span></div>
         <ul class="plainpts" style="position:absolute;left:714px;top:540px;width:526px;margin:0;">
-          <li>Multi-band image simulations progressing</li>
+          <li>Multi-band image simulations progressing<span class="sub" style="display:block;">in Rust, targeting June 2027</span></li>
         </ul>
         <aside class="notes"><ul class="skim">
       <li><strong>Animation</strong> — the v2 production run, 10–27 October 2026: each DR6 tile lights up with the blinded mass map as its shapes complete.</li>
@@ -496,8 +496,9 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <p style="position:absolute;left:680px;top:160px;width:560px;margin:0;font-size:26px;">Previous release: <strong style="font-size:32px;">−5.7%</strong></p>
         <p style="position:absolute;left:680px;top:225px;width:560px;margin:0;font-size:26px;">Estimates for our new run:</p>
         <p class="mrow" style="position:absolute;left:680px;top:272px;width:580px;margin:0;font-size:24px;"><strong style="font-size:32px;">−0.6 ± 0.4%</strong>&nbsp; ShapePipe (Martin Kilbinger) <img class="avatar" src="images/people/martin-kilbinger.jpg" alt="Martin Kilbinger" style="object-position:50% 25%;"></p>
-        <p class="caption" style="position:absolute;left:680px;top:318px;width:560px;margin:0;text-align:left;">includes the selection response, which AnaCal's number does not</p>
+        <p class="caption" style="position:absolute;left:680px;top:318px;width:560px;margin:0;text-align:left;">shear + selection response</p>
         <p class="mrow" style="position:absolute;left:680px;top:352px;width:580px;margin:0;font-size:24px;"><strong style="font-size:32px;">+0.3 ± 0.8%</strong>&nbsp; AnaCal (Shurui Lin) <img class="avatar" src="images/people/shurui-lin.jpg" alt="Shurui Lin"></p>
+        <p class="caption" style="position:absolute;left:680px;top:398px;width:560px;margin:0;text-align:left;">shear response</p>
         <p style="position:absolute;left:640px;top:540px;width:620px;margin:0;text-align:center;font-size:58px;font-weight:700;letter-spacing:0.04em;color:#C62828;transform:rotate(-4deg);">VERY PRELIMINARY</p>
         <aside class="notes"><ul class="skim">
       <li><strong>Shear calibration</strong> — 2D release $m = -0.057 \pm 0.0047$ from the image simulations, error tripled for the prior. v2: Martin's ShapePipe metacalibration on Fabian's isolated-galaxy grid simulations (4 grids, 148 tiles), inverse-variance mean $m_1 = -0.0062 \pm 0.0038$, $m_2 = -0.0057 \pm 0.0046$; the joint Sheldon+2020 response gives the same within errors. Both include the selection response; Shurui's AnaCal run likely does not (Martin, #weak-lensing-3x2, 3 Nov), so the fair like-for-like is ShapePipe's shear-only m, which Martin has not posted. AnaCal (Shurui Lin, UIUC; trained on LSST sims, subset of single exposures): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
