@@ -8,9 +8,9 @@ Draws its own frames in the palette and type of the production status page:
 an orthographic celestial sphere textured with the Gaia EDR3 all-sky map
 (galactic, transformed to equatorial), seen from a fixed elevation and turning
 at a constant rate about the pole, settling to a stop as the run ends. Every DR6 tile is a pale veil until its
-batch is processed and teal after. A thin pale line outlines the DR6 footprint
-throughout. Overlays: catalogue objects so far, the date, and cumulative
-completed area (deg²) against time.
+batch is processed and teal after. A pale line outlines the footprint throughout.
+Overlays: catalogue objects so far, the date, and cumulative completed area
+(deg²) against time.
 
 Inputs (live): production/status.json (tile universe, batch timeline, latest
 build) and production/tile_history.json (processed_at per tile). Tiles that
@@ -19,10 +19,10 @@ status timeline (see `time_missing`).
 
 With `--massmap FILE` (the final full-area Kaiser–Squires κ_E map, HEALPix, in
 units of its noise σ unless a `series.json` beside it gives `sigma_final`), each
-tile's patch of that map appears as the tile finishes, coloured with the shared
-press palette (`massmap_style.py`); where the map is masked the Gaia sky shows
-through. Tiles still pending keep their veil through the run; the veil of tiles
-that never finished lifts in the hold, so the last frame is map, sky and outline.
+tile's patch of that map replaces the bare Gaia sky as the tile finishes,
+coloured with the shared press palette (`massmap_style.py`); there is no veil,
+and where the map is masked the sky shows through. The outlined footprint is
+then the tiles the map covers, so the last frame is the whole map filling it.
 
 Inputs beside the script: assets/gaia_edr3_colour_equirectangular.png (ESA/Gaia/DPAC,
 CC BY-SA 3.0 IGO) and assets/EBGaramond-{Regular,Medium}.otf.
@@ -360,12 +360,13 @@ G = {}
 
 
 def outline(foot):
-    """Opacity of the footprint outline over the full supersampled frame: a thin antialiased line
-    along the boundary of the footprint mask, fading towards the limb like the tiles."""
+    """Opacity of the footprint outline over the full supersampled frame: an antialiased line about
+    5 px wide along the boundary of the footprint mask, with holes of a tile or so closed so
+    single unmapped tiles don't get rings, fading towards the limb like the tiles."""
     n, S = 2 * R + 1, SS
-    m = Image.fromarray((foot * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(3)).filter(ImageFilter.MinFilter(3))
-    m = np.asarray(m.resize((n * S, n * S), Image.BILINEAR).filter(ImageFilter.GaussianBlur(1.2 * S)), np.float32) / 255
-    line = np.clip(1.8 - 3.5 * np.abs(m - 0.5), 0, 1)
+    m = Image.fromarray((foot * 255).astype(np.uint8)).filter(ImageFilter.MaxFilter(7)).filter(ImageFilter.MinFilter(7))
+    m = np.asarray(m.resize((n * S, n * S), Image.BILINEAR).filter(ImageFilter.GaussianBlur(2.4 * S)), np.float32) / 255
+    line = np.clip(3.0 - 7.0 * np.abs(m - 0.5), 0, 1)
     mu = np.asarray(Image.fromarray(G["grid"][2].reshape(n, n).astype(np.float32)).resize((n * S, n * S), Image.BILINEAR))
     a = Image.fromarray((255 * A_OUTLINE * line * np.clip(mu / 0.08, 0, 1)).astype(np.uint8))
     full = Image.new("L", (W * S, H * S), 0)
@@ -410,20 +411,16 @@ def render(job):
     vis = np.flatnonzero(mu > 0)
     m = mu[vis]
     pv = p[vis][:, None]
-    run = np.sin(np.pi * pv) ** 2                                         # a batch passes through 'running'
-    if "kappa" in g:   # the mass map shows through as the veil lifts
-        col = np.array(PARCH) + (np.array(OCHRE) - np.array(PARCH)) * (0.85 * run)
-        alpha = (A_TODO * (1 - pv[:, 0]) + 0.5 * run[:, 0]) * np.clip(m / 0.08, 0, 1)
-        alpha *= 1 - ~np.isfinite(g["t_done"][vis]) * ease((i - g["i_end"]) / FPS)   # never finished: veil lifts in the hold
-    else:
+    if "kappa" not in g:   # without a map, tiles carry the progress: a veil, ochre while running, teal when done
+        run = np.sin(np.pi * pv) ** 2
         col = np.array(PARCH) * (1 - pv) + np.array(TEAL) * pv
         col += (np.array(OCHRE) - col) * (0.85 * run)
         alpha = (A_TODO + (A_DONE - A_TODO) * pv[:, 0]) * np.clip(m / 0.08, 0, 1)
-    col *= (0.82 + 0.18 * m)[:, None]
-    rgba = np.concatenate([col, 255 * alpha[:, None]], 1).astype(int)
-    xs, ys = project(g["corner"][vis], r, u)
-    for k in range(len(vis)):
-        d.polygon(list(zip(xs[k], ys[k])), fill=tuple(rgba[k]))
+        col *= (0.82 + 0.18 * m)[:, None]
+        rgba = np.concatenate([col, 255 * alpha[:, None]], 1).astype(int)
+        xs, ys = project(g["corner"][vis], r, u)
+        for k in range(len(vis)):
+            d.polygon(list(zip(xs[k], ys[k])), fill=tuple(rgba[k]))
     img = Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
     img.paste(Image.new("RGB", img.size, OUTLINE), (0, 0), outline(foot))
     d = ImageDraw.Draw(img)
@@ -483,13 +480,25 @@ def render(job):
     return i, img.resize((W, H), Image.LANCZOS).tobytes()
 
 
-def tile_lut(ids):
-    """(b, a) → tile index, for tile ids 'a.b'; −1 where there is no tile."""
+def tile_lut(ids, keep):
+    """(b, a) → tile index, for the tiles `keep` of ids 'a.b'; −1 where there is no such tile."""
     lut = np.full((361, 721), -1, np.int32)
-    for k, t in enumerate(ids):
-        a, b = (int(x) for x in t.split("."))
+    for k in keep:
+        a, b = (int(x) for x in ids[k].split("."))
         lut[b, a % 721] = k
     return lut
+
+
+def mapped(ids, kappa):
+    """Whether the map has any unmasked pixel in each tile (sampled on a 6×6 grid per tile)."""
+    import healpy as hp
+    ra, dec = tile_radec(ids)
+    f = (np.arange(6) + 0.5) / 6 - 0.5
+    d = dec[:, None, None] + TILE * f[:, None]
+    r = ra[:, None, None] + TILE * f[None, :] / np.cos(np.radians(dec))[:, None, None]
+    v = unit(*np.broadcast_arrays(r, d)).reshape(-1, 3)
+    vals = kappa["map"][kappa["lut"][hp.vec2pix(kappa["nside"], v[:, 0], v[:, 1], v[:, 2])]]
+    return np.isfinite(vals.reshape(len(ids), -1)).any(1)
 
 
 def load_massmap(f):
@@ -535,9 +544,13 @@ def main():
     days = round((finite.max() - ts(cur["timeline"][0][0]).timestamp()) / 86400)
     state = dict(days=days, t_done=t_done, centre=centre, corner=corner, area=area, per_tile=per_tile,
                  t0=t0, t1=t1, area_total=A, yticks=[0, 2000, 4000], xticks=xticks,
-                 curve_t=curve_t, curve_a=curve_a, grat=graticule_lines(), tile_lut=tile_lut(universe))
+                 curve_t=curve_t, curve_a=curve_a, grat=graticule_lines())
+    shown = np.isfinite(t_done)
     if a.massmap:
         state["kappa"] = load_massmap(a.massmap)
+        shown &= mapped(universe, state["kappa"])
+    state["tile_lut"] = tile_lut(universe, np.flatnonzero(shown))
+    print(f"footprint shown: {shown.sum()} tiles, {area[shown].sum():,.0f} deg²")
 
     n_in, n_sim, n_hold = round(INTRO_S * FPS), round(SIM_S * FPS), round(HOLD_S * FPS)
     N = n_in + n_sim + n_hold
