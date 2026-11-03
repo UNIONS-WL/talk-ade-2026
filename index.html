@@ -511,10 +511,11 @@ Not the same split as the paper: "late-type" here is the morphology class of the
         <p style="position:absolute;left:680px;top:160px;width:560px;margin:0;font-size:26px;">Previous release: <strong style="font-size:32px;">−5.7%</strong></p>
         <p style="position:absolute;left:680px;top:225px;width:560px;margin:0;font-size:26px;">Estimates for our new run:</p>
         <p class="mrow" style="position:absolute;left:680px;top:272px;width:580px;margin:0;font-size:24px;"><strong style="font-size:32px;">−0.6 ± 0.4%</strong>&nbsp; ShapePipe (Martin Kilbinger) <img class="avatar" src="images/people/martin-kilbinger.jpg" alt="Martin Kilbinger" style="object-position:50% 25%;"></p>
+        <p class="caption" style="position:absolute;left:680px;top:318px;width:560px;margin:0;text-align:left;">includes the selection response, which AnaCal's number does not</p>
         <p class="mrow" style="position:absolute;left:680px;top:352px;width:580px;margin:0;font-size:24px;"><strong style="font-size:32px;">+0.3 ± 0.8%</strong>&nbsp; AnaCal (Shurui Lin) <img class="avatar" src="images/people/shurui-lin.jpg" alt="Shurui Lin"></p>
         <p style="position:absolute;left:640px;top:540px;width:620px;margin:0;text-align:center;font-size:58px;font-weight:700;letter-spacing:0.04em;color:#C62828;transform:rotate(-4deg);">VERY PRELIMINARY</p>
         <aside class="notes"><ul class="skim">
-      <li><strong>Shear calibration</strong> — 2D release $m = -0.057 \pm 0.0047$ from the image simulations, error tripled for the prior. v2: Martin's ShapePipe metacalibration on Fabian's isolated-galaxy grid simulations (4 grids, 148 tiles), inverse-variance mean $m_1 = -0.0062 \pm 0.0038$, $m_2 = -0.0057 \pm 0.0046$; the joint Sheldon+2020 response gives the same within errors. AnaCal (Shurui Lin, UIUC; trained on LSST sims, subset of single exposures): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
+      <li><strong>Shear calibration</strong> — 2D release $m = -0.057 \pm 0.0047$ from the image simulations, error tripled for the prior. v2: Martin's ShapePipe metacalibration on Fabian's isolated-galaxy grid simulations (4 grids, 148 tiles), inverse-variance mean $m_1 = -0.0062 \pm 0.0038$, $m_2 = -0.0057 \pm 0.0046$; the joint Sheldon+2020 response gives the same within errors. Both include the selection response; Shurui's AnaCal run likely does not (Martin, #weak-lensing-3x2, 3 Nov), so the fair like-for-like is ShapePipe's shear-only m, which Martin has not posted. AnaCal (Shurui Lin, UIUC; trained on LSST sims, subset of single exposures): $m_1 = (+3.1 \pm 7.8)\times10^{-3}$, $m_2 = (+2.0 \pm 7.6)\times10^{-3}$.</li>
       <li><strong>Caveat</strong> — isolated galaxies only; blending added about $-1.7\%$ in the 2D release.</li>
       <li><strong>$n(z)$</strong> — a working $n(z)$ for validation and null tests, each bin drawn as its share of the shear weight; the $n(z)$ for parameters comes from the photo-z group.</li>
     </ul>
@@ -534,10 +535,13 @@ Not the same split as the paper: "late-type" here is the morphology class of the
 
       <!-- Cail · massmap-paris -->
       <section class="bleed">
-        <video src="media/massmap_paris_fullarea.mp4" poster="media/massmap_paris_fullarea.jpg" muted="" loop="" playsinline="" data-autoplay="" style="position:absolute;left:0;top:0;width:1280px;height:720px;object-fit:cover;object-position:50% 0;"></video>
+        <div class="playlist">
+          <figure class="on"><video src="media/massmap_paris.mp4" poster="media/massmap_paris.jpg" muted="" playsinline="" preload="auto"></video><figcaption>First release · 2,900 deg²</figcaption></figure>
+          <figure><video src="media/massmap_paris_fullarea.mp4" poster="media/massmap_paris_fullarea.jpg" muted="" playsinline="" preload="auto"></video><figcaption>Next release · full area, blinded</figcaption></figure>
+        </div>
         <h2 class="on-veil">Thank you!</h2>
         <aside class="notes"><ul class="skim">
-      <li><strong>The map</strong> — the first-release MCALens convergence map (Paper I; unions_mcalens_nside2048…_e.fits) over the first-release footprint, about 2,900 deg², composited into the dusk sky over the Eiffel Tower (media/fp/METHOD_exact_kappa_northern_v2.md). Not the new full-area map.</li>
+      <li><strong>The maps</strong> — two clips alternate, crossfading. First: the first-release MCALens convergence map (Paper I; unions_mcalens_nside2048…_e.fits, sparse + Wiener), about 2,900 deg², composited into the dusk sky over the Eiffel Tower (media/fp/METHOD_exact_kappa_northern_v2.md). Second: the v2 full-area Kaiser–Squires κ_E (nside 1024, 30′ smoothing) on the same sky — far more area, coarser structure.</li>
       <li><strong>Questions</strong> — loops while questions run.</li>
       <li><strong>Blind</strong> — divided by its own rms, so its amplitude carries no $S_8$ information.</li>
     </ul></aside>
@@ -630,6 +634,26 @@ Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a ce
       katex: { local: 'reveal/katex' },
       plugins: [ RevealMath.KaTeX, RevealNotes ],
     });
+    // A .playlist plays its videos in turn while its slide is current, crossfading between them.
+    function playlist(slide) {
+      document.querySelectorAll('.playlist video').forEach(v => v.pause());
+      const box = slide.querySelector('.playlist');
+      if (!box) return;
+      const figs = [...box.children];
+      figs.forEach((f, i) => {
+        const v = f.querySelector('video');
+        v.onended = () => {
+          const next = figs[(i + 1) % figs.length];
+          const nv = next.querySelector('video');
+          nv.currentTime = 0; nv.play();
+          figs.forEach(g => g.classList.toggle('on', g === next));
+        };
+      });
+      const cur = box.querySelector('.on video');
+      cur.currentTime = 0; cur.play();
+    }
+    Reveal.on('ready', e => playlist(e.currentSlide));
+    Reveal.on('slidechanged', e => playlist(e.currentSlide));
     // Page numbers live inside each slide, in slide coordinates, so they sit beside the logo at any window size; backup slides count outside the total.
     Reveal.on('ready', () => {
       const slides = Reveal.getSlides();
