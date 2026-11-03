@@ -159,3 +159,7 @@
 .reveal ul.plainpts li .sub { font-size: 20px; color: var(--ink-soft); }
 .reveal ul.plainpts li.accent { color: var(--accent); }
 .reveal .runcal svg { display: block; width: 100%; height: auto; }
+
+/* papers slide: one click bolds the papers discussed in this talk (a fragment that stays visible, only restyles) */
+.reveal .fragment.today { opacity: 1; visibility: inherit; transition: color .3s, font-weight .3s; }
+.reveal .fragment.today.visible { font-weight: 700; color: var(--accent); }
