@@ -163,3 +163,7 @@
 /* papers slide: one click bolds the papers discussed in this talk (a fragment that stays visible, only restyles) */
 .reveal .fragment.today { opacity: 1; visibility: inherit; transition: color .3s, font-weight .3s; }
 .reveal .fragment.today.visible { font-weight: 700; color: var(--accent); }
+
+/* arXiv links: same colour as the text around them, underlined on hover */
+.reveal a.arx-link { color: inherit; text-decoration: none; }
+.reveal a.arx-link:hover { text-decoration: underline; }
