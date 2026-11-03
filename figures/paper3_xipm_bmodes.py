@@ -8,7 +8,8 @@ images/paper3_xipm_bmodes.png
 Paper III's arrays (data, diagonal errors, best fit, best-fit xi_sys) are read from the
 vector content of its Figure 1 PDF: axes registered on the 12'/83' scale-cut edges (x, log)
 and the zero line plus y tick-label spacing (y). Both papers use the same 20 log bins over
-1-250 arcmin. The B-modes and their errors (diagonal of the MC pure-mode covariance) come
+1-250 arcmin. Open circles: the data with the B-modes removed (xi+ - xi+^B, xi- + xi-^B).
+The B-modes and their errors (diagonal of the MC pure-mode covariance) come
 from the bmodes Lightcone baseline, the input of pure_eb.pure_eb_data_vector_figure.
 """
 import matplotlib.pyplot as plt
@@ -81,6 +82,9 @@ def main():
         ax.plot(*p["sys"], color="red", lw=3, zorder=3, label=r"best-fit $\xi^{\rm sys}_\pm$ (PSF leakage)")
         ax.errorbar(p["theta"] * 0.97, p["y"], p["err"], fmt="o", color=INK, ms=9, lw=2.5, zorder=4,
                     label="UNIONS-3500 data")
+        sign = -1 if i == 0 else 1   # B-modes add to xi+ and subtract from xi-: remove them
+        ax.plot(p["theta"] * 0.97, p["y"] + sign * th * xb * 1e4, "o", mfc="none", mec=INK, ms=13, mew=2.5, zorder=4,
+                label=r"data with $\xi^B_\pm$ removed")
         ax.errorbar(th * 1.03, th * xb * 1e4, th * sb * 1e4, fmt="D", color=B_COLOR, ms=9, lw=2.5, zorder=5,
                     label=r"B-modes $\xi^B_\pm$ (Daley+2026)")
         ax.set_xscale("log")
@@ -90,8 +94,8 @@ def main():
     axes[0].set_ylabel(r"$\theta\,\xi\ \times 10^4$")
     axes[0].set_ylim(-0.3, 1.3)
     axes[1].set_ylim(-0.3, 1.15)
-    fig.tight_layout(w_pad=2, rect=(0, 0, 1, 0.88))
-    fig.legend(*axes[0].get_legend_handles_labels(), loc="upper center", ncol=4, frameon=False,
+    fig.tight_layout(w_pad=2, rect=(0, 0, 1, 0.82))
+    fig.legend(*axes[0].get_legend_handles_labels(), loc="upper center", ncol=3, frameon=False,
                fontsize=32, handletextpad=0.4, columnspacing=1.6)
     out = IMAGES / "paper3_xipm_bmodes.png"
     fig.savefig(out, facecolor="white")
