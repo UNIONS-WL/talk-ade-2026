@@ -6,7 +6,7 @@
 
 Draws its own frames in the palette and type of the production status page:
 an orthographic celestial sphere textured with the Gaia EDR3 all-sky map
-(galactic, transformed to equatorial). The camera faces the main footprint cap,
+(galactic, transformed to equatorial). The camera faces the main footprint cap's centroid,
 swings to the other cap (RA outside `MAIN_RA`) while its tiles finish, and swings back. Every DR6 tile is a pale veil until its
 batch is processed and teal after. A pale line outlines the footprint throughout.
 Overlays: catalogue objects so far, the date, and cumulative completed area
@@ -61,9 +61,6 @@ INTRO_S, SIM_S, HOLD_S = 0.7, 30.0, 5.0
 MAIN_RA = (85.0, 295.0)            # RA span of the main cap; the tiles outside it form the other cap (deg)
 SWING_S = 1.2                      # seconds for each swing between the two caps
 WARP = 3.0                         # sim-clock slowdown while the other cap fills
-ELEV_OTHER = 30.0                  # camera latitude while facing the other cap (deg)
-ELEV = 55.0                        # camera latitude (deg)
-PHI_END = 152.0                    # RA the camera faces for most of the run: the main footprint cap (deg)
 CX, CY, R = 640, 540, 430          # globe centre and radius (output px)
 PX0, PX1 = 1220, 1800              # the text column to the globe's right (output px)
 CHART = (PX0, PX1, 500, 720)       # completed-area chart: x0, x1, y_top, y_bottom (output px)
@@ -242,7 +239,7 @@ def tile_geometry(ids):
     return unit(ra, dec), unit(cra, cdec), area
 
 
-def basis(phi, elev=ELEV):
+def basis(phi, elev):
     """View direction c, screen-right r and screen-up u for the camera facing RA phi from latitude elev.
 
     Sky convention, as on the status page: seen from inside, RA increases to the left.
@@ -454,8 +451,9 @@ def render(job):
     T0, T1, A = g["t0"], g["t1"], g["area_total"]
     X = lambda t: cx0 + (cx1 - cx0) * (t - T0) / (T1 - T0)
     Y = lambda v: cy1 - (cy1 - cy0) * v / A
-    for x in range(int(cx0), int(cx1), 9 * S):
-        d.line([(x, Y(A)), (x + 3 * S, Y(A))], fill=MUTED, width=S)
+    if not DECK:   # the full footprint, dashed along the top
+        for x in range(int(cx0), int(cx1), 9 * S):
+            d.line([(x, Y(A)), (x + 3 * S, Y(A))], fill=MUTED, width=S)
     d.line([(cx0, cy1), (cx1, cy1)], fill=RULE, width=S)
     for tday, anc in ((T0, "la"), (T1, "ra")):
         d.text((X(tday), cy1 + 12 * S), dt.datetime.fromtimestamp(tday, dt.timezone.utc).strftime("%-d %b"),
@@ -469,10 +467,11 @@ def render(job):
         fill = tuple(int(0.8 * PAGE[j] + 0.2 * TEAL[j]) for j in range(3))
         d.polygon(pts + [(pts[-1][0], cy1), (pts[0][0], cy1)], fill=fill)
         d.line(pts, fill=TEAL, width=3 * S, joint="curve")
-    yv = Y(V1_AREA)
-    for x in range(int(cx0), int(cx1), 12 * S):
-        d.line([(x, yv), (x + 6 * S, yv)], fill=COBALT, width=2 * S)
-    d.text((cx0, yv - 8 * S), V1_LABEL, font=f["tick"], fill=COBALT, anchor="ls")
+    if not DECK:   # the first release, dashed in cobalt
+        yv = Y(V1_AREA)
+        for x in range(int(cx0), int(cx1), 12 * S):
+            d.line([(x, yv), (x + 6 * S, yv)], fill=COBALT, width=2 * S)
+        d.text((cx0, yv - 8 * S), V1_LABEL, font=f["tick"], fill=COBALT, anchor="ls")
     hx, hy = pts[-1]
     d.ellipse((hx - 8 * S, hy - 8 * S, hx + 8 * S, hy + 8 * S), fill=RAG)
     d.ellipse((hx - 5 * S, hy - 5 * S, hx + 5 * S, hy + 5 * S), fill=TEAL)
@@ -573,10 +572,14 @@ def main():
     N = n_in + n_sim + n_hold
     state["i_end"] = n_in + n_sim
     # camera: faces the main cap, swings to the other cap while it fills, swings back
+    # each cap is seen face-on: the camera looks at its area-weighted centroid
     ra, _ = tile_radec(universe)   # swing out as the other cap starts filling, back as it finishes
     other = shown & ((ra < MAIN_RA[0]) | (ra > MAIN_RA[1]))
-    phi_other = math.degrees(np.angle(np.exp(1j * np.radians(ra[other])).mean()))
-    turn = (phi_other - PHI_END + 180) % 360 - 180
+    def centroid(sel):
+        v = (centre[sel] * area[sel, None]).sum(0)
+        return math.degrees(math.atan2(v[1], v[0])), math.degrees(math.asin(v[2] / np.linalg.norm(v)))
+    (phi_main, el_main), (phi_other, el_other) = centroid(shown & ~other), centroid(other)
+    turn = (phi_other - phi_main + 180) % 360 - 180
     fa, fb = np.quantile((t_done[other] - t0) / (t1 - t0), [0.02, 0.98])
     # the sim clock slows by WARP across that window, so the other cap fills slowly enough to watch
     fg = np.linspace(0, 1, 20001)
@@ -586,11 +589,11 @@ def main():
     sw = SWING_S * FPS
     ia = n_in + np.interp(fa, fg, gg) * n_sim - sw / 2   # half-way round as the first tiles land
     ib = n_in + np.interp(fb, fg, gg) * n_sim            # back once its last tiles have landed
-    print(f"other cap: {other.sum()} tiles at RA {phi_other % 360:.0f}, filling {fa:.0%}–{fb:.0%} of the run; swings at frames {ia:.0f}, {ib:.0f}")
+    print(f"main cap at (RA {phi_main % 360:.0f}, Dec {el_main:.0f}); other cap: {other.sum()} tiles at (RA {phi_other % 360:.0f}, Dec {el_other:.0f}), filling {fa:.0%}–{fb:.0%} of the run; swings at frames {ia:.0f}, {ib:.0f}")
     jobs = []
     for i in range(N):
         w = ease((i - ia) / sw) - ease((i - ib) / sw)
-        view = (PHI_END + turn * w, ELEV + (ELEV_OTHER - ELEV) * w)
+        view = (phi_main + turn * w, el_main + (el_other - el_main) * w)
         if i < n_in:
             t = te = t0
         elif i < n_in + n_sim:
