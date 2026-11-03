@@ -144,3 +144,8 @@
 .reveal ul.bigpoints li .sub { font-size: 22px; font-weight: 400; color: var(--ink-soft); }
 .reveal ul.bigpoints li.accent { color: var(--accent); font-size: 26px; }
 .reveal .textcol.large p:not(.num), .reveal .textcol.large li { font-size: 24px; }
+.reveal p.mrow img.avatar { width: 56px; height: 56px; vertical-align: middle; margin-left: 10px; display: inline-block; }
+.reveal .credit.lead { font-size: 26px; gap: 18px; }
+.reveal .credit.lead .arx { font-size: 20px; }
+.reveal .textcol.roomy .kicker { display: block; margin: 0 0 8px; }
+.reveal .textcol.roomy p { font-size: 28px; line-height: 1.35; margin: 0 0 40px; }
