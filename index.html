@@ -480,20 +480,29 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       </section>
 
 
-      <!-- Cail · backup: error-bar blink (two identical frames; advance to blink) -->
+      <!-- Cail · backup: 3×2pt with UNIONS × SPHEREx lenses -->
       <section data-section="Backup">
-        <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
-        <img class="plot" src="images/xi_blink_old.png" alt="Concealed v2 xi plus and minus with the 2D release error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with the 2D release's error bars</p>
+        <h2>3×2pt with UNIONS × SPHEREx lenses, narrower than DES Y6</h2>
+        <img class="plot" src="images/lsx_nz_desy6.svg" alt="Tomographic n(z), each scaled to peak 1: six LSx v0.9 bins below z = 0.5 against the six DES Y6 lens bins" style="position:absolute;left:30px;top:130px;width:640px;height:auto;">
+        <video src="media/spherex_sky_redshift.mp4" poster="fig/spherex_sky_redshift_poster.jpg" muted="" loop="" playsinline="" data-autoplay="" aria-label="SPHEREx galaxies over the whole sky as redshift climbs, with the UNIONS footprint outlined" style="position:absolute;left:690px;top:140px;width:560px;height:284px;"></video>
+        <img src="fig/spherex_unions_overlay.png" alt="The UNIONS footprint outlined in orange over the map" style="position:absolute;left:690px;top:140px;width:560px;height:284px;pointer-events:none;">
+        <p class="accent" style="position:absolute;left:690px;top:450px;width:560px;margin:0;font-size:22px;">On the same timescale as tomographic cosmic shear</p>
+        <div class="credit br"><img class="avatar" src="images/people/calum-murray.jpg" alt="Calum Murray"><span><span class="cname">Calum Murray</span><br><span class="arx">leads the UNIONS 3×2pt</span></span></div>
+        <p class="caption" style="position:absolute;left:40px;top:540px;width:1200px;margin:0;">Lens sample: SPHEREx redshifts (LSx v0.9), n(z) from DESI DR1 matches, against the DES Y6 lens bins (arXiv:2601.14559); each scaled to peak 1. Preliminary.</p>
         
+        <div hidden="" data-ai-note="done" style="position:absolute;left:915px;top:593px;width:300px;"><p data-by="author">please add my photo here</p><p data-by="ai">Done: your photo (images/people/calum-murray.jpg) replaces the grey placeholder.</p></div><aside class="notes">3×2pt slide (Calum: name it UNIONS × SPHEREx, the lens sample will move to UNIONS positions). Formerly a backup, added at Calum's request: the DESI Legacy Surveys × SPHEREx (LSx) catalogue's tomographic n(z) against DES Y6, from the UNIONS × SPHEREx deck (talks/2611_UNIONS_SPHEREx, fig/allsky/new/lsx_nz_desy6.svg).
+Catalogue: SPHEREx forced photometry at 92 M Legacy Surveys positions, redshifts from SPHEREx alone; quality sample ~41 M galaxies, σ_NMAD 0.009 and ~1% outliers against DESI.
+Figure: six z_est bins (0, 0.10, 0.16, 0.22, 0.30, 0.40, 0.50); n(z) = DIR from DESI DR1 BGS_ANY matches, each weighted by N_catalogue / N_truth in its (z_est 0.02 × r 0.25 mag) cell so the faint end counts; against the DES Y6 MagLim++ lens bins (arXiv:2601.14559, Fig. 2; bin 2 dashed, dropped before unblinding). Each scaled to peak 1: shapes and widths only.
+Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a cell have the same true-z distribution as bright ones. In the 0–0.1 bin the weights move ⟨z⟩ from 0.080 to 0.104 (effective N ~7,500), so that bin's tail is uncertain. Preliminary: not a release number.</aside>
       </section>
 
+      <!-- Cail · backup: full-area v2 error bars -->
       <section>
         <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
         <img class="plot" src="images/xi_blink_new.png" alt="The same concealed v2 xi plus and minus with the v2 error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
         <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with v2's error bars: 0.71× ($\xi_+$), 0.68× ($\xi_-$) inside 12–83′</p>
         <aside class="notes"><ul class="skim">
-      <li><strong>Blink</strong> — advance and go back between the two slides to flip between the 2D-release error bars (2894 deg², n_eff 4.96) and v2's (4690 deg², n_eff 6.87); everything else is identical.</li>
+      <li><strong>Error bars</strong> — v2 error bars (4690 deg², n_eff 6.87) on the concealed v2 data; the 2D release had 2894 deg², n_eff 4.96. The 2D-release-error-bar frame is images/xi_blink_old.png.</li>
       <li><strong>Expectation</strong> — √(n_eff·A) ratio 0.67; area alone 0.79. Measured 0.71 / 0.68.</li>
     </ul>
     <details><summary>Sources</summary><p>errorbar-blink thread (Nibi): cosmo-val-v2-tomo/slides/xi_blink_slide.py, SP_v2.0.sacc via the unions blind; Paper II cov_reporting_ng.txt.</p></details></aside>
@@ -574,24 +583,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       </section>
 
 
-      <!-- Cail · backup: LSx n(z) against DES Y6 -->
-      
-
-      <!-- Cail · backup: dv-blinded, data only (swap its src into the main slide to use it) -->
-      <section>
-        <h2>3×2pt with UNIONS × SPHEREx lenses, narrower than DES Y6</h2>
-        <img class="plot" src="images/lsx_nz_desy6.svg" alt="Tomographic n(z), each scaled to peak 1: six LSx v0.9 bins below z = 0.5 against the six DES Y6 lens bins" style="position:absolute;left:30px;top:130px;width:640px;height:auto;">
-        <video src="media/spherex_sky_redshift.mp4" poster="fig/spherex_sky_redshift_poster.jpg" muted="" loop="" playsinline="" data-autoplay="" aria-label="SPHEREx galaxies over the whole sky as redshift climbs, with the UNIONS footprint outlined" style="position:absolute;left:690px;top:140px;width:560px;height:284px;"></video>
-        <img src="fig/spherex_unions_overlay.png" alt="The UNIONS footprint outlined in orange over the map" style="position:absolute;left:690px;top:140px;width:560px;height:284px;pointer-events:none;">
-        <p class="accent" style="position:absolute;left:690px;top:450px;width:560px;margin:0;font-size:22px;">On the same timescale as tomographic cosmic shear</p>
-        <div class="credit br"><img class="avatar" src="images/people/calum-murray.jpg" alt="Calum Murray"><span><span class="cname">Calum Murray</span><br><span class="arx">leads the UNIONS 3×2pt</span></span></div>
-        <p class="caption" style="position:absolute;left:40px;top:540px;width:1200px;margin:0;">Lens sample: SPHEREx redshifts (LSx v0.9), n(z) from DESI DR1 matches, against the DES Y6 lens bins (arXiv:2601.14559); each scaled to peak 1. Preliminary.</p>
-        
-        <div hidden="" data-ai-note="done" style="position:absolute;left:915px;top:593px;width:300px;"><p data-by="author">please add my photo here</p><p data-by="ai">Done: your photo (images/people/calum-murray.jpg) replaces the grey placeholder.</p></div><aside class="notes">3×2pt slide (Calum: name it UNIONS × SPHEREx, the lens sample will move to UNIONS positions). Formerly a backup, added at Calum's request: the DESI Legacy Surveys × SPHEREx (LSx) catalogue's tomographic n(z) against DES Y6, from the UNIONS × SPHEREx deck (talks/2611_UNIONS_SPHEREx, fig/allsky/new/lsx_nz_desy6.svg).
-Catalogue: SPHEREx forced photometry at 92 M Legacy Surveys positions, redshifts from SPHEREx alone; quality sample ~41 M galaxies, σ_NMAD 0.009 and ~1% outliers against DESI.
-Figure: six z_est bins (0, 0.10, 0.16, 0.22, 0.30, 0.40, 0.50); n(z) = DIR from DESI DR1 BGS_ANY matches, each weighted by N_catalogue / N_truth in its (z_est 0.02 × r 0.25 mag) cell so the faint end counts; against the DES Y6 MagLim++ lens bins (arXiv:2601.14559, Fig. 2; bin 2 dashed, dropped before unblinding). Each scaled to peak 1: shapes and widths only.
-Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a cell have the same true-z distribution as bright ones. In the 0–0.1 bin the weights move ⟨z⟩ from 0.080 to 0.104 (effective N ~7,500), so that bin's tail is uncertain. Preliminary: not a release number.</aside>
-      </section>
 
       
     </div>
