@@ -172,3 +172,4 @@
 .reveal .playlist figure.on { opacity: 1; }
 .reveal .playlist video { position: absolute; left: 0; top: 0; width: 1280px; height: 720px; object-fit: cover; object-position: 50% 0; }
 .reveal .playlist figcaption { position: absolute; left: 30px; bottom: 22px; padding: 4px 12px; font-size: 20px; color: var(--ink); background: rgba(255,255,255,0.88); border-radius: 4px; }
+.reveal .textcol p.num .lbl { font-size: 18px; font-weight: 400; color: var(--ink-soft); letter-spacing: 0.02em; }
