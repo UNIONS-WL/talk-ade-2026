@@ -6,8 +6,8 @@
 
 Draws its own frames in the palette and type of the production status page:
 an orthographic celestial sphere textured with the Gaia EDR3 all-sky map
-(galactic, transformed to equatorial), seen from a fixed elevation and turning
-at a constant rate about the pole, settling to a stop as the run ends. Every DR6 tile is a pale veil until its
+(galactic, transformed to equatorial). The camera faces the main footprint cap,
+swings to the other cap (RA outside `MAIN_RA`) while its tiles finish, and swings back. Every DR6 tile is a pale veil until its
 batch is processed and teal after. A pale line outlines the footprint throughout.
 Overlays: catalogue objects so far, the date, and cumulative completed area
 (deg²) against time.
@@ -28,6 +28,7 @@ Inputs beside the script: assets/gaia_edr3_colour_equirectangular.png (ESA/Gaia/
 CC BY-SA 3.0 IGO) and assets/EBGaramond-{Regular,Medium}.otf.
 
     uv run replay_globe.py [--jobs 8] [--frames 0,300,600] [--massmap assets/display.fits]
+    GLOBE_LAYOUT=deck uv run replay_globe.py ...   # 1200×1100 slide layout: globe over the chart, white page
     → shots/replay/dr6_globe.mp4, shots/replay/dr6_globe_sheet.jpg
 """
 import argparse
@@ -36,6 +37,7 @@ import datetime as dt
 import json
 import math
 import multiprocessing as mp
+import os
 import pathlib
 import subprocess
 import urllib.request
@@ -56,17 +58,26 @@ GAIA = ASSETS / "gaia_edr3_colour_equirectangular.png"
 W, H, SS = 1920, 1080, 2           # output size, supersampling factor
 FPS = 30
 INTRO_S, SIM_S, HOLD_S = 0.7, 30.0, 5.0
-SPIN = 1.6 / 22.7                  # globe turns per second while the run plays
-SETTLE_S = 2.0                     # the spin eases to a stop over the hold's first seconds
+MAIN_RA = (85.0, 295.0)            # RA span of the main cap; the tiles outside it form the other cap (deg)
+SWING_S = 1.2                      # seconds for each swing between the two caps
+WARP = 3.0                         # sim-clock slowdown while the other cap fills
+ELEV_OTHER = 30.0                  # camera latitude while facing the other cap (deg)
 ELEV = 55.0                        # camera latitude (deg)
-PHI_END = 152.0                    # RA the camera faces once the spin has stopped: the main footprint cap (deg)
+PHI_END = 152.0                    # RA the camera faces for most of the run: the main footprint cap (deg)
 CX, CY, R = 640, 540, 430          # globe centre and radius (output px)
 PX0, PX1 = 1220, 1800              # the text column to the globe's right (output px)
+CHART = (PX0, PX1, 500, 720)       # completed-area chart: x0, x1, y_top, y_bottom (output px)
+DECK = os.environ.get("GLOBE_LAYOUT") == "deck"   # slide layout: globe over the chart on a white page, no text column
+if DECK:
+    W, H = 1200, 1100
+    CX, CY, R = 600, 380, 360
+    CHART = (90, 1110, 850, 1010)
 TAU_H = 4.0                        # remaining→processed ease per tile (sim hours)
 TILE = 0.5                         # tile side (deg)
 
 # status-page palette
 PARCH = (237, 226, 206)
+PAGE = (255, 255, 255) if DECK else PARCH   # what the globe sits on
 RAG = (251, 246, 233)
 INK = (27, 22, 17)
 MUTED = (122, 111, 92)
@@ -231,12 +242,12 @@ def tile_geometry(ids):
     return unit(ra, dec), unit(cra, cdec), area
 
 
-def basis(phi):
-    """View direction c, screen-right r and screen-up u for the camera facing RA phi.
+def basis(phi, elev=ELEV):
+    """View direction c, screen-right r and screen-up u for the camera facing RA phi from latitude elev.
 
     Sky convention, as on the status page: seen from inside, RA increases to the left.
     """
-    p, e = math.radians(phi), math.radians(ELEV)
+    p, e = math.radians(phi), math.radians(elev)
     c = np.array([math.cos(e) * math.cos(p), math.cos(e) * math.sin(p), math.sin(e)])
     r = np.array([math.sin(p), -math.cos(p), 0.0])
     u = np.array([-math.sin(e) * math.cos(p), -math.sin(e) * math.sin(p), math.cos(e)])
@@ -264,12 +275,13 @@ def static_layers():
     """Parchment page with the globe's soft shadow, the antialiased disc mask, and the
     disc's pixel grid (output resolution) for sampling the sky."""
     w, h = W * SS, H * SS
-    bg = Image.new("RGB", (w, h), PARCH)
+    bg = Image.new("RGB", (w, h), PAGE)
     sh = Image.new("L", (w, h), 0)
     ImageDraw.Draw(sh).ellipse(((CX - R * 0.96) * SS, (CY - R * 0.9 + 26) * SS,
                                 (CX + R * 0.96) * SS, (CY + R * 1.0 + 26) * SS), fill=70)
     sh = sh.filter(ImageFilter.GaussianBlur(40 * SS))
-    bg = Image.composite(Image.new("RGB", (w, h), (120, 100, 75)), bg, sh)
+    if not DECK:
+        bg = Image.composite(Image.new("RGB", (w, h), (120, 100, 75)), bg, sh)
     big = Image.new("L", (w * 2, h * 2), 0)
     ImageDraw.Draw(big).ellipse(((CX - R) * SS * 2, (CY - R) * SS * 2, (CX + R) * SS * 2, (CY + R) * SS * 2), fill=255)
     mask = big.resize((w, h), Image.LANCZOS)
@@ -380,18 +392,20 @@ def init(state):
     G["gaia"] = load_gaia()
     G["fonts"] = dict(big=font("serif", 120), unit=font("serif", 30), date=font("serif", 48),
                       tick=font("serif", 22), head=font("serif", 26), pay=font("serif-medium", 50))
+    if DECK:   # drawn at twice slide size
+        G["fonts"].update(date=font("serif", 36), tick=font("serif", 34), head=font("serif-medium", 38))
 
 
 def render(job):
-    i, t_disp, t_eval, phi = job
+    i, t_disp, t_eval, view = job
     g, S = G, SS
-    c, r, u = basis(phi)
+    c, r, u = basis(*view)
 
     # sky on the sphere
     rgb, foot = sky(c, r, u, t_eval)
     disc = Image.fromarray(rgb).resize(((2 * R + 1) * S, (2 * R + 1) * S), Image.BILINEAR)
     img = g["bg"].copy()
-    layer = Image.new("RGB", img.size, PARCH)
+    layer = Image.new("RGB", img.size, PAGE)
     layer.paste(disc, ((CX - R) * S, (CY - R) * S))
     img = Image.composite(layer, img, g["mask"])
 
@@ -429,13 +443,14 @@ def render(job):
     f = g["fonts"]
     x0, x1 = PX0 * S, PX1 * S
     tl = dt.datetime.fromtimestamp(t_disp, dt.timezone.utc)
-    d.text((x0, 230 * S), tl.strftime("%-d %B %Y"), font=f["date"], fill=INK, anchor="ls")
-    num, unit_ = fmt_objects(g["per_tile"] * p.sum())
-    d.text((x0 - 4 * S, 372 * S), num, font=f["big"], fill=INK, anchor="ls")
-    d.text((x0, 414 * S), unit_, font=f["unit"], fill=MUTED, anchor="ls")
+    if not DECK:
+        d.text((x0, 230 * S), tl.strftime("%-d %B %Y"), font=f["date"], fill=INK, anchor="ls")
+        num, unit_ = fmt_objects(g["per_tile"] * p.sum())
+        d.text((x0 - 4 * S, 372 * S), num, font=f["big"], fill=INK, anchor="ls")
+        d.text((x0, 414 * S), unit_, font=f["unit"], fill=MUTED, anchor="ls")
 
     # completed area against time: the full footprint dashed above, the first release dashed in cobalt
-    cx0, cx1, cy0, cy1 = x0, x1, 500 * S, 720 * S
+    cx0, cx1, cy0, cy1 = (v * S for v in CHART)
     T0, T1, A = g["t0"], g["t1"], g["area_total"]
     X = lambda t: cx0 + (cx1 - cx0) * (t - T0) / (T1 - T0)
     Y = lambda v: cy1 - (cy1 - cy0) * v / A
@@ -451,7 +466,7 @@ def render(job):
     pts = [(X(t), Y(v)) for t, v in zip(ct[keep], ca[keep])]
     pts.append((X(min(t_disp, T1)), Y(a_now)))
     if len(pts) > 1:
-        fill = tuple(int(0.8 * PARCH[j] + 0.2 * TEAL[j]) for j in range(3))
+        fill = tuple(int(0.8 * PAGE[j] + 0.2 * TEAL[j]) for j in range(3))
         d.polygon(pts + [(pts[-1][0], cy1), (pts[0][0], cy1)], fill=fill)
         d.line(pts, fill=TEAL, width=3 * S, joint="curve")
     yv = Y(V1_AREA)
@@ -464,12 +479,14 @@ def render(job):
     label = f"{a_now:,.0f} deg²"
     xy, anchor = ((hx + 14 * S, hy - 10 * S), "ls") if hx < cx1 - 150 * S else ((hx, Y(A) - 12 * S), "rs")
     x0b, y0b, x1b, y1b = d.textbbox(xy, label, font=f["head"], anchor=anchor)
-    d.rectangle((x0b - 4 * S, y0b - 2 * S, x1b + 4 * S, y1b + 4 * S), fill=PARCH)
+    d.rectangle((x0b - 4 * S, y0b - 2 * S, x1b + 4 * S, y1b + 4 * S), fill=PAGE)
     d.text(xy, label, font=f["head"], fill=INK, anchor=anchor)
+    if DECK:   # the date rides above the chart's left end
+        d.text((cx0, cy0 - 34 * S), tl.strftime("%-d %B %Y"), font=f["date"], fill=MUTED, anchor="ls")
 
     # once the run is done: what it cost, against what the last one took
     k = float(np.clip((i - g["i_end"] - 0.4 * FPS) / (0.9 * FPS), 0, 1))
-    if k > 0:
+    if k > 0 and not DECK:
         top = Image.new("RGBA", img.size, (0, 0, 0, 0))
         dt_ = ImageDraw.Draw(top)
         a8 = int(255 * ease(k))
@@ -555,21 +572,33 @@ def main():
     n_in, n_sim, n_hold = round(INTRO_S * FPS), round(SIM_S * FPS), round(HOLD_S * FPS)
     N = n_in + n_sim + n_hold
     state["i_end"] = n_in + n_sim
+    # camera: faces the main cap, swings to the other cap while it fills, swings back
+    ra, _ = tile_radec(universe)   # swing out as the other cap starts filling, back as it finishes
+    other = shown & ((ra < MAIN_RA[0]) | (ra > MAIN_RA[1]))
+    phi_other = math.degrees(np.angle(np.exp(1j * np.radians(ra[other])).mean()))
+    turn = (phi_other - PHI_END + 180) % 360 - 180
+    fa, fb = np.quantile((t_done[other] - t0) / (t1 - t0), [0.02, 0.98])
+    # the sim clock slows by WARP across that window, so the other cap fills slowly enough to watch
+    fg = np.linspace(0, 1, 20001)
+    dens = 1 + (WARP - 1) * (ease((fg - fa + 0.01) / 0.01) - ease((fg - fb) / 0.01))
+    gg = np.concatenate([[0], np.cumsum((dens[1:] + dens[:-1]) / 2)])
+    gg /= gg[-1]                                       # fraction of sim frames elapsed at run fraction fg
+    sw = SWING_S * FPS
+    ia = n_in + np.interp(fa, fg, gg) * n_sim - sw / 2   # half-way round as the first tiles land
+    ib = n_in + np.interp(fb, fg, gg) * n_sim            # back once its last tiles have landed
+    print(f"other cap: {other.sum()} tiles at RA {phi_other % 360:.0f}, filling {fa:.0%}–{fb:.0%} of the run; swings at frames {ia:.0f}, {ib:.0f}")
     jobs = []
-    settle = SETTLE_S * FPS
-    s_end = state["i_end"] + settle / 2                  # spin phase at which the globe comes to rest
     for i in range(N):
-        x = min(max(i - state["i_end"], 0), settle)     # frames into the hold, decelerating linearly
-        s = min(i, state["i_end"]) + x - x * x / (2 * settle)
-        phi = PHI_END + 360 * SPIN * (s_end - s) / FPS
+        w = ease((i - ia) / sw) - ease((i - ib) / sw)
+        view = (PHI_END + turn * w, ELEV + (ELEV_OTHER - ELEV) * w)
         if i < n_in:
             t = te = t0
         elif i < n_in + n_sim:
-            t = te = t0 + (t1 - t0) * (i - n_in + 1) / n_sim
+            t = te = t0 + (t1 - t0) * np.interp((i - n_in + 1) / n_sim, gg, fg)
         else:  # hold on the live state; let the last tiles finish their ease
             t = t1
             te = t1 + TAU_H * 3600 * min(1.0, (i - n_in - n_sim + 1) / FPS)
-        jobs.append((i, t, te, phi))
+        jobs.append((i, t, te, view))
     sel = [int(x) for x in a.frames.split(",")] if a.frames else None
 
     # the last frame shows the live state
