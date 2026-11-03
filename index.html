@@ -406,10 +406,11 @@ Not the same split as the paper: "late-type" here is the morphology class of the
           <li>27 core-years in under three weeks <span class="sub" style="display:block;">(previous run: more than a year)</span></li>
           <li class="accent">No comparable lensing measurements of this sky until Euclid DR3</li>
         </ul>
-        <span class="kicker" style="position:absolute;left:640px;top:420px;">Tomographic cosmic shear</span>
-        <div class="credit lead" style="position:absolute;left:640px;top:450px;width:600px;"><img class="avatar" src="images/people/klara-bertmann.jpg" alt="Klara Bertmann" style="object-position:50% 35%;"><span>Constraints competitive with Stage III and Year-1 Stage IV surveys</span></div>
+        <span class="kicker" style="position:absolute;left:640px;top:400px;">Tomographic cosmic shear</span>
+        <div class="credit lead" style="position:absolute;left:640px;top:430px;width:600px;"><img class="avatar" src="images/people/klara-bertmann.jpg" alt="Klara Bertmann" style="object-position:50% 35%;"><span><span class="cname" style="display:block;font-size:20px;color:var(--ink-soft);">Led by Klara Bertmann</span>Constraints expected to be competitive<br>with Stage III and Year-1 Stage IV surveys</span></div>
         <ul class="plainpts" style="position:absolute;left:714px;top:540px;width:526px;margin:0;">
-          <li>Multi-band image simulations progressing<span class="sub" style="display:block;">in Rust, targeting June 2027</span></li>
+          <li>Multi-band image simulations progressing</li>
+          <li class="accent">Targeting June 2027 release</li>
         </ul>
         <aside class="notes"><ul class="skim">
       <li><strong>Animation</strong> — the v2 production run, 10–27 October 2026: each DR6 tile lights up with the blinded mass map as its shapes complete.</li>
@@ -477,8 +478,27 @@ Not the same split as the paper: "late-type" here is the morphology class of the
       </section>
 
 
-      <!-- Cail · robustness -->
+      <!-- Cail · backup: error-bar blink (two identical frames; advance to blink) -->
       <section data-section="Backup">
+        <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
+        <img class="plot" src="images/xi_blink_old.png" alt="Concealed v2 xi plus and minus with the 2D release error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with the 2D release's error bars</p>
+        
+      </section>
+
+      <section>
+        <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
+        <img class="plot" src="images/xi_blink_new.png" alt="The same concealed v2 xi plus and minus with the v2 error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
+        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with v2's error bars: 0.71× ($\xi_+$), 0.68× ($\xi_-$) inside 12–83′</p>
+        <aside class="notes"><ul class="skim">
+      <li><strong>Blink</strong> — advance and go back between the two slides to flip between the 2D-release error bars (2894 deg², n_eff 4.96) and v2's (4690 deg², n_eff 6.87); everything else is identical.</li>
+      <li><strong>Expectation</strong> — √(n_eff·A) ratio 0.67; area alone 0.79. Measured 0.71 / 0.68.</li>
+    </ul>
+    <details><summary>Sources</summary><p>errorbar-blink thread (Nibi): cosmo-val-v2-tomo/slides/xi_blink_slide.py, SP_v2.0.sacc via the unions blind; Paper II cov_reporting_ng.txt.</p></details></aside>
+      </section>
+
+      <!-- Cail · robustness -->
+      <section>
         <h2>$S_8$ is robust to analysis choices but sensitive to the IA prior</h2>
         <img class="plot" src="images/paper3_s8_whisker.png" alt="Whisker plot of S8 under the configuration-space robustness tests" style="position:absolute;left:103px;top:112px;width:574px;height:512px;">
         <p class="caption" style="position:absolute;left:40px;top:630px;width:700px;margin:0;">Goh et al. 2026</p>
@@ -551,24 +571,6 @@ Not the same split as the paper: "late-type" here is the morphology class of the
     <details><summary>Sources</summary><p>Moriond 2026 slide 9 (images/blind_nz_ABC.png).</p></details></aside>
       </section>
 
-      <!-- Cail · backup: error-bar blink (two identical frames; advance to blink) -->
-      <section>
-        <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
-        <img class="plot" src="images/xi_blink_old.png" alt="Concealed v2 xi plus and minus with the 2D release error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with the 2D release's error bars</p>
-        
-      </section>
-
-      <section>
-        <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
-        <img class="plot" src="images/xi_blink_new.png" alt="The same concealed v2 xi plus and minus with the v2 error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with v2's error bars: 0.71× ($\xi_+$), 0.68× ($\xi_-$) inside 12–83′</p>
-        <aside class="notes"><ul class="skim">
-      <li><strong>Blink</strong> — advance and go back between the two slides to flip between the 2D-release error bars (2894 deg², n_eff 4.96) and v2's (4690 deg², n_eff 6.87); everything else is identical.</li>
-      <li><strong>Expectation</strong> — √(n_eff·A) ratio 0.67; area alone 0.79. Measured 0.71 / 0.68.</li>
-    </ul>
-    <details><summary>Sources</summary><p>errorbar-blink thread (Nibi): cosmo-val-v2-tomo/slides/xi_blink_slide.py, SP_v2.0.sacc via the unions blind; Paper II cov_reporting_ng.txt.</p></details></aside>
-      </section>
 
       <!-- Cail · backup: LSx n(z) against DES Y6 -->
       
