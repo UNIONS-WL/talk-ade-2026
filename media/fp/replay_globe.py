@@ -56,10 +56,10 @@ GAIA = ASSETS / "gaia_edr3_colour_equirectangular.png"
 W, H, SS = 1920, 1080, 2           # output size, supersampling factor
 FPS = 30
 INTRO_S, SIM_S, HOLD_S = 0.7, 30.0, 5.0
-SPIN = 0.8 / 22.7                  # globe turns per second while the run plays
+SPIN = 1.6 / 22.7                  # globe turns per second while the run plays
 SETTLE_S = 2.0                     # the spin eases to a stop over the hold's first seconds
 ELEV = 55.0                        # camera latitude (deg)
-PHI_CAP = 195.0                    # RA of the main footprint cap, faced mid-burst (deg)
+PHI_END = 152.0                    # RA the camera faces once the spin has stopped: the main footprint cap (deg)
 CX, CY, R = 640, 540, 430          # globe centre and radius (output px)
 PX0, PX1 = 1220, 1800              # the text column to the globe's right (output px)
 TAU_H = 4.0                        # remaining→processed ease per tile (sim hours)
@@ -555,27 +555,13 @@ def main():
     n_in, n_sim, n_hold = round(INTRO_S * FPS), round(SIM_S * FPS), round(HOLD_S * FPS)
     N = n_in + n_sim + n_hold
     state["i_end"] = n_in + n_sim
-    # constant spin, phased so the camera faces the cap mid-burst: the rate-weighted centre of the
-    # contiguous stretch around the peak completion rate (12 h smoothing) where the rate stays above 30% of peak
-    rate = np.convolve(np.gradient(curve_a), np.ones(48) / 48, mode="same")
-    k = np.argmax(rate)
-    hi = rate > 0.3 * rate[k]
-    lo_k, hi_k = k, k
-    while lo_k > 0 and hi[lo_k - 1]:
-        lo_k -= 1
-    while hi_k < len(rate) - 1 and hi[hi_k + 1]:
-        hi_k += 1
-    w = rate[lo_k:hi_k + 1]
-    t_peak = float((curve_t[lo_k:hi_k + 1] * w).sum() / w.sum())
-    i_peak = n_in + (t_peak - t0) / (t1 - t0) * n_sim - 1
-    fmt = lambda t: f"{dt.datetime.fromtimestamp(t, dt.timezone.utc):%d %b %H:%M}"
-    print(f"burst {fmt(curve_t[lo_k])} → {fmt(curve_t[hi_k])} UTC, centred {fmt(t_peak)} (frame {i_peak:.0f})")
     jobs = []
     settle = SETTLE_S * FPS
+    s_end = state["i_end"] + settle / 2                  # spin phase at which the globe comes to rest
     for i in range(N):
         x = min(max(i - state["i_end"], 0), settle)     # frames into the hold, decelerating linearly
         s = min(i, state["i_end"]) + x - x * x / (2 * settle)
-        phi = PHI_CAP + 360 * SPIN * (i_peak - s) / FPS
+        phi = PHI_END + 360 * SPIN * (s_end - s) / FPS
         if i < n_in:
             t = te = t0
         elif i < n_in + n_sim:
