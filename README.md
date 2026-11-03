@@ -12,7 +12,7 @@ Open it in any browser (arrow keys; `S` for the speaker view), or edit it on a c
 (`.github/workflows/publish.yml`); there is no build step.
 
 - Calum's half: slides 1–21 (figures in `fig/`, videos in `media/`). Cail's half starts at the teal
-  "Cosmology from UNIONS" divider (slide 22; figures in `images/`, videos in `media/`), with backup slides at the end (3×2pt first, then the v2 error bars).
+  "Cosmology from UNIONS" divider (slide 22; figures in `images/`, videos in `media/`), with backup slides at the end (3×2pt first, then the error-bar blink on one slide).
 - Look: Cail's house theme (EB Garamond, the orange headline rule, the small-caps footer, the logo bottom right,
   the teal · orange · yellow strip along the foot) on a white ground.
 - Cail's slides were ported on 2 November from his house-system sources (removed the same day; they are in the

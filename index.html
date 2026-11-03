@@ -499,10 +499,12 @@ Caveat: DESI stops at r ≈ 19.5; the reweighting assumes faint galaxies in a ce
       <!-- Cail · backup: full-area v2 error bars -->
       <section>
         <h2>Full-area v2 error bars are about 0.7× the 2D release's</h2>
-        <img class="plot" src="images/xi_blink_new.png" alt="The same concealed v2 xi plus and minus with the v2 error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;">
-        <p class="caption" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;">Concealed v2 $\xi_\pm$ with v2's error bars: 0.71× ($\xi_+$), 0.68× ($\xi_-$) inside 12–83′</p>
+        <img class="plot fragment fade-out" data-fragment-index="0" src="images/xi_blink_old.png" alt="Concealed v2 xi plus and minus with the 2D release error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;transition:none;">
+        <img class="plot fragment" data-fragment-index="0" src="images/xi_blink_new.png" alt="The same concealed v2 xi plus and minus with the v2 error bars" style="position:absolute;left:40px;top:120px;width:1200px;height:500px;transition:none;">
+        <p class="caption fragment fade-out" data-fragment-index="0" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;transition:none;">Concealed v2 $\xi_\pm$ with the 2D release's error bars</p>
+        <p class="caption fragment" data-fragment-index="0" style="position:absolute;left:40px;top:630px;width:1200px;margin:0;transition:none;">Concealed v2 $\xi_\pm$ with v2's error bars: 0.71× ($\xi_+$), 0.68× ($\xi_-$) inside 12–83′</p>
         <aside class="notes"><ul class="skim">
-      <li><strong>Error bars</strong> — v2 error bars (4690 deg², n_eff 6.87) on the concealed v2 data; the 2D release had 2894 deg², n_eff 4.96. The 2D-release-error-bar frame is images/xi_blink_old.png.</li>
+      <li><strong>Blink</strong> — opens on the 2D release's error bars (2894 deg², n_eff 4.96); one click flips in place to v2's (4690 deg², n_eff 6.87), back-arrow flips back. Same concealed v2 points throughout.</li>
       <li><strong>Expectation</strong> — √(n_eff·A) ratio 0.67; area alone 0.79. Measured 0.71 / 0.68.</li>
     </ul>
     <details><summary>Sources</summary><p>errorbar-blink thread (Nibi): cosmo-val-v2-tomo/slides/xi_blink_slide.py, SP_v2.0.sacc via the unions blind; Paper II cov_reporting_ng.txt.</p></details></aside>
